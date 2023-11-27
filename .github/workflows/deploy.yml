@@ -1,0 +1,33 @@
+name: deploy
+
+on:
+    push:
+        branch: master
+    workflow_dispatch:
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  submodules: true
+                  fetch-depth: 0
+
+            - name: Setup Hugo
+              uses: peaceiris/actions-hugo@v2
+              with:
+                  hugo-version: "latest"
+                  extended: true
+
+            - name: Build Web
+              run: hugo --gc --minify --cleanDestinationDir
+
+            - name: Deploy Web
+              uses: peaceiris/actions-gh-pages@v3
+              with:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+                  PUBLISH_BRANCH: gh-pages
+                  PUBLISH_DIR: ./public
+                  commit_message: ${{ github.event.head_commit.message }}
