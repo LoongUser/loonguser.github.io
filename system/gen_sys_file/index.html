@@ -1,0 +1,99 @@
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="1. Initrd # 通常, lib/modules/下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成Initrd:
+1.1 dracut命令 # ls lib/modules/* | xargs -I N dracut --kver N --force 1.2 mkinitramfs命令 # ls lib/modules/* | xargs -I N mkinitramfs /lib/modules/N -o /boot/initrd.img-N 2. GRUB # 2.1 Grub # 通常, Grub安装在当前启动系统所在的磁盘上, 如下命令可以找到当前磁盘. (希望将Grub安装在其他盘的同学, 看明白自己想要的效果)
+[root@mxd ~]# lsblk -P | grep &#34;$(lsblk -P | grep -w 'MOUNTPOINTS=&#34;/&#34;' | sed 's/.*MAJ:MIN=&#34;\([^:]*\).*/\1/g'):0&#34; | awk -F '&#34;' '{print &#34;/dev/&#34; $2}' /dev/nvme0n1 再通过grub-install或者grub2-install命令安装进磁盘:
+grub-install /dev/nvme0n1 2."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:title" content="生成系统下的一些文件"><meta property="og:description" content="1. Initrd # 通常, lib/modules/下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成Initrd:
+1.1 dracut命令 # ls lib/modules/* | xargs -I N dracut --kver N --force 1.2 mkinitramfs命令 # ls lib/modules/* | xargs -I N mkinitramfs /lib/modules/N -o /boot/initrd.img-N 2. GRUB # 2.1 Grub # 通常, Grub安装在当前启动系统所在的磁盘上, 如下命令可以找到当前磁盘. (希望将Grub安装在其他盘的同学, 看明白自己想要的效果)
+[root@mxd ~]# lsblk -P | grep &#34;$(lsblk -P | grep -w 'MOUNTPOINTS=&#34;/&#34;' | sed 's/.*MAJ:MIN=&#34;\([^:]*\).*/\1/g'):0&#34; | awk -F '&#34;' '{print &#34;/dev/&#34; $2}' /dev/nvme0n1 再通过grub-install或者grub2-install命令安装进磁盘:
+grub-install /dev/nvme0n1 2."><meta property="og:type" content="article"><meta property="og:url" content="https://loonguser.github.io/system/gen_sys_file/"><meta property="article:section" content="system"><meta property="article:modified_time" content="2023-11-27T15:27:44+08:00"><title>生成系统下的一些文件 | 龙芯玩机指南</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.33a48f5432973b8ff9a82679d9e45d67f2c15d4399bd2829269455cfe390b5e8.css integrity="sha256-M6SPVDKXO4/5qCZ52eRdZ/LBXUOZvSgpJpRVz+OQteg=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.9edf17d0c1a35ebca00b7f18cfb104c2e02caf473d65dda48568ab49a74748a3.js integrity="sha256-nt8X0MGjXrygC38Yz7EEwuAsr0c9Zd2khWirSadHSKM=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
+<label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
+Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/firmware/>如何更新固件</a></li><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/update_system/>如何更新系统</a></li><li><a href=/system/gen_sys_file/ class=active>生成系统下的一些文件</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
+</label><strong>生成系统下的一些文件</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#1-initrd>1. Initrd</a><ul><li><a href=#11-dracut命令>1.1 dracut命令</a></li><li><a href=#12-mkinitramfs命令>1.2 mkinitramfs命令</a></li></ul></li><li><a href=#2-grub>2. GRUB</a><ul><li><a href=#21-grub>2.1 Grub</a></li><li><a href=#22-grubcfg>2.2 grub.cfg</a></li><li><a href=#23-grubefi>2.3 grub.efi</a></li></ul></li><li><a href=#3-fstab>3. fstab</a><ul><li><a href=#31-自动更新>3.1 自动更新</a></li><li><a href=#32-手动更新>3.2 手动更新</a></li></ul></li><li><a href=#4-生成用户>4. 生成用户</a></li></ul></li></ul></nav></aside></header><article class=markdown><h2 id=1-initrd>1. Initrd
+<a class=anchor href=#1-initrd>#</a></h2><p>通常, <code>lib/modules/</code>下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成<code>Initrd</code>:</p><h3 id=11-dracut命令>1.1 dracut命令
+<a class=anchor href=#11-dracut%e5%91%bd%e4%bb%a4>#</a></h3><pre tabindex=0><code>ls lib/modules/* | xargs -I N dracut --kver N --force
+</code></pre><h3 id=12-mkinitramfs命令>1.2 mkinitramfs命令
+<a class=anchor href=#12-mkinitramfs%e5%91%bd%e4%bb%a4>#</a></h3><pre tabindex=0><code>ls lib/modules/* | xargs -I N mkinitramfs /lib/modules/N -o /boot/initrd.img-N 
+</code></pre><h2 id=2-grub>2. GRUB
+<a class=anchor href=#2-grub>#</a></h2><h3 id=21-grub>2.1 Grub
+<a class=anchor href=#21-grub>#</a></h3><p>通常, <code>Grub</code>安装在当前启动系统所在的磁盘上, 如下命令可以找到当前磁盘. (希望将<code>Grub</code>安装在其他盘的同学, 看明白自己想要的效果)</p><pre tabindex=0><code>[root@mxd ~]# lsblk -P | grep &#34;$(lsblk -P | grep -w &#39;MOUNTPOINTS=&#34;/&#34;&#39; | sed &#39;s/.*MAJ:MIN=&#34;\([^:]*\).*/\1/g&#39;):0&#34; | awk -F &#39;&#34;&#39; &#39;{print &#34;/dev/&#34; $2}&#39;
+/dev/nvme0n1
+</code></pre><p>再通过<code>grub-install</code>或者<code>grub2-install</code>命令安装进磁盘:</p><pre tabindex=0><code>grub-install /dev/nvme0n1
+</code></pre><h3 id=22-grubcfg>2.2 grub.cfg
+<a class=anchor href=#22-grubcfg>#</a></h3><pre tabindex=0><code>grub-mkconfig -o /boot/grub/grub.cfg
+</code></pre><h3 id=23-grubefi>2.3 grub.efi
+<a class=anchor href=#23-grubefi>#</a></h3><pre tabindex=0><code>grub-mkimage -c /boot/grub/grub.cfg -o /boot/efi/EFI/BOOT/BOOTLOONGARCH64.EFI -O loongarch64-efi
+</code></pre><p><code>2.1</code>节中生成<code>grub</code>可以让<code>bios</code>找到启动设备, 自动启动.</p><p>假如没有执行<code>2.1</code>中的内容, 用户可以在<code>UEFI</code>下通过手动执行此节命令中生成的<code>BOOTLOONGARCH64.EFI</code>加载<code>grub</code>程序.</p><h2 id=3-fstab>3. fstab
+<a class=anchor href=#3-fstab>#</a></h2><p>系统启动后, 启动参数中的<code>root=</code>后面的内容将被挂载为<code>根文件系统</code>, 也就是<code>Linux</code>目录中的<code>/</code>分区, 而其他的目录的挂载依赖<code>/etc/fstab</code>中的描述, 倘若重新分区, 通常需要更新<code>/etc/fstab</code>中的内容. 里面的内容具体含义详情
+<a href=https://www.bing.com/>https://www.bing.com/</a></p><h3 id=31-自动更新>3.1 自动更新
+<a class=anchor href=#31-%e8%87%aa%e5%8a%a8%e6%9b%b4%e6%96%b0>#</a></h3><p>自动更新的前提是<strong>对应目录已经按照预设想法挂载</strong>, 比如:</p><pre tabindex=0><code>[root@mxd ~]# lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda      8:0    0 238.5G  0 disk
+├─sda1   8:1    0   300M  0 part /boot/efi
+├─sda2   8:2    0   300M  0 part /boot
+├─sda3   8:3    0  41.3G  0 part /
+├─sda4   8:4    0  41.3G  0 part
+├─sda5   8:5    0 146.5G  0 part /root
+│                                /opt
+│                                /home
+│                                /var
+│                                /data
+└─sda6   8:6    0   8.8G  0 part [SWAP]
+</code></pre><p>然后使用<code>github</code>上开源的<code>genfstab</code>工具生成:</p><pre tabindex=0><code>[root@mxd ~]# git clone https://github.com/glacion/genfstab.git
+正克隆到 &#39;genfstab&#39;...
+remote: Enumerating objects: 14, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 14 (delta 0), reused 1 (delta 0), pack-reused 11
+接收对象中: 100% (14/14), 29.18 KiB | 281.00 KiB/s, 完成.
+处理 delta 中: 100% (2/2), 完成.
+[root@mxd ~]# cd genfstab/
+[root@mxd ~ genfstab]# ./genfstab -U &gt; /etc/fstab
+</code></pre><p>同样, 假如在制作非当前启动系统的<code>fstab</code>文件, 例如:</p><pre tabindex=0><code>[root@mxd ~]# lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda      8:0    0 238.5G  0 disk
+├─sda1   8:1    0   300M  0 part /mnt/boot/efi
+├─sda2   8:2    0   300M  0 part /mnt/boot
+├─sda3   8:3    0  82.6G  0 part /mnt
+├─sda4   8:5    0 146.5G  0 part /mnt/home
+└─sda5   8:6    0   8.8G  0 part [SWAP]
+</code></pre><p>也同样可以使用:</p><pre tabindex=0><code>[root@mxd ~ genfstab]# ./genfstab -U &gt; /mnt/etc/fstab
+</code></pre><h3 id=32-手动更新>3.2 手动更新
+<a class=anchor href=#32-%e6%89%8b%e5%8a%a8%e6%9b%b4%e6%96%b0>#</a></h3><p>同样, 假如在制作非当前启动系统的<code>fstab</code>文件, 例如:</p><pre tabindex=0><code>[root@mxd ~]# lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda      8:0    0 238.5G  0 disk
+├─sda1   8:1    0   300M  0 part /mnt/boot/efi
+├─sda2   8:2    0   300M  0 part /mnt/boot
+├─sda3   8:3    0  82.6G  0 part /mnt
+├─sda4   8:5    0 146.5G  0 part /mnt/home
+└─sda5   8:6    0   8.8G  0 part [SWAP]
+[root@mxd ~]# blkid
+/dev/sda2: LABEL=&#34;bootfs&#34; UUID=&#34;6a68fa6e-4fa3-4036-91a3-6f0b2e6ff1b4&#34; BLOCK_SIZE=&#34;1024&#34; TYPE=&#34;ext3&#34; PARTUUID=&#34;2215dfd8&#34;
+/dev/sda4: LABEL=&#34;datafs&#34; UUID=&#34;b4e5345f-171e-447c-8b89-52459b29a380&#34; BLOCK_SIZE=&#34;512&#34; TYPE=&#34;xfs&#34; PARTUUID=&#34;0ba0e5ea-a&#34;
+/dev/sda3: LABEL=&#34;rootfs&#34; UUID=&#34;103a31fa-631b-4ec5-8295-0817394b36d6&#34; BLOCK_SIZE=&#34;512&#34; TYPE=&#34;xfs&#34; PARTUUID=&#34;687bdb73-3&#34;
+/dev/sda1: UUID=&#34;768C-0E8F&#34; BLOCK_SIZE=&#34;512&#34; TYPE=&#34;vfat&#34; PARTUUID=&#34;bbb4bdad-36d3-4300-872c-1c00b15588c2&#34;
+/dev/sda5: UUID=&#34;e7429117-dba5-4318-8d48-ab34b7919f6d&#34; TYPE=&#34;swap&#34; PARTUUID=&#34;5bb18f47-7756-4be9-b5c0-59d1f1d36fed&#34;
+</code></pre><p>只需要将对应分区的<code>UUID</code>填写到<code>/mnt/etc/fstab</code>中去.</p><p>第一列是<code>UUID</code>, 或者理解是挂载的来源</p><p>第二列是挂载的目标位置</p><p>第三列是挂载的类型</p><p>第四列是挂载的参数</p><pre tabindex=0><code>[root@mxd ~]# cat /mnt/etc/fstab
+# /etc/fstab: static file system information.
+#
+# Use &#39;blkid&#39; to print the universally unique identifier for a device; this may
+# be used with UUID= as a more robust way to name devices that works even if
+# disks are added and removed. See fstab(5).
+#
+# &lt;file system&gt;             &lt;mount point&gt;  &lt;type&gt;  &lt;options&gt;  &lt;dump&gt;  &lt;pass&gt;
+UUID=768C-0E8F                            /boot/efi      vfat    defaults,noatime 0 2
+UUID=6a68fa6e-4fa3-4036-91a3-6f0b2e6ff1b4 /boot          ext3    defaults,noatime 0 2
+UUID=103a31fa-631b-4ec5-8295-0817394b36d6 /              xfs     defaults,noatime,discard 0 1
+UUID=b4e5345f-171e-447c-8b89-52459b29a380 /home          xfs     defaults,noatime,discard 0 2
+UUID=e7429117-dba5-4318-8d48-ab34b7919f6d swap           swap    defaults,noatime 0 2
+tmpfs                                     /tmp           tmpfs   defaults,noatime,mode=1777 0 0
+</code></pre><p>其中第四列挂载的参数可以参考<code>mount -v</code>的输出, 不清楚的抄一抄上述内容, 基本是可用的.</p><h2 id=4-生成用户>4. 生成用户
+<a class=anchor href=#4-%e7%94%9f%e6%88%90%e7%94%a8%e6%88%b7>#</a></h2><p>其实是创建用户, 任何系统都需要一个可登录的用户来操作, 那么则必须配置一个用户作为登录选项.</p><p>开发中常用<code>root</code>帐号通常是自带的, 但是我们需要对其设定密码, 通过<code>passwd root</code>命令.</p><p>如果我们需要普通用户, 则需要通过<code>useradd</code>命令创建:</p><pre tabindex=0><code>[root@mxd ~]# useradd -m -s /bin/bash username
+[root@mxd ~]# passwd username
+新的密码：
+重新输入新的密码：
+passwd：已成功更新密码
+</code></pre><blockquote><p>通常, 上述内容是制作一个操作系统最基本的内容(个人理解, 非专业说明).</p></blockquote></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/LoongUser/loonguser.github.io/commit/834cd38246fea6d7c72da4a8485ee7c7b57450d5 title='最后修改者 AydenMeng | November 27, 2023' target=_blank rel=noopener><img src=/svg/calendar.svg class=book-icon alt=Calendar>
+<span>November 27, 2023</span></a></div><div><a class="flex align-center" href=https://github.com/LoongUser/loonguser.github.io/edit/main/content/content/system/gen_sys_file.md target=_blank rel=noopener><img src=/svg/edit.svg class=book-icon alt=Edit>
+<span>编辑本页</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#1-initrd>1. Initrd</a><ul><li><a href=#11-dracut命令>1.1 dracut命令</a></li><li><a href=#12-mkinitramfs命令>1.2 mkinitramfs命令</a></li></ul></li><li><a href=#2-grub>2. GRUB</a><ul><li><a href=#21-grub>2.1 Grub</a></li><li><a href=#22-grubcfg>2.2 grub.cfg</a></li><li><a href=#23-grubefi>2.3 grub.efi</a></li></ul></li><li><a href=#3-fstab>3. fstab</a><ul><li><a href=#31-自动更新>3.1 自动更新</a></li><li><a href=#32-手动更新>3.2 手动更新</a></li></ul></li><li><a href=#4-生成用户>4. 生成用户</a></li></ul></li></ul></nav></div></aside></main></body></html>

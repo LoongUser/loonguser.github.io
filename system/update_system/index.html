@@ -1,0 +1,107 @@
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="1 全系统更新: # Debian系:
+apt update && apt upgrade Redhat系:
+yum update Arch系:
+pacman -Syu 2. 单独更新内核 # 2.1 更新自己编译的内核 # 将内核放置/boot下即可(通常/boot是grub.cfg默认指定的根目录)
+更新完记得更新grub.cfg, 见第四节.
+2.2 更新软件源上的内核 # 以Debian系为例, 其余不做演示:
+root@loongson-pc:/home/loongson# apt-cache search linux-header aufs-dkms - DKMS files to build and install aufs linux-headers-4.19.0-17-common - Common header files for Linux 4.19 linux-headers-4.19.0-17-loongson-3 - Linux kernel headers for 4.19 on loongson-3 linux-headers-4.19.0-18-common - Common header files for Linux 4.19 linux-headers-4.19.0-18-loongson-3 - Linux kernel headers for 4."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:title" content="如何更新系统"><meta property="og:description" content="1 全系统更新: # Debian系:
+apt update && apt upgrade Redhat系:
+yum update Arch系:
+pacman -Syu 2. 单独更新内核 # 2.1 更新自己编译的内核 # 将内核放置/boot下即可(通常/boot是grub.cfg默认指定的根目录)
+更新完记得更新grub.cfg, 见第四节.
+2.2 更新软件源上的内核 # 以Debian系为例, 其余不做演示:
+root@loongson-pc:/home/loongson# apt-cache search linux-header aufs-dkms - DKMS files to build and install aufs linux-headers-4.19.0-17-common - Common header files for Linux 4.19 linux-headers-4.19.0-17-loongson-3 - Linux kernel headers for 4.19 on loongson-3 linux-headers-4.19.0-18-common - Common header files for Linux 4.19 linux-headers-4.19.0-18-loongson-3 - Linux kernel headers for 4."><meta property="og:type" content="article"><meta property="og:url" content="https://loonguser.github.io/system/update_system/"><meta property="article:section" content="system"><meta property="article:modified_time" content="2023-11-27T15:27:44+08:00"><title>如何更新系统 | 龙芯玩机指南</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.33a48f5432973b8ff9a82679d9e45d67f2c15d4399bd2829269455cfe390b5e8.css integrity="sha256-M6SPVDKXO4/5qCZ52eRdZ/LBXUOZvSgpJpRVz+OQteg=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.9edf17d0c1a35ebca00b7f18cfb104c2e02caf473d65dda48568ab49a74748a3.js integrity="sha256-nt8X0MGjXrygC38Yz7EEwuAsr0c9Zd2khWirSadHSKM=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
+<label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
+Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/firmware/>如何更新固件</a></li><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/update_system/ class=active>如何更新系统</a></li><li><a href=/system/gen_sys_file/>生成系统下的一些文件</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
+</label><strong>如何更新系统</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#1-全系统更新>1 全系统更新:</a></li><li><a href=#2-单独更新内核>2. 单独更新内核</a><ul><li><a href=#21-更新自己编译的内核>2.1 更新自己编译的内核</a></li><li><a href=#22-更新软件源上的内核>2.2 更新软件源上的内核</a></li></ul></li><li><a href=#3-单独更新initrd>3. 单独更新initrd</a><ul><li><a href=#31-更新自己编译的modules并生成initrd>3.1 更新自己编译的modules并生成initrd</a></li><li><a href=#32-更新软件源上的initrd>3.2 更新软件源上的initrd</a></li></ul></li><li><a href=#4-更新grubcfg>4. 更新grub.cfg</a></li></ul></li></ul></nav></aside></header><article class=markdown><h2 id=1-全系统更新>1 全系统更新:
+<a class=anchor href=#1-%e5%85%a8%e7%b3%bb%e7%bb%9f%e6%9b%b4%e6%96%b0>#</a></h2><p><code>Debian</code>系:</p><pre tabindex=0><code>apt update &amp;&amp; apt upgrade
+</code></pre><p><code>Redhat</code>系:</p><pre tabindex=0><code>yum update
+</code></pre><p><code>Arch</code>系:</p><pre tabindex=0><code>pacman -Syu
+</code></pre><h2 id=2-单独更新内核>2. 单独更新内核
+<a class=anchor href=#2-%e5%8d%95%e7%8b%ac%e6%9b%b4%e6%96%b0%e5%86%85%e6%a0%b8>#</a></h2><h3 id=21-更新自己编译的内核>2.1 更新自己编译的内核
+<a class=anchor href=#21-%e6%9b%b4%e6%96%b0%e8%87%aa%e5%b7%b1%e7%bc%96%e8%af%91%e7%9a%84%e5%86%85%e6%a0%b8>#</a></h3><p>将内核放置<code>/boot</code>下即可(通常<code>/boot</code>是<code>grub.cfg</code>默认指定的根目录)</p><p>更新完记得更新<code>grub.cfg</code>, 见第四节.</p><h3 id=22-更新软件源上的内核>2.2 更新软件源上的内核
+<a class=anchor href=#22-%e6%9b%b4%e6%96%b0%e8%bd%af%e4%bb%b6%e6%ba%90%e4%b8%8a%e7%9a%84%e5%86%85%e6%a0%b8>#</a></h3><p>以<code>Debian</code>系为例, 其余不做演示:</p><pre tabindex=0><code>root@loongson-pc:/home/loongson# apt-cache search linux-header
+aufs-dkms - DKMS files to build and install aufs
+linux-headers-4.19.0-17-common - Common header files for Linux 4.19
+linux-headers-4.19.0-17-loongson-3 - Linux kernel headers for 4.19 on loongson-3
+linux-headers-4.19.0-18-common - Common header files for Linux 4.19
+linux-headers-4.19.0-18-loongson-3 - Linux kernel headers for 4.19 on loongson-3
+linux-headers-4.19.0-19-common - Common header files for Linux 4.19
+linux-headers-4.19.0-19-loongson-3 - Linux kernel headers for 4.19 on loongson-3
+linux-headers-loongson-3 - Linux kernel headers for 4.19 on loongson-3 (meta-package)
+root@loongson-pc:/home/loongson#
+root@loongson-pc:/home/loongson# apt install linux-headers-4.19.0-19-loongson-3
+正在读取软件包列表... 完成正在分析软件包的依赖关系树       
+正在读取状态信息... 完成       
+......
+......
+</code></pre><h2 id=3-单独更新initrd>3. 单独更新initrd
+<a class=anchor href=#3-%e5%8d%95%e7%8b%ac%e6%9b%b4%e6%96%b0initrd>#</a></h2><h3 id=31-更新自己编译的modules并生成initrd>3.1 更新自己编译的modules并生成initrd
+<a class=anchor href=#31-%e6%9b%b4%e6%96%b0%e8%87%aa%e5%b7%b1%e7%bc%96%e8%af%91%e7%9a%84modules%e5%b9%b6%e7%94%9f%e6%88%90initrd>#</a></h3><p>将从内核源码编译的模块文件拷贝至<code>/lib/modules/</code>, 比如<code>4.19.190+.tgz</code>是模块文件的压缩包:</p><pre tabindex=0><code>root@loongson-pc:/lib/modules# tar -zxf 4.19.190+.tgz -C /lib/modules/
+root@loongson-pc:/lib/modules# ls
+4.19.0-19-loongson-3  4.19.190+
+</code></pre><p>在<code>/lib/modules/</code>下生成的<code>4.19.190+</code>文件夹即为新的模块文件目录, 然后手动生成<code>initrd</code>即可. (通常, 模块文件夹名与内核版本名称一致, 倘若不一致, 需要进入<code>/lib/modules/</code>目录, 相当于指定文件夹)</p><pre tabindex=0><code>root@loongson-pc:/lib/modules# cd /lib/modules/
+root@loongson-pc:/lib/modules# dracut --force --kver 4.19.190+
+dracut: Executing: /usr/bin/dracut --force --kver 4.19.190+
+Mode:                     real
+Method:                   sha256
+Files:                    1034
+Linked:                   188 files
+Compared:                 0 xattrs
+Compared:                 2322 files
+Saved:                    7.64 MiB
+Duration:                 0.088150 seconds
+dracut: *** Hardlinking files done ***
+dracut: *** Stripping files ***
+dracut: *** Stripping files done ***
+dracut: *** Generating early-microcode cpio image ***
+dracut: *** Store current command line parameters ***
+dracut: Stored kernel commandline:
+dracut:  resume=UUID=e7429117-dba5-4318-8d48-ab34b7919f6d
+dracut:  root=UUID=103a31fa-631b-4ec5-8295-0817394b36d6 rootfstype=xfs rootflags=rw,noatime,attr2,inode64,noquota
+dracut: *** Creating image file &#39;/boot/initramfs-4.19.190+.img&#39; ***
+dracut: *** Creating initramfs image file &#39;/boot/initramfs-4.19.190+.img&#39; done ***
+</code></pre><p><code>/boot/initramfs-4.19.190+.img</code>即为生成的<code>initrd</code></p><p><code>mkinitramfs</code>等其他命令不再介绍, 可参考:
+<a href=../gen_sys_file>生成系统下的一些文件</a></p><h3 id=32-更新软件源上的initrd>3.2 更新软件源上的initrd
+<a class=anchor href=#32-%e6%9b%b4%e6%96%b0%e8%bd%af%e4%bb%b6%e6%ba%90%e4%b8%8a%e7%9a%84initrd>#</a></h3><p>以<code>Debian</code>系为例, 其余不做演示:</p><pre tabindex=0><code>root@loongson-pc:/lib/modules# apt-cache search linux-image
+linux-image-4.19.0-17-loongson-3 - Linux kernel, version 4.19 for loongson 3
+linux-image-4.19.0-17-loongson-3-dbg - Debug symbols for linux-image-4.19.0-17-loongson-3
+linux-image-4.19.0-17-loongson-3-kdump - kdump package
+linux-image-4.19.0-18-loongson-3 - Linux kernel, version 4.19 for loongson 3
+linux-image-4.19.0-18-loongson-3-dbg - Debug symbols for linux-image-4.19.0-18-loongson-3
+linux-image-4.19.0-18-loongson-3-kdump - kdump package
+linux-image-4.19.0-19-loongson-3 - Linux kernel, version 4.19 for loongson 3
+linux-image-4.19.0-19-loongson-3-dbg - Debug symbols for linux-image-4.19.0-19-loongson-3
+linux-image-4.19.0-19-loongson-3-kdump - kdump package
+linux-image-loongson-3 - Linux for Loongson 3 (meta-package)
+linux-image-loongson-3-dbg - Debugging symbols for Linux loongson-3 configuration (meta-package)
+root@loongson-pc:/lib/modules# apt install linux-image-4.19.0-19-loongson-3
+正在读取软件包列表... 完成正在分析软件包的依赖关系树       
+正在读取状态信息... 完成       
+......
+......
+</code></pre><h2 id=4-更新grubcfg>4. 更新grub.cfg
+<a class=anchor href=#4-%e6%9b%b4%e6%96%b0grubcfg>#</a></h2><p>内核和<code>initrd</code>准备完毕后, 可以增加或修改相应的启动项. 例如<code>vm.mxd</code>是手动编译生成的内核名称. <code>initramfs-4.19.190+.img</code>是根据<code>modules</code>生成的<code>initrd</code>, 增加或者修改相应内容即可:</p><pre tabindex=0><code>menuentry &#39;vm.mxd&#39; --class loongnix_20 --class gnu-linux --class gnu --class os $menuentry_id_option &#39;gnulinux-simple-103a31fa-631b-4ec5-8295-0817394b36d6&#39; {
+        load_video
+        gfxmode $linux_gfx_mode
+        insmod gzio
+        if [ x$grub_platform = xxen ]; then insmod xzio; insmod lzopio; fi
+        insmod part_gpt
+        insmod ext2
+        set root=&#39;hd0,gpt2&#39;
+        if [ x$feature_platform_search_hint = xy ]; then
+          search --no-floppy --fs-uuid --set=root --hint-ieee1275=&#39;ieee1275//disk@0,gpt2&#39; --hint-bios=hd0,gpt2 --hint-efi=hd0,gpt2 --hint-baremetal=ahci0,gpt2  6a68fa6e-4fa3-4036-91a3-6f0b2e6ff1b4
+        else
+          search --no-floppy --fs-uuid --set=root 6a68fa6e-4fa3-4036-91a3-6f0b2e6ff1b4
+        fi
+        echo    &#39;Loading Linux 4.19.0-19-loongson-3 ...&#39;
+        linux   /vm.mxd root=UUID=103a31fa-631b-4ec5-8295-0817394b36d6 ro  console=ttyS0,115200 earlycon=uart,mmio,0x1fe001e0 splash resume=PARTUUID=5bb18f47-7756-4be9-b5c0-59d1f1d36fed
+        echo    &#39;Loading initial ramdisk ...&#39;
+        initrd  /initramfs-4.19.190+.img
+}
+</code></pre></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/LoongUser/loonguser.github.io/commit/834cd38246fea6d7c72da4a8485ee7c7b57450d5 title='最后修改者 AydenMeng | November 27, 2023' target=_blank rel=noopener><img src=/svg/calendar.svg class=book-icon alt=Calendar>
+<span>November 27, 2023</span></a></div><div><a class="flex align-center" href=https://github.com/LoongUser/loonguser.github.io/edit/main/content/content/system/update_system.md target=_blank rel=noopener><img src=/svg/edit.svg class=book-icon alt=Edit>
+<span>编辑本页</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#1-全系统更新>1 全系统更新:</a></li><li><a href=#2-单独更新内核>2. 单独更新内核</a><ul><li><a href=#21-更新自己编译的内核>2.1 更新自己编译的内核</a></li><li><a href=#22-更新软件源上的内核>2.2 更新软件源上的内核</a></li></ul></li><li><a href=#3-单独更新initrd>3. 单独更新initrd</a><ul><li><a href=#31-更新自己编译的modules并生成initrd>3.1 更新自己编译的modules并生成initrd</a></li><li><a href=#32-更新软件源上的initrd>3.2 更新软件源上的initrd</a></li></ul></li><li><a href=#4-更新grubcfg>4. 更新grub.cfg</a></li></ul></li></ul></nav></div></aside></main></body></html>
