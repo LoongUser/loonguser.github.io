@@ -60,7 +60,7 @@ enableGitInfo = true
 
   # (Optional, default favicon.png) Set the path to a favicon file.
   # If the favicon is /static/favicon.png then the path would be favicon.png
-  # BookFavicon = 'favicon.png'
+  BookFavicon = 'favicon.png'
 
   # (Optional, default none) Set the path to a logo for the book.
   # If the logo is /static/logo.png then the path would be logo.png
