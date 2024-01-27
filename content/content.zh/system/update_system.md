@@ -95,7 +95,7 @@ dracut: *** Creating initramfs image file '/boot/initramfs-4.19.190+.img' done *
 
 `/boot/initramfs-4.19.190+.img`即为生成的`initrd`
 
-`mkinitramfs`等其他命令不再介绍, 可参考: [生成系统下的一些文件](../gen_sys_file)
+`mkinitramfs`等其他命令不再介绍, 可参考: [生成系统下的一些文件](gen_sys_file)
 
 ### 3.2 更新软件源上的initrd
 

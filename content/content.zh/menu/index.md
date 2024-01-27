@@ -9,6 +9,7 @@ headless: true
   - [从UEFI如何启动到系统]({{< relref "/firmware/uefi" >}})
 
 - [**系统**]({{< relref "/system/" >}})
+  - [内核编译]({{< relref "/system/kernel" >}})
   - [生成系统下的一些文件]({{< relref "/system/gen_sys_file" >}})
   - [系统下查看一些信息]({{< relref "/system/systeminfo" >}})
   - [如何更新系统]({{< relref "/system/update_system" >}})

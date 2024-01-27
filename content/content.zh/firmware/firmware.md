@@ -8,7 +8,7 @@ toc: true
 
 ## 在PMON下更新固件
 
-详情[PMON使用方法](../pmon)
+详情[PMON使用方法](pmon)
 
 从硬盘加载:
 
@@ -54,7 +54,7 @@ Erase end!
 
 ## 在UEFI下更新固件
 
-详情[uefi使用方法](../uefi)
+详情[uefi使用方法](uefi.md)
 
 ```
 UEFI Interactive Shell v2.2
