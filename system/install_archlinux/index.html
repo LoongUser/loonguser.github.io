@@ -1,0 +1,270 @@
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="转载文章来源： https://bbs.loongarch.org/d/88-archlinux/28
+本主题多人协作，版主权限可编辑，开源爱好者若要参与协作，可回复中申请权限，或者在QQ群里申请。 # 为了协调一致，本指南基于 @yetist制作的可引导安装镜像，指南覆盖系统引导、安装和具体应用配置。安装配置中遇到的问题，可以在回复中提出。本主题多人协作持续更新，勿催，谢谢！ # 一、龙芯新固件环境下引导盘的制作 # 安装镜像及软件仓库动态，可在如下主题中找到 # https://bbs.loongarch.org/d/67-loongarchlinux-202203/30
+最新镜像下载，随时更新 # https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.16.1-loongarch64.iso
+https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.22.1-loongarch64.iso
+https://mirrors.wsyu.edu.cn/loongarch/archlinux/iso/latest/archlinux-loong64.iso
+引导盘制作 # 准备工作：一块确定状态良好的U盘，容量4G以上即可，制作引导U盘会擦除盘内原始数据，注意备份。
+Linux环境下，插入U盘，系统会识别，不要做任何打开，加载等操作，具体设备名，可使用如下命令
+ls -la /dev/sd* ## U盘一般会识别成硬盘设备，*表示系统动态赋予的一个字符，用以区分不同硬盘 Linux环境下，使用dd这个工具软件 # 注意：x是个字符，用实际内容替换，命令执行需要root用户权限 sudo dd if=loongarchlinux-xxx.iso of=/dev/sdx bs=1M status=progress oflag=direct # 命令执行完成后，建议运行下如下命令，确保U盘写入完整 sudo sync 二、系统引导和安装前的检查 # 使用新固件引导，有两个快捷键会经常用到：
+F2 ----- 激活固件配置界面，可在配置界面的选择引导设备 F12 ----- 激活引导管理菜单，暂时不推荐使用这个方式选择引导设备 使用新固件引导系统，包括引导本主题中制作好的U盘和之前使用grub有区别，具体流程是：
+1、开机前把制作好的U盘插入机器USB接口，建议插入到主板提供的接口上，不建议使用前置接口，躲坑。
+2、开机后出现龙芯logo，快速按F2，直到进入固件配置界面
+3、按如下图示操作：
+&mldr;
+TODO: 需要补充英文界面操作，或说明修改语言方法。
+移动光标到 启动管理 项，回车：
+进入 启动管理 菜单之后，将会看到一系列可选择的启动项，请在列表中找到 EFI System Partition 或 EFI System Partition 2，并选择此项启动："><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:title" content="新世界Archlinux系统安装"><meta property="og:description" content="转载文章来源： https://bbs.loongarch.org/d/88-archlinux/28
+本主题多人协作，版主权限可编辑，开源爱好者若要参与协作，可回复中申请权限，或者在QQ群里申请。 # 为了协调一致，本指南基于 @yetist制作的可引导安装镜像，指南覆盖系统引导、安装和具体应用配置。安装配置中遇到的问题，可以在回复中提出。本主题多人协作持续更新，勿催，谢谢！ # 一、龙芯新固件环境下引导盘的制作 # 安装镜像及软件仓库动态，可在如下主题中找到 # https://bbs.loongarch.org/d/67-loongarchlinux-202203/30
+最新镜像下载，随时更新 # https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.16.1-loongarch64.iso
+https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.22.1-loongarch64.iso
+https://mirrors.wsyu.edu.cn/loongarch/archlinux/iso/latest/archlinux-loong64.iso
+引导盘制作 # 准备工作：一块确定状态良好的U盘，容量4G以上即可，制作引导U盘会擦除盘内原始数据，注意备份。
+Linux环境下，插入U盘，系统会识别，不要做任何打开，加载等操作，具体设备名，可使用如下命令
+ls -la /dev/sd* ## U盘一般会识别成硬盘设备，*表示系统动态赋予的一个字符，用以区分不同硬盘 Linux环境下，使用dd这个工具软件 # 注意：x是个字符，用实际内容替换，命令执行需要root用户权限 sudo dd if=loongarchlinux-xxx.iso of=/dev/sdx bs=1M status=progress oflag=direct # 命令执行完成后，建议运行下如下命令，确保U盘写入完整 sudo sync 二、系统引导和安装前的检查 # 使用新固件引导，有两个快捷键会经常用到：
+F2 ----- 激活固件配置界面，可在配置界面的选择引导设备 F12 ----- 激活引导管理菜单，暂时不推荐使用这个方式选择引导设备 使用新固件引导系统，包括引导本主题中制作好的U盘和之前使用grub有区别，具体流程是：
+1、开机前把制作好的U盘插入机器USB接口，建议插入到主板提供的接口上，不建议使用前置接口，躲坑。
+2、开机后出现龙芯logo，快速按F2，直到进入固件配置界面
+3、按如下图示操作：
+&mldr;
+TODO: 需要补充英文界面操作，或说明修改语言方法。
+移动光标到 启动管理 项，回车：
+进入 启动管理 菜单之后，将会看到一系列可选择的启动项，请在列表中找到 EFI System Partition 或 EFI System Partition 2，并选择此项启动："><meta property="og:type" content="article"><meta property="og:url" content="https://loonguser.github.io/system/install_archlinux/"><meta property="article:section" content="system"><meta property="article:modified_time" content="2024-02-06T10:42:51+08:00"><title>新世界Archlinux系统安装 | 龙芯玩机指南</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.d436779daa8c5f0991463cafa654da54b3387090baa524ea86796bd910108f69.js integrity="sha256-1DZ3naqMXwmRRjyvplTaVLM4cJC6pSTqhnlr2RAQj2k=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
+<label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
+Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li><li><a href=/firmware/firmware/>如何更新固件</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/gen_sys_file/>生成系统下的一些文件</a></li><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/install_archlinux/ class=active>新世界Archlinux系统安装</a></li><li><a href=/system/update_system/>如何更新系统</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li><li><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></li><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li></ul></li><li><p><a href=/system/><strong>内核</strong></a></p><ul><li><a href=/system/kernel/>内核编译</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
+</label><strong>新世界Archlinux系统安装</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><ul><li></li></ul></li><li><a href=#一龙芯新固件环境下引导盘的制作>一、龙芯新固件环境下引导盘的制作</a><ul><li><a href=#安装镜像及软件仓库动态可在如下主题中找到>安装镜像及软件仓库动态，可在如下主题中找到</a></li><li><a href=#最新镜像下载随时更新>最新镜像下载，随时更新</a></li><li><a href=#引导盘制作>引导盘制作</a></li></ul></li><li><a href=#二系统引导和安装前的检查>二、系统引导和安装前的检查</a></li><li><a href=#三安装到机内硬盘>三、安装到机内硬盘</a><ul><li><a href=#分区和格式化>分区和格式化</a></li><li><a href=#安装必要的基础组件>安装必要的基础组件</a></li></ul></li><li><a href=#四重启前要做的系统配置>四、重启前要做的系统配置</a><ul><li><a href=#设置时区和语言>设置时区和语言</a></li><li><a href=#设置-hostname>设置 hostname</a></li><li><a href=#设置root用户密码超级管理员密码>设置root用户密码（超级管理员密码）</a></li><li><a href=#建立一个普通用户>建立一个普通用户</a></li><li><a href=#安装并配置-sudo>安装并配置 sudo</a></li><li><a href=#网络配置>网络配置</a></li><li><a href=#引导配置>引导配置</a></li></ul></li><li><a href=#五本机硬盘引导确认archlinux基本系统安装成功>五、本机硬盘引导，确认archlinux基本系统安装成功</a></li><li><a href=#六图形界面组件和程序安装配置>六、图形界面组件和程序安装配置</a></li></ul></li></ul></nav></aside></header><article class=markdown><blockquote><p>转载文章来源：
+<a href=https://bbs.loongarch.org/d/88-archlinux/28>https://bbs.loongarch.org/d/88-archlinux/28</a></p></blockquote><h4 id=本主题多人协作版主权限可编辑开源爱好者若要参与协作可回复中申请权限或者在qq群里申请>本主题多人协作，版主权限可编辑，开源爱好者若要参与协作，可回复中申请权限，或者在QQ群里申请。
+<a class=anchor href=#%e6%9c%ac%e4%b8%bb%e9%a2%98%e5%a4%9a%e4%ba%ba%e5%8d%8f%e4%bd%9c%e7%89%88%e4%b8%bb%e6%9d%83%e9%99%90%e5%8f%af%e7%bc%96%e8%be%91%e5%bc%80%e6%ba%90%e7%88%b1%e5%a5%bd%e8%80%85%e8%8b%a5%e8%a6%81%e5%8f%82%e4%b8%8e%e5%8d%8f%e4%bd%9c%e5%8f%af%e5%9b%9e%e5%a4%8d%e4%b8%ad%e7%94%b3%e8%af%b7%e6%9d%83%e9%99%90%e6%88%96%e8%80%85%e5%9c%a8qq%e7%be%a4%e9%87%8c%e7%94%b3%e8%af%b7>#</a></h4><h4 id=为了协调一致本指南基于yetisthttpsbbsloongarchorgu79制作的可引导安装镜像指南覆盖系统引导安装和具体应用配置安装配置中遇到的问题可以在回复中提出本主题多人协作持续更新勿催谢谢>为了协调一致，本指南基于
+<a href=https://bbs.loongarch.org/u/79>@yetist</a>制作的可引导安装镜像，指南覆盖系统引导、安装和具体应用配置。安装配置中遇到的问题，可以在回复中提出。本主题多人协作持续更新，勿催，谢谢！
+<a class=anchor href=#%e4%b8%ba%e4%ba%86%e5%8d%8f%e8%b0%83%e4%b8%80%e8%87%b4%e6%9c%ac%e6%8c%87%e5%8d%97%e5%9f%ba%e4%ba%8eyetisthttpsbbsloongarchorgu79%e5%88%b6%e4%bd%9c%e7%9a%84%e5%8f%af%e5%bc%95%e5%af%bc%e5%ae%89%e8%a3%85%e9%95%9c%e5%83%8f%e6%8c%87%e5%8d%97%e8%a6%86%e7%9b%96%e7%b3%bb%e7%bb%9f%e5%bc%95%e5%af%bc%e5%ae%89%e8%a3%85%e5%92%8c%e5%85%b7%e4%bd%93%e5%ba%94%e7%94%a8%e9%85%8d%e7%bd%ae%e5%ae%89%e8%a3%85%e9%85%8d%e7%bd%ae%e4%b8%ad%e9%81%87%e5%88%b0%e7%9a%84%e9%97%ae%e9%a2%98%e5%8f%af%e4%bb%a5%e5%9c%a8%e5%9b%9e%e5%a4%8d%e4%b8%ad%e6%8f%90%e5%87%ba%e6%9c%ac%e4%b8%bb%e9%a2%98%e5%a4%9a%e4%ba%ba%e5%8d%8f%e4%bd%9c%e6%8c%81%e7%bb%ad%e6%9b%b4%e6%96%b0%e5%8b%bf%e5%82%ac%e8%b0%a2%e8%b0%a2>#</a></h4><h2 id=一龙芯新固件环境下引导盘的制作>一、龙芯新固件环境下引导盘的制作
+<a class=anchor href=#%e4%b8%80%e9%be%99%e8%8a%af%e6%96%b0%e5%9b%ba%e4%bb%b6%e7%8e%af%e5%a2%83%e4%b8%8b%e5%bc%95%e5%af%bc%e7%9b%98%e7%9a%84%e5%88%b6%e4%bd%9c>#</a></h2><h3 id=安装镜像及软件仓库动态可在如下主题中找到>安装镜像及软件仓库动态，可在如下主题中找到
+<a class=anchor href=#%e5%ae%89%e8%a3%85%e9%95%9c%e5%83%8f%e5%8f%8a%e8%bd%af%e4%bb%b6%e4%bb%93%e5%ba%93%e5%8a%a8%e6%80%81%e5%8f%af%e5%9c%a8%e5%a6%82%e4%b8%8b%e4%b8%bb%e9%a2%98%e4%b8%ad%e6%89%be%e5%88%b0>#</a></h3><p><a href=https://bbs.loongarch.org/d/67-loongarchlinux-202203/30>https://bbs.loongarch.org/d/67-loongarchlinux-202203/30</a></p><h3 id=最新镜像下载随时更新>最新镜像下载，随时更新
+<a class=anchor href=#%e6%9c%80%e6%96%b0%e9%95%9c%e5%83%8f%e4%b8%8b%e8%bd%bd%e9%9a%8f%e6%97%b6%e6%9b%b4%e6%96%b0>#</a></h3><p><a href=https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.16.1-loongarch64.iso>https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.16.1-loongarch64.iso</a><br><a href=https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.22.1-loongarch64.iso>https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.22.1-loongarch64.iso</a></p><p><a href=https://mirrors.wsyu.edu.cn/loongarch/archlinux/iso/latest/archlinux-loong64.iso>https://mirrors.wsyu.edu.cn/loongarch/archlinux/iso/latest/archlinux-loong64.iso</a></p><h3 id=引导盘制作>引导盘制作
+<a class=anchor href=#%e5%bc%95%e5%af%bc%e7%9b%98%e5%88%b6%e4%bd%9c>#</a></h3><p>准备工作：一块确定状态良好的U盘，容量4G以上即可，制作引导U盘会擦除盘内原始数据，注意备份。<br>Linux环境下，插入U盘，系统会识别，不要做任何打开，加载等操作，具体设备名，可使用如下命令</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ls -la /dev/sd*      <span style=color:#75715e>##  U盘一般会识别成硬盘设备，*表示系统动态赋予的一个字符，用以区分不同硬盘</span>
+</span></span></code></pre></div><h4 id=linux环境下使用dd这个工具软件>Linux环境下，使用dd这个工具软件
+<a class=anchor href=#linux%e7%8e%af%e5%a2%83%e4%b8%8b%e4%bd%bf%e7%94%a8dd%e8%bf%99%e4%b8%aa%e5%b7%a5%e5%85%b7%e8%bd%af%e4%bb%b6>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-perl data-lang=perl><span style=display:flex><span>注意<span style=color:#960050;background-color:#1e0010>：</span>x是个字符<span style=color:#960050;background-color:#1e0010>，</span>用实际内容替换<span style=color:#960050;background-color:#1e0010>，</span>命令执行需要root用户权限
+</span></span><span style=display:flex><span>sudo dd <span style=color:#66d9ef>if</span><span style=color:#f92672>=</span>loongarchlinux<span style=color:#f92672>-</span>xxx<span style=color:#f92672>.</span>iso of<span style=color:#f92672>=</span><span style=color:#e6db74>/dev/s</span>dx  bs<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>M status<span style=color:#f92672>=</span>progress oflag<span style=color:#f92672>=</span>direct 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 命令执行完成后，建议运行下如下命令，确保U盘写入完整</span>
+</span></span><span style=display:flex><span>sudo sync 
+</span></span></code></pre></div><h2 id=二系统引导和安装前的检查>二、系统引导和安装前的检查
+<a class=anchor href=#%e4%ba%8c%e7%b3%bb%e7%bb%9f%e5%bc%95%e5%af%bc%e5%92%8c%e5%ae%89%e8%a3%85%e5%89%8d%e7%9a%84%e6%a3%80%e6%9f%a5>#</a></h2><p>使用新固件引导，有两个快捷键会经常用到：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-lua data-lang=lua><span style=display:flex><span>F2 <span style=color:#75715e>----- 激活固件配置界面，可在配置界面的选择引导设备</span>
+</span></span><span style=display:flex><span>F12 <span style=color:#75715e>----- 激活引导管理菜单，暂时不推荐使用这个方式选择引导设备</span>
+</span></span></code></pre></div><p><img src=https://bbs.loongarch.org/assets/files/2022-06-18/1655528601-696633-boot.jpg alt></p><p><strong>使用新固件引导系统，包括引导本主题中制作好的U盘和之前使用grub有区别，具体流程是：</strong></p><p>1、开机前把<strong>制作好的U盘</strong>插入机器USB接口，建议插入到<strong>主板提供的接口</strong>上，不建议使用前置接口，躲坑。<br>2、开机后出现龙芯logo，<strong>快速按F2</strong>，直到进入<strong>固件配置界面</strong><br>3、按如下图示操作：<br>&mldr;<br>TODO: 需要补充英文界面操作，或说明修改语言方法。</p><p>移动光标到 <strong>启动管理</strong> 项，回车：<br><img src=https://bbs.loongarch.org/assets/files/2022-06-18/1655534559-721436-dbd7f34c6e4fa17c59420e5fe2852376.jpg alt></p><p>进入 <strong>启动管理</strong> 菜单之后，将会看到一系列可选择的启动项，请在列表中找到 <strong>EFI System Partition</strong> 或 <strong>EFI System Partition 2</strong>，并选择此项启动：<br><img src=https://bbs.loongarch.org/assets/files/2022-06-18/1655534991-6743-9d13303388461bb11beb2e2ae202d27b.jpg alt></p><ol start=4><li>如果在 <strong>启动管理</strong> 界面选择对了正确的启动项，电脑将会从U盘启动，如果看到显示器上出现了以下黑色背景的菜单项，则说明从 U 盘引导成功。<br><img src=https://bbs.loongarch.org/assets/files/2022-06-18/1655533619-356520-2022-06-18-13-00.png alt></li></ol><p>在这个界面出现后，请选择带有 <strong>LoongArchLinux</strong> 的菜单项，一般使用第1个就可以，电脑将开始从U 盘上启动系统。</p><ol start=5><li>当看到如下界面出现时，说明已经进入了 ArchLinux 安装环境，可以开始安装系统了。<br><img src=https://bbs.loongarch.org/assets/files/2022-06-18/1655535657-243475-1d0feaab65ec1e6fce482435d488a229.jpg alt></li></ol><h2 id=三安装到机内硬盘>三、安装到机内硬盘
+<a class=anchor href=#%e4%b8%89%e5%ae%89%e8%a3%85%e5%88%b0%e6%9c%ba%e5%86%85%e7%a1%ac%e7%9b%98>#</a></h2><h3 id=分区和格式化>分区和格式化
+<a class=anchor href=#%e5%88%86%e5%8c%ba%e5%92%8c%e6%a0%bc%e5%bc%8f%e5%8c%96>#</a></h3><p>分区和挂载也可以参考
+<a href="https://lwqwq.com/posts/arch-linux-install-notes#:~:text=%E7%9A%84%E5%89%8D%E5%90%8E%E5%AF%B9%E6%AF%94-,%E5%88%86%E5%8C%BA%EF%BC%8C%E5%88%9B%E5%BB%BA%E5%AD%90%E5%8D%B7%EF%BC%8C%E6%88%96%E6%98%AF%E6%B8%85%E9%99%A4%E7%8E%B0%E6%9C%89%E7%9A%84%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F,-%E6%A0%B9%E6%8D%AE%E5%AE%89%E8%A3%85%E7%B3%BB%E7%BB%9F">凌莞的分区方案</a></p><h4 id=1磁盘分区操作>1、磁盘分区操作
+<a class=anchor href=#1%e7%a3%81%e7%9b%98%e5%88%86%e5%8c%ba%e6%93%8d%e4%bd%9c>#</a></h4><p>安装引导盘提供的分区工具比较多，常用的<strong>fdisk,cfdisk,gpart</strong>都有提供，推荐使用<strong>cfdisk</strong>，文本图形界面。</p><p><strong>重要</strong>：分区和格式化后，磁盘（机械硬盘、固态硬盘和U盘）原有信息会被清除，友情提示谨慎操作，一定要确定好使用哪块硬盘，要记住它的设备名，如果是sata接口，或者U盘，设备名一般是sda、sdb、sdc，固态情况要复杂些，但也很好辨认。本指南预设目标磁盘是 <strong>sdx</strong> ，<strong>x</strong> 字符根据实际需要选择！</p><p><strong>预备知识</strong>：sdx磁盘分区后，会生成 sdx1、sdx2 &mldr; sdxn，数字表示的是第几个分区。分区操作执行完成后，可执行如下命令：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ls -la /dev/sd*     <span style=color:#75715e># 命令会列出所有识别出来的硬盘设备，也可以验证分区是否成功</span>
+</span></span></code></pre></div><p><strong>分区的具体操作</strong>：</p><pre tabindex=0><code class=language-undefined data-lang=undefined>cfdisk  /dev/sdx     
+</code></pre><p>输入命令回车后，会出现一个全屏界面，里面显示的是<strong>分区列表</strong>，屏幕下面是几个<strong>按钮</strong><br><strong>具体操作</strong>，选择分区用上下箭头，用tab键和左右键可选择屏幕下面的按钮，回车确定<br><strong>提示</strong>：所有操作都会在 write 后生效，所以要再次检查下分区布局</p><p><img src=https://bbs.loongarch.org/assets/files/2022-06-18/1655538879-594777-cfdisk.jpg alt></p><h5 id=如果原来的分区都要放弃全盘切入到新固件新环境有个便捷的方法>如果原来的分区都要放弃，全盘切入到新固件新环境，有个便捷的方法
+<a class=anchor href=#%e5%a6%82%e6%9e%9c%e5%8e%9f%e6%9d%a5%e7%9a%84%e5%88%86%e5%8c%ba%e9%83%bd%e8%a6%81%e6%94%be%e5%bc%83%e5%85%a8%e7%9b%98%e5%88%87%e5%85%a5%e5%88%b0%e6%96%b0%e5%9b%ba%e4%bb%b6%e6%96%b0%e7%8e%af%e5%a2%83%e6%9c%89%e4%b8%aa%e4%be%bf%e6%8d%b7%e7%9a%84%e6%96%b9%e6%b3%95>#</a></h5><pre tabindex=0><code class=language-undefined data-lang=undefined>cfdisk -z /dev/sdx
+</code></pre><p><strong>它会清空你选定的设备的所有分区，一切从头来过</strong></p><p>分<strong>区的结果：</strong><br>一个EFI分区，多个linux分区<br>建议：EFI分区容量200M不少，1G也不多，创建这个分区时，在cfdisk里，可以指定分区类型，选第一个EFI即可<br>可以考虑建一个8G或16G的分区，后续把这个分区当交换分区用</p><h4 id=2分区格式化操作>2、分区格式化操作
+<a class=anchor href=#2%e5%88%86%e5%8c%ba%e6%a0%bc%e5%bc%8f%e5%8c%96%e6%93%8d%e4%bd%9c>#</a></h4><p>本例中使用的磁盘是sata接口的固态硬盘，所以系统识别为sdb，配置了6个分区，sdb1是efi分区，sdb3是要准备使用的root分区，sdb5准备当成交换分区，具体的格式化操作是：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mkfs.fat /dev/sdb1       <span style=color:#75715e># 将 ESP 分区格式化成 fat 文件格式，这是EFI分区的要求</span>
+</span></span><span style=display:flex><span>mkfs.ext4 /dev/sdb3   <span style=color:#75715e># 将根分区格式化成 ext4 文件格式，这样更加稳定简单</span>
+</span></span><span style=display:flex><span>mkswap /dev/sdb5      <span style=color:#75715e># 制作交换分区</span>
+</span></span><span style=display:flex><span>swapon /dev/sdb5       <span style=color:#75715e># 交换分区使能</span>
+</span></span></code></pre></div><h3 id=安装必要的基础组件>安装必要的基础组件
+<a class=anchor href=#%e5%ae%89%e8%a3%85%e5%bf%85%e8%a6%81%e7%9a%84%e5%9f%ba%e7%a1%80%e7%bb%84%e4%bb%b6>#</a></h3><h4 id=1分区挂载>1、分区挂载
+<a class=anchor href=#1%e5%88%86%e5%8c%ba%e6%8c%82%e8%bd%bd>#</a></h4><p>进行到这个步骤，算是完成了前期的准备工作，后续是要真正安装archlinux了，建议确认如下事项：</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pacman -Syy             <span style=color:#75715e># 检测下网络，并确认所需工具能正常使用</span>
+</span></span><span style=display:flex><span>lsblk                            <span style=color:#75715e># 检查下磁盘分区，是否有效</span>
+</span></span></code></pre></div><p>接下来要做的是把准备好的分区进行挂载，以便往磁盘里安装组件，一般情况下建议使用 /mnt 这个挂载点</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cd  /                                         <span style=color:#75715e># 到根目录</span>
+</span></span><span style=display:flex><span>mount /dev/sdb3  /mnt          <span style=color:#75715e># 把准备好的根分区，挂载到 /mnt 上  </span>
+</span></span><span style=display:flex><span>mkdir  /mnt/boot                    <span style=color:#75715e># 在/mnt目录下，建立一个boot目录，用于挂载efi分区</span>
+</span></span><span style=display:flex><span>mount  /dev/sdb1  /mnt/boot     <span style=color:#75715e># 挂载efi分区到 /mnt/boot上</span>
+</span></span></code></pre></div><p>可以运行如下命令确认下挂载情况</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>df         <span style=color:#75715e># 如果能看到   /mnt 对应 sdb3  以及  /mnt/boot 对应sdb1，说明挂载成功</span>
+</span></span></code></pre></div><h4 id=2使用pacstrap安装必须组件>2、使用pacstrap安装必须组件
+<a class=anchor href=#2%e4%bd%bf%e7%94%a8pacstrap%e5%ae%89%e8%a3%85%e5%bf%85%e9%a1%bb%e7%bb%84%e4%bb%b6>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span>pacstrap   /mnt   <span style=color:#66d9ef>base</span> <span style=color:#66d9ef>base</span>-devel  linux  linux-headers  linux-firmware vi nano dhcpcd networkmanager
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>这个命令会启动下载安装到硬盘过程，时间长短受网络状况影响，需要等待，这个时间可以边休憩边看下载和安装这两个过程是否出错中止，整个过程结束后，可输入如下命令，进入安装系统的配置阶段</span>
+</span></span></code></pre></div><h4 id=3生成新系统的fstab>3、生成新系统的fstab
+<a class=anchor href=#3%e7%94%9f%e6%88%90%e6%96%b0%e7%b3%bb%e7%bb%9f%e7%9a%84fstab>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>genfstab</span> <span style=color:#f92672>-</span><span style=color:#a6e22e>U</span> <span style=color:#f92672>/</span><span style=color:#a6e22e>mnt</span> <span style=color:#f92672>&gt;</span> <span style=color:#960050;background-color:#1e0010>/mnt/etc/fstab</span>
+</span></span></code></pre></div><h4 id=4进入新系统>4、进入新系统
+<a class=anchor href=#4%e8%bf%9b%e5%85%a5%e6%96%b0%e7%b3%bb%e7%bb%9f>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-perl data-lang=perl><span style=display:flex><span>arch<span style=color:#f92672>-</span>chroot   <span style=color:#f92672>/</span>mnt
+</span></span></code></pre></div><h2 id=四重启前要做的系统配置>四、重启前要做的系统配置
+<a class=anchor href=#%e5%9b%9b%e9%87%8d%e5%90%af%e5%89%8d%e8%a6%81%e5%81%9a%e7%9a%84%e7%b3%bb%e7%bb%9f%e9%85%8d%e7%bd%ae>#</a></h2><h3 id=设置时区和语言>设置时区和语言
+<a class=anchor href=#%e8%ae%be%e7%bd%ae%e6%97%b6%e5%8c%ba%e5%92%8c%e8%af%ad%e8%a8%80>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-perl data-lang=perl><span style=display:flex><span>ln <span style=color:#f92672>-</span>sf <span style=color:#e6db74>/usr/s</span>hare<span style=color:#e6db74>/zoneinfo/</span>Asia<span style=color:#e6db74>/Shanghai /</span>etc<span style=color:#f92672>/</span>localtime 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>hwclock <span style=color:#f92672>--</span>systohc
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>nano  <span style=color:#e6db74>/etc/</span>locale<span style=color:#f92672>.</span>gen
+</span></span><span style=display:flex><span><span style=color:#75715e># 如下两行前面的#号删除</span>
+</span></span><span style=display:flex><span>en_US<span style=color:#f92672>.</span>UTF<span style=color:#f92672>-</span><span style=color:#ae81ff>8</span> UTF<span style=color:#f92672>-</span><span style=color:#ae81ff>8</span>
+</span></span><span style=display:flex><span>zh_CN<span style=color:#f92672>.</span>UTF<span style=color:#f92672>-</span><span style=color:#ae81ff>8</span> UTF<span style=color:#f92672>-</span><span style=color:#ae81ff>8</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 保存退出</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这个命令会根据/etc/locale.gen的配置，生成需要的locale数据</span>
+</span></span><span style=display:flex><span>locale<span style=color:#f92672>-</span>gen
+</span></span></code></pre></div><p>下一步是设置整个系统的首选语言。如果你的设备是服务器之类，只会以 SSH 连接，那么可以设置一个全局中文语言</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>echo</span> <span style=color:#e6db74>&#39;LANG=zh_CN.UTF-8&#39;</span> <span style=color:#f92672>&gt;</span> <span style=color:#960050;background-color:#1e0010>/etc/locale.conf</span>
+</span></span></code></pre></div><p>如果这台机器一般接键盘鼠标，那么这里就设置英文 locale，不然 tty 会显示口口。进了图形界面（比如说 KDE）之后是可以在设置里把用户级别的语言设置成中文的</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-javascript data-lang=javascript><span style=display:flex><span><span style=color:#a6e22e>echo</span> <span style=color:#e6db74>&#39;LANG=en_US.UTF-8&#39;</span> <span style=color:#f92672>&gt;</span> <span style=color:#960050;background-color:#1e0010>/etc/locale.conf</span>
+</span></span></code></pre></div><h3 id=设置-hostname>设置 hostname
+<a class=anchor href=#%e8%ae%be%e7%bd%ae-hostname>#</a></h3><p>请把 <code>myarchlinux</code> 换成任何你喜欢的 hostname</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>echo <span style=color:#e6db74>&#39;myarchlinux&#39;</span> &gt; /etc/hostname
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>nano  /etc/hosts
+</span></span><span style=display:flex><span><span style=color:#75715e># 输入如下三行信息</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>127.0.0.1	localhost
+</span></span><span style=display:flex><span>::1		localhost
+</span></span><span style=display:flex><span>127.0.1.1	myarchlinux.localdomain myarchlinux
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 保存退出</span>
+</span></span></code></pre></div><h3 id=设置root用户密码超级管理员密码>设置root用户密码（超级管理员密码）
+<a class=anchor href=#%e8%ae%be%e7%bd%aeroot%e7%94%a8%e6%88%b7%e5%af%86%e7%a0%81%e8%b6%85%e7%ba%a7%e7%ae%a1%e7%90%86%e5%91%98%e5%af%86%e7%a0%81>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>passwd 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 因为当前用户为root，所以设置的是root用户密码，命令运行会提示输入两次密码，两次密码要保持一致。</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 因为系统当前并未设置密码规则，所以无相关限制，确保两次一样即可，此密码权限最高，注意保密。</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 设置好这个密码后，可以在任何用户环境下，通过如下命令进入超级管理员权限，比如安装软件，调整配置等</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>su 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 输入正确的root密码后，可使用超级管理员权限。</span>
+</span></span></code></pre></div><h3 id=建立一个普通用户>建立一个普通用户
+<a class=anchor href=#%e5%bb%ba%e7%ab%8b%e4%b8%80%e4%b8%aa%e6%99%ae%e9%80%9a%e7%94%a8%e6%88%b7>#</a></h3><p>这个用户用于日常登陆，无管理员权限，确保日常操作不会对系统文件和配置进行更改，组名这里建议使用 <code>wheel</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 添加新用户</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>useradd 用户名 -m -G 组名
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>例如： 
+</span></span><span style=display:flex><span>useradd   xyz -m -G wheel
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 设置用户登录密码</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>passwd 用户名
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>例如：
+</span></span><span style=display:flex><span> passwd xyz
+</span></span></code></pre></div><h3 id=安装并配置-sudo>安装并配置 sudo
+<a class=anchor href=#%e5%ae%89%e8%a3%85%e5%b9%b6%e9%85%8d%e7%bd%ae-sudo>#</a></h3><pre tabindex=0><code class=language-undefined data-lang=undefined>pacman -S sudo vi
+</code></pre><p>然后执行 <code>visudo</code> 并将 <code>%wheel</code> 前面的 <code>#</code> 去掉 (可按 x), 去掉之后按 <code>[esc]</code> (ESC 按键） 然后输入 <code>:wq</code> 保存退出。</p><p>现在所有在 wheel 组里面的用户就可以执行 <code>sudo</code> 命令了。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-sql data-lang=sql><span style=display:flex><span><span style=color:#f92672>##</span> Uncomment <span style=color:#66d9ef>to</span> allow members <span style=color:#66d9ef>of</span> <span style=color:#66d9ef>group</span> wheel <span style=color:#66d9ef>to</span> <span style=color:#66d9ef>execute</span> <span style=color:#66d9ef>any</span> command
+</span></span><span style=display:flex><span><span style=color:#f92672>%</span>wheel <span style=color:#66d9ef>ALL</span><span style=color:#f92672>=</span>(<span style=color:#66d9ef>ALL</span>:<span style=color:#66d9ef>ALL</span>) <span style=color:#66d9ef>ALL</span>
+</span></span></code></pre></div><h3 id=网络配置>网络配置
+<a class=anchor href=#%e7%bd%91%e7%bb%9c%e9%85%8d%e7%bd%ae>#</a></h3><h4 id=有线连接自动获取ip的配置两种方案任选其一推荐方案2进入桌面环境可以直接管理网络连接>有线连接，自动获取ip的配置，两种方案任选其一，推荐方案2，进入桌面环境，可以直接管理网络连接
+<a class=anchor href=#%e6%9c%89%e7%ba%bf%e8%bf%9e%e6%8e%a5%e8%87%aa%e5%8a%a8%e8%8e%b7%e5%8f%96ip%e7%9a%84%e9%85%8d%e7%bd%ae%e4%b8%a4%e7%a7%8d%e6%96%b9%e6%a1%88%e4%bb%bb%e9%80%89%e5%85%b6%e4%b8%80%e6%8e%a8%e8%8d%90%e6%96%b9%e6%a1%882%e8%bf%9b%e5%85%a5%e6%a1%8c%e9%9d%a2%e7%8e%af%e5%a2%83%e5%8f%af%e4%bb%a5%e7%9b%b4%e6%8e%a5%e7%ae%a1%e7%90%86%e7%bd%91%e7%bb%9c%e8%bf%9e%e6%8e%a5>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>方案1：
+</span></span><span style=display:flex><span>systemctl enable dhcpcd
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>方案2：
+</span></span><span style=display:flex><span>systemctl enable NetworkManager
+</span></span></code></pre></div><h3 id=引导配置>引导配置
+<a class=anchor href=#%e5%bc%95%e5%af%bc%e9%85%8d%e7%bd%ae>#</a></h3><p>这一步的配置影响到是否可以正确引导安装完成的基本系统，所以每一步都需要仔细确认：</p><p>系统引导有多个方案配置，根据需要进行选择！</p><h4 id=systemd-boot-方案>systemd-boot 方案
+<a class=anchor href=#systemd-boot-%e6%96%b9%e6%a1%88>#</a></h4><p>龙芯推出的新固件新内核，一个突出的特性是内核支持EFI引导，这让固件直接加载linux内核成为可能。和Grub加载内核相比，系统引导所需要的时间有所缩短，改善了用户体验。具体信息详见：<br><a href=https://bbs.loongarch.org/d/89>如何把你的系统从旧世界迁移到新世界</a></p><p>指南推荐使用 systemd 内置的 systemd-boot 方案，具体配置方法如下：</p><p>在配置之前，可以使用如下命令确认下分区方案以及挂载情况</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>df         <span style=color:#75715e># 如果能看到   /mnt 对应 sdb3  以及  /mnt/boot 对应sdb1，说明挂载成功</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 需要说明的是，接下来的操作主要影响 /mnt/boot，也就是EFI分区</span>
+</span></span></code></pre></div><p>1、 安装引导管理程序</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 如下两个命令，把固件引导系统所需二进制文件和配置文件拷贝到/boot，也就是EFI分区</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 之前安装内核时，内核文件也安装在这个分区上</span>
+</span></span><span style=display:flex><span>bootctl --path<span style=color:#f92672>=</span>/boot install
+</span></span><span style=display:flex><span>bootctl update
+</span></span></code></pre></div><p>2、配置引导时传递给内核的参数</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 进入引导配置入口目录</span>
+</span></span><span style=display:flex><span>cd  /boot/loader/entries
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 新建一个引导配置文件</span>
+</span></span><span style=display:flex><span>nano arch.conf
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 把如下内容输入到arch.conf文件中</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>title	ArchLinux
+</span></span><span style=display:flex><span>linux	/vmlinuz-linux
+</span></span><span style=display:flex><span>initrd	/initramfs-linux-fallback.img
+</span></span><span style=display:flex><span>options	root<span style=color:#f92672>=</span>/dev/sdb3 rw loglevel<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span> 
+</span></span></code></pre></div><p><strong>注意：root=/dev/sdb3 是指定根分区的设备名，根据实际情况进行更改，也可以使用uuid名</strong></p><p>3、仔细校对后保存，重启计算机</p><h4 id=grub-方案>grub 方案
+<a class=anchor href=#grub-%e6%96%b9%e6%a1%88>#</a></h4><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># pacman -S grub</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># grub-install /dev/sda   (把sda换成你安装archlinux的硬盘名）</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># grub-mkconfig /boot/grub/grub.cfg</span>
+</span></span></code></pre></div><p>重启电脑后，在EFI启动选项里面选择arch即可。</p><h2 id=五本机硬盘引导确认archlinux基本系统安装成功>五、本机硬盘引导，确认archlinux基本系统安装成功
+<a class=anchor href=#%e4%ba%94%e6%9c%ac%e6%9c%ba%e7%a1%ac%e7%9b%98%e5%bc%95%e5%af%bc%e7%a1%ae%e8%ae%a4archlinux%e5%9f%ba%e6%9c%ac%e7%b3%bb%e7%bb%9f%e5%ae%89%e8%a3%85%e6%88%90%e5%8a%9f>#</a></h2><p>经过上述步骤设置，重启计算机后，可自动加载内核进入archlinux命令行界面<br>为了便于后续的图形界面安装，使用root用户，登陆进命令行界面，需要做如下检查：</p><p>1、检查网络连接情况，运行如下命令</p><pre tabindex=0><code class=language-undefined data-lang=undefined>pacman -Syy
+</code></pre><p>此命令可测试网络连通情况，也可进一步确认系统的pacman配置是否正确。</p><p>2、安装一些工具软件，对系统信息进行基础检测</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装辅助工具软件包</span>
+</span></span><span style=display:flex><span>pacman -S neofetch efivar 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 查看系统信息，注意查看gpu是否正确识别</span>
+</span></span><span style=display:flex><span>neofetch
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 查看efi固件的基本变量</span>
+</span></span><span style=display:flex><span>efivar
+</span></span></code></pre></div><p>3、添加仓库</p><p>建议添加下面所有仓库，不要为了省事只添加一部分。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-csharp data-lang=csharp><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#960050;background-color:#1e0010>编辑文件</span>
+</span></span><span style=display:flex><span>nano /etc/pacman.conf
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#960050;background-color:#1e0010>查看如下内容，可根据需要进行修改定制</span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>#</span> <span style=color:#960050;background-color:#1e0010>行首加#号，表示不使用这个库</span>
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>[testing]</span>
+</span></span><span style=display:flex><span>Include = /etc/pacman.d/mirrorlist
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>[core]</span>
+</span></span><span style=display:flex><span>Include = /etc/pacman.d/mirrorlist
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>[extra]</span>
+</span></span><span style=display:flex><span>Include = /etc/pacman.d/mirrorlist
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>#</span>[community-testing]
+</span></span><span style=display:flex><span><span style=color:#960050;background-color:#1e0010>#</span>Include = /etc/pacman.d/mirrorlist
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>[community]</span>
+</span></span><span style=display:flex><span>Include = /etc/pacman.d/mirrorlist
+</span></span><span style=display:flex><span><span style=color:#a6e22e>
+</span></span></span><span style=display:flex><span><span style=color:#a6e22e>[aur]</span>
+</span></span><span style=display:flex><span>Include = /etc/pacman.d/mirrorlist
+</span></span></code></pre></div><p>编辑完成后，再次运行如下命令</p><pre tabindex=0><code class=language-undefined data-lang=undefined>pacman -Syy
+</code></pre><p>可以使用最新的库设置，下载所有生效库的软件包数据库</p><h2 id=六图形界面组件和程序安装配置>六、图形界面组件和程序安装配置
+<a class=anchor href=#%e5%85%ad%e5%9b%be%e5%bd%a2%e7%95%8c%e9%9d%a2%e7%bb%84%e4%bb%b6%e5%92%8c%e7%a8%8b%e5%ba%8f%e5%ae%89%e8%a3%85%e9%85%8d%e7%bd%ae>#</a></h2><p><strong>1、基本图形环境</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装基本图形系统 xorg</span>
+</span></span><span style=display:flex><span>pacman -S --needed xorg 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 建议确认下如下软件包是否安装</span>
+</span></span><span style=display:flex><span>xorg-server xf86-video-amdgpu xf86-video-ati xf86-video-loongson
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装 gnome 桌面环境</span>
+</span></span><span style=display:flex><span>pacman -S --needed gnome gdm 
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># gdm是 gnome 的图形登陆管理器，若准备系统引导直接进入gdm登陆，输入如下命令：</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>systemctl enable gdm
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 也可以不重启系统测试下gdm是否正常，可执行如下命令：</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>systemctl start gdm
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>**2、图形登录管理器的配置**
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 使用lightdm替换gdm，可以进行如下操作：</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>pacman -S --needed lightdm lightdm-gtk-greeter lightdm-gtk-greeter-settings lightdm-webkit2-greeter
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>systemctl disable gdm    <span style=color:#75715e># 取消gdm</span>
+</span></span><span style=display:flex><span>systemctl enable lightdm
+</span></span></code></pre></div><p><strong>3、安装更多的桌面环境</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 安装 mate 桌面环境</span>
+</span></span><span style=display:flex><span>pacman -S --needed mate
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装 xfce4 桌面环境</span>
+</span></span><span style=display:flex><span>pacman -S --needed xfce4  xfce4-goodies
+</span></span></code></pre></div><p><strong>4、中文输入和显示</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-shell data-lang=shell><span style=display:flex><span><span style=color:#75715e># 添加中文字体</span>
+</span></span><span style=display:flex><span>pacman -S wqy-bitmapfont wqy-microhei wqy-microhei-lite wqy-zenhei
+</span></span><span style=display:flex><span><span style=color:#75715e># 重建字体缓存，安装字体即刻生效</span>
+</span></span><span style=display:flex><span>fc-cache -fv
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 安装输入法，使用拼音输入</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 方案1：使用ibus输入法引擎</span>
+</span></span><span style=display:flex><span>pacman -S ibus ibus-libpinyin pinyin-data
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 方案2：使用fcitx输入法引擎</span>
+</span></span><span style=display:flex><span>pacman -S --needed fcitx5 fcitx5-chinese-addons 
+</span></span><span style=display:flex><span><span style=color:#75715e>## fcitx 的一些词库</span>
+</span></span><span style=display:flex><span>pacman -S fcitx5-pinyin-moegirl fcitx5-pinyin-zhwiki
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 中文处理的一些配置</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 在桌面环境启用输入法，最直观的办法是启动对应的配置界面</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 这样输入法引擎和输入法都可以进行自由切换</span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 方法是双击对应的图标即可，按界面内容添加拼音即刻使用</span>
+</span></span></code></pre></div><p><strong>已xfce桌面环境，启动 ibus 输入法引擎为例：</strong></p><p><strong>5、常用的应用软件</strong></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e># 媒体播放，桌面环境已有播放软件，但一些解码组件需要单独安装</span>
+</span></span><span style=display:flex><span>pacman -S  parole  gst-libav  x264 libva-vdpau-driver mesa-vdpau libvdpau-va-gl vdpauinfo ffmpeg
+</span></span><span style=display:flex><span>pacman -S libva-utils libva libva-mesa-driver libva1
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 可使用下面两个工具，查看下解码器支持信息</span>
+</span></span><span style=display:flex><span>vainfo
+</span></span><span style=display:flex><span>vdpauinfo
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 浏览器</span>
+</span></span><span style=display:flex><span>pacman -S firefox
+</span></span><span style=display:flex><span>pacman -S chromium
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e># 虚拟机软件</span>
+</span></span><span style=display:flex><span>pacman -S qemu-full virt-manager
+</span></span><span style=display:flex><span><span style=color:#75715e># 文本编辑器</span>
+</span></span><span style=display:flex><span>pacman -S --needed kate
+</span></span></code></pre></div></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/LoongUser/loonguser.github.io/commit/ff538dd321889ee276c2f078de3cfd5232ab39a2 title='最后修改者 AydenMeng | February 6, 2024' target=_blank rel=noopener><img src=/svg/calendar.svg class=book-icon alt=Calendar>
+<span>February 6, 2024</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><ul><li></li></ul></li><li><a href=#一龙芯新固件环境下引导盘的制作>一、龙芯新固件环境下引导盘的制作</a><ul><li><a href=#安装镜像及软件仓库动态可在如下主题中找到>安装镜像及软件仓库动态，可在如下主题中找到</a></li><li><a href=#最新镜像下载随时更新>最新镜像下载，随时更新</a></li><li><a href=#引导盘制作>引导盘制作</a></li></ul></li><li><a href=#二系统引导和安装前的检查>二、系统引导和安装前的检查</a></li><li><a href=#三安装到机内硬盘>三、安装到机内硬盘</a><ul><li><a href=#分区和格式化>分区和格式化</a></li><li><a href=#安装必要的基础组件>安装必要的基础组件</a></li></ul></li><li><a href=#四重启前要做的系统配置>四、重启前要做的系统配置</a><ul><li><a href=#设置时区和语言>设置时区和语言</a></li><li><a href=#设置-hostname>设置 hostname</a></li><li><a href=#设置root用户密码超级管理员密码>设置root用户密码（超级管理员密码）</a></li><li><a href=#建立一个普通用户>建立一个普通用户</a></li><li><a href=#安装并配置-sudo>安装并配置 sudo</a></li><li><a href=#网络配置>网络配置</a></li><li><a href=#引导配置>引导配置</a></li></ul></li><li><a href=#五本机硬盘引导确认archlinux基本系统安装成功>五、本机硬盘引导，确认archlinux基本系统安装成功</a></li><li><a href=#六图形界面组件和程序安装配置>六、图形界面组件和程序安装配置</a></li></ul></li></ul></nav></div></aside></main></body></html>
