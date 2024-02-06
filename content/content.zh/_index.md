@@ -10,6 +10,14 @@ title: "龙芯玩机指南"
 
 本仓库旨在完成一份龙芯机器的使用指南, 鉴于龙芯用户常常使用Linux, 也希望此仓库能够成为Linux用户可以借鉴的好仓库.
 
+## 投稿及反馈
+
+如果你有想投稿或者想知道的内容, 可以给我们发邮件, 也可以直接给本仓库贡献代码:
+
+- <aydenmeng@yeah.net>
+- <dongyan0314@gmail.com>
+- [https://github.com/LoongUser/loonguser.github.io.git](https://github.com/LoongUser/loonguser.github.io.git)
+
 ## 下载地址
 ### 手册
 | 手册 | 地址 |
@@ -53,4 +61,3 @@ title: "龙芯玩机指南"
 |龙芯俱乐部:|[http://www.openloongson.org/kl/](http://www.openloongson.org/kl/)|
 |LoongArch开放社区(武老师作品)|[https://loongarch.dev/zh-cn/](https://loongarch.dev/zh-cn/)|
 |loonguser(本站)|[https://loonguser.github.io/](https://loonguser.github.io/)<br>[https://loonguser.gitee.io/](https://loonguser.gitee.io/)|
-
