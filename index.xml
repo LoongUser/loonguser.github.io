@@ -11,7 +11,9 @@ git clone https://gitlab.com/qemu-project/qemu.git cd qemu mkdir build4la cd bui
 -m 4G: 指定为虚拟机分配4GB内存（4096MB）。</description></item><item><title>从UEFI如何启动到系统</title><link>https://loonguser.github.io/firmware/uefi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/uefi/</guid><description>UEFI须知 # 1. 进入UEFI setup界面 # 在串口或者显示界面下显示BDS字样的时候(如下图), 稍微按按上下键即可进入Setup界面 2. Setup界面 # 无论是Intel还是loongson, BIOS下都有设置的接口, PMON也有, 无非是显示样式差异, 原理相通. Loongson的UEFI界面如下图
 不同的条目, 用于设置不同的功能. 其中普通用户通常只需要进入BootManager界面选择相应的启动目标即可. 3. BootManager界面 # 在下图区域1中为条目名称, 区域2中为UEFI下解析的路径名(有点专业,不用理解), 总之, 左边看不懂时就看右边, 找相关的关键字, 比如下图, 左侧是设备名, 不太能看出是什么设备, 右侧则有Sata字样可以识别. 4. Shell下操作 # 通常, 正常情况下, 系统直接启动, 用户无法感知上述界面的存在, 但当出现一些问题时, 我们可能需要进入Shell下进行操作, 如上图中的第二个条目, 选中后回车进入下图界面: 4.1. 显示启动设备 # 正常情况下， 进入Shell后仍然会提示启动相关的设备, 如上图, 倘若由于操作过多, 或者显示bug等, 我们还想再次看到相关的显示, 则需要通过map命令再次显示，如下图：
 可以看到, 其实和默认进入Shell的打印是一样的, 不过为了防止打印被冲刷掉, 还是要会一下.
-4.2. 进入设备及查看文件 # 看上图, 图中黄色字体, FS0: , BLK0:等, 可以理解为不同设备的重命名, 其中FS开头的标识表示该设备的文件系统可以识别, BLK开头的表示表示该设备不存在文件系统, 或者文件系统不可识别. 总之对我们有意义的就只有FS开头的标识.</description></item><item><title>龙芯lajtag常用技巧</title><link>https://loonguser.github.io/applications/ejtag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/ejtag/</guid><description>cd /tmp/ejtag-debug/ ./la_ejtag_debug_gpio -t source configs/configs.ls3a5000 cpus 查看pc
+4.2. 进入设备及查看文件 # 看上图, 图中黄色字体, FS0: , BLK0:等, 可以理解为不同设备的重命名, 其中FS开头的标识表示该设备的文件系统可以识别, BLK开头的表示表示该设备不存在文件系统, 或者文件系统不可识别. 总之对我们有意义的就只有FS开头的标识.</description></item><item><title>龙芯lajtag常用技巧</title><link>https://loonguser.github.io/applications/ejtag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/ejtag/</guid><description>使用串口时:
+cd /tmp/ejtag-debug/ ./la_ejtag_debug_gpio -t source configs/configs.ls3a5000 在本机上运行时:
+cd /path/ejtag-debug/ ./la_ejtag_debug_usb -t source configs/configs.ls3a5000 cpus 查看pc
 set 查看通用寄存器及部分csr寄存器, 此时pc停在set时运行的地址.
 cont 从set处继续运行
 hb addr; cont 断点到addr处, 等待触发断点.
@@ -22,10 +24,7 @@ watch data mask; cont 检测通用寄存器, 当通用寄存器中和data一致�
 d1/d4/d8 addr length 按照1字节, 4字节, 8字节, 依次dump length个addr寄存器中的值.
 m1/m4/m8 addr data1 data2&amp;hellip; 按照1字节, 4字节, 8字节, 依次将dataX 写入addr地址.
 disas addr length 反汇编addr处开始length长的内容.
-csrs d8 num length 从第num个csr寄存器连续读出length个值.
-csrs m8 num data 向第num个csr寄存器写入data.
-gdbserver
-spi_program_flash</description></item><item><title>内核编译</title><link>https://loonguser.github.io/system/kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/kernel/</guid><description>龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
+csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item><item><title>内核编译</title><link>https://loonguser.github.io/system/kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/kernel/</guid><description>龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
 vmlinux+vmlinuz libmodules RamDisk_initrd 准备阶段 # 下面以LoongArch架构的编译为例. 编译器采用Gcc交叉编译LoongArch版本
 编译器版本 : loongarch64-linux-gnu-gcc-8.3.0 配置文件 采用龙芯默认配置: cp arch/loongarch/configs/loongson3_defconfig .config 开始编译 # vmlinux/vmlinuz
 执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-(此为编译器路径 which gcc) menuconfig 进入图形化配置界面,开关相关功能,我们直接Esc退出.

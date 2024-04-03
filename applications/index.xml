@@ -4,7 +4,9 @@
 qemu安装 # # Arch系 pacman -S qemu-system-loongarch64 # Debian系 apt install qemu-system-loongarch64 # Fedora系 yum install qemu-system-loongarch64 自己编译安装:
 git clone https://gitlab.com/qemu-project/qemu.git cd qemu mkdir build4la cd build4la ../configure --target-list=loongarch64-softmmu --enable-kvm --disable-werror --enable-vnc --enable-debug --enable-gdb make -j 8 qemu使用 # qemu启动固件: # ./qemu-system-loongarch64 -m 4G -smp 1 --cpu la464 --machine virt -bios edk2-loongarch64-code.fd -display none --serial stdio 参数说明:
 ./qemu-system-loongarch64: 这是QEMU模拟器的可执行文件，用于模拟LoongArch64架构的系统。
--m 4G: 指定为虚拟机分配4GB内存（4096MB）。</description></item><item><title>龙芯lajtag常用技巧</title><link>https://loonguser.github.io/applications/ejtag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/ejtag/</guid><description>cd /tmp/ejtag-debug/ ./la_ejtag_debug_gpio -t source configs/configs.ls3a5000 cpus 查看pc
+-m 4G: 指定为虚拟机分配4GB内存（4096MB）。</description></item><item><title>龙芯lajtag常用技巧</title><link>https://loonguser.github.io/applications/ejtag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/ejtag/</guid><description>使用串口时:
+cd /tmp/ejtag-debug/ ./la_ejtag_debug_gpio -t source configs/configs.ls3a5000 在本机上运行时:
+cd /path/ejtag-debug/ ./la_ejtag_debug_usb -t source configs/configs.ls3a5000 cpus 查看pc
 set 查看通用寄存器及部分csr寄存器, 此时pc停在set时运行的地址.
 cont 从set处继续运行
 hb addr; cont 断点到addr处, 等待触发断点.
@@ -15,7 +17,4 @@ watch data mask; cont 检测通用寄存器, 当通用寄存器中和data一致�
 d1/d4/d8 addr length 按照1字节, 4字节, 8字节, 依次dump length个addr寄存器中的值.
 m1/m4/m8 addr data1 data2&amp;hellip; 按照1字节, 4字节, 8字节, 依次将dataX 写入addr地址.
 disas addr length 反汇编addr处开始length长的内容.
-csrs d8 num length 从第num个csr寄存器连续读出length个值.
-csrs m8 num data 向第num个csr寄存器写入data.
-gdbserver
-spi_program_flash</description></item></channel></rss>
+csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item></channel></rss>
