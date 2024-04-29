@@ -25,6 +25,12 @@ yum update
 pacman -Syu
 ```
 
+安同 OS (AOSC OS)：
+
+```
+oma upgrade
+```
+
 ## 2. 单独更新内核
 
 ### 2.1 更新自己编译的内核
