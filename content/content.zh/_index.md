@@ -40,9 +40,10 @@ title: "龙芯玩机指南"
 |loongnix|[http://pkg.loongnix.cn](http://pkg.loongnix.cn)|
 |archlinux|[https://mirrors.wsyu.edu.cn/](https://mirrors.wsyu.edu.cn/)<br>[https://github.com/loongarchlinux/](https://github.com/loongarchlinux/)|
 |龙芯软件发布|[http://www.loongnix.cn/zh/loongnix/](http://www.loongnix.cn/zh/loongnix/)|
+|安同 OS (AOSC OS)|[https://aosc.io/zh-cn/](https://aosc.io/zh-cn/)|
 |deepin深度系统预览版|[https://ci.deepin.com/repo/deepin/deepin-ports/cdimage/](https://ci.deepin.com/repo/deepin/deepin-ports/cdimage/)|
 |内网ftp源(旧)|[http://ftp.loongnix.org/](http://ftp.loongnix.org/)|
- 
+
 ### 代码
 
 | 代码 | 地址 |
