@@ -1,0 +1,173 @@
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="文章来源: http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html
+自2022/11/16日起桌面版软件源的key到期，如本地遇到key的问题，可依照下列方法对Key授权进行升级即可：
+wget http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb
+dpkg -i debian-archive-keyring_2019.1.lnd.2_all.deb
+apt-key add /usr/share/keyrings/debian-archive-buster-loongarch64-stable.gpg
+1. loongnix桌面系统源 # http://pkg.loongnix.cn/loongnix/ 2. 开启sshd服务 # Loongnixi桌面系统默认关闭sshd服务，开启方法:
+loongson@loongson-pc:~$ sudo apt install openssh-server loongson@loongson-pc:~$ systemctl start ssh loongson@loongson-pc:~$ systemctl status ssh 3. 安装auditd软件包 # Loongnix系统默认不集成auditd软件包，若使用过程中用到审计功能，需手动安装auditd软件包:
+loongson@loongson-pc:~$ sudo apt install auditd && systemctl start auditd && systemctl status auditd 4. 制作rootfs文件系统 # 已安装debootstrap的前提下，使用以下方法制作rootfs文件系统：
+debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/ chroot iso debootstrap/debootstrap --second-stage cd iso chroot ."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/system/Loongnix_FAQ/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="Loongnix_FAQ"><meta property="og:description" content="文章来源: http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html
+自2022/11/16日起桌面版软件源的key到期，如本地遇到key的问题，可依照下列方法对Key授权进行升级即可：
+wget http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb
+dpkg -i debian-archive-keyring_2019.1.lnd.2_all.deb
+apt-key add /usr/share/keyrings/debian-archive-buster-loongarch64-stable.gpg
+1. loongnix桌面系统源 # http://pkg.loongnix.cn/loongnix/ 2. 开启sshd服务 # Loongnixi桌面系统默认关闭sshd服务，开启方法:
+loongson@loongson-pc:~$ sudo apt install openssh-server loongson@loongson-pc:~$ systemctl start ssh loongson@loongson-pc:~$ systemctl status ssh 3. 安装auditd软件包 # Loongnix系统默认不集成auditd软件包，若使用过程中用到审计功能，需手动安装auditd软件包:
+loongson@loongson-pc:~$ sudo apt install auditd && systemctl start auditd && systemctl status auditd 4. 制作rootfs文件系统 # 已安装debootstrap的前提下，使用以下方法制作rootfs文件系统：
+debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/ chroot iso debootstrap/debootstrap --second-stage cd iso chroot ."><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="system"><meta property="article:modified_time" content="2024-06-22T17:38:39+08:00"><title>Loongnix_FAQ | 龙芯玩机指南</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.d899dd5b7a89f065d83e18b4d8ec773171c3810a8eaca0aaff5b8f950a9eb2e8.js integrity="sha256-2JndW3qJ8GXYPhi02Ox3MXHDgQqOrKCq/1uPlQqesug=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
+<label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
+Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/firmware/>如何更新固件</a></li><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/gen_sys_file/>生成系统下的一些文件</a></li><li><a href=/system/install_archlinux/>新世界Archlinux系统安装</a></li><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/update_system/>如何更新系统</a></li><li><a href=/system/build_openharmony_for_2k500/>龙芯2K500先锋派OpenHarmony构建指北</a></li><li><a href=/system/Loongnix_FAQ/ class=active>Loongnix_FAQ</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li><li><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></li></ul></li><li><p><a href=/system/><strong>内核</strong></a></p><ul><li><a href=/system/kernel/>内核编译</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
+</label><strong>Loongnix_FAQ</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#1-loongnix桌面系统源>1. loongnix桌面系统源</a></li><li><a href=#2-开启sshd服务>2. 开启sshd服务</a></li><li><a href=#3-安装auditd软件包>3. 安装auditd软件包</a></li><li><a href=#4-制作rootfs文件系统>4. 制作rootfs文件系统</a></li><li><a href=#5-锁定屏幕界面无法点击功能按键>5. 锁定屏幕界面无法点击功能按键</a></li><li><a href=#6-密码复杂度要求>6. 密码复杂度要求</a></li><li><a href=#7-home键不能调用开始菜单>7. home键不能调用开始菜单</a></li><li><a href=#8-运行命令vulkaninfo会报错>8. 运行命令vulkaninfo会报错</a></li><li><a href=#9-使用npm安装软件包>9. 使用npm安装软件包</a></li><li><a href=#10-图形环境下修改系统语言>10. 图形环境下修改系统语言</a></li><li><a href=#11-unit-firewalldservice-could-not-be-found>11. unit-firewalldservice-could-not-be-found</a></li><li><a href=#12-配置软件包仓库>12. 配置软件包仓库</a></li><li><a href=#13-查看系统版本信息>13. 查看系统版本信息</a></li><li><a href=#14-查看系统已安装软件包>14. 查看系统已安装软件包</a></li><li><a href=#15-查询软件包文件列表>15. 查询软件包文件列表</a></li><li><a href=#16-编译安装非loongnix程序>16. 编译安装非loongnix程序</a></li><li><a href=#17-loongnix-20loongarch64镜像默认密码>17. loongnix-20loongarch64镜像默认密码</a></li><li><a href=#18-升级最新系统版本>18. 升级最新系统版本</a></li><li><a href=#19-切换xfce主题>19. 切换xfce主题</a></li><li><a href=#20-使用init3或telinit-3黑屏>20. 使用init3或telinit-3黑屏</a></li><li><a href=#21-u盘格式化为ext4后宿主为root而当前用户>21. u盘格式化为ext4后宿主为root而当前用户</a></li><li><a href=#22-命令行模式中文显示乱码>22. 命令行模式中文显示乱码</a></li><li><a href=#23-软件光标切换成硬件光标>23. 软件光标切换成硬件光标</a></li><li><a href=#24-桌面系统手动分区注意事项>24. 桌面系统手动分区注意事项</a></li><li><a href=#25-igbuioko模块的编译方法>25. igbuioko模块的编译方法</a></li><li><a href=#26-查看内存页大小>26. 查看内存页大小</a></li><li><a href=#27-默认软件源仓库>27. 默认软件源仓库</a></li><li><a href=#28-查看内核和编译器版本>28. 查看内核和编译器版本</a></li><li><a href=#29-取消密码复杂度设置>29. 取消密码复杂度设置</a></li><li><a href=#30-在mate-terminal终端配置软件包源代码的源地址>30. 在mate-terminal终端配置软件包源代码的源地址</a></li><li><a href=#31-loongnix桌面系统获取源代码>31. loongnix桌面系统获取源代码</a></li><li><a href=#32-loongnix-201livecdcartoon系统升级后桌面无图标显示>32. loongnix-201livecdcartoon系统升级后桌面无图标显示</a></li><li><a href=#33-kpatch-升级到097后生成的模块文件运行时报错>33. kpatch-升级到097后生成的模块文件运行时报错</a></li></ul></li></ul></nav></aside></header><article class=markdown><blockquote><p>文章来源: <code>http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html</code></p></blockquote><blockquote><p>自2022/11/16日起桌面版软件源的key到期，如本地遇到key的问题，可依照下列方法对Key授权进行升级即可：</p><p>wget
+<a href=http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb>http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb</a></p><p>dpkg -i debian-archive-keyring_2019.1.lnd.2_all.deb</p><p>apt-key add /usr/share/keyrings/debian-archive-buster-loongarch64-stable.gpg</p></blockquote><h2 id=1-loongnix桌面系统源>1. loongnix桌面系统源
+<a class=anchor href=#1-loongnix%e6%a1%8c%e9%9d%a2%e7%b3%bb%e7%bb%9f%e6%ba%90>#</a></h2><pre tabindex=0><code class=language-auto data-lang=auto>http://pkg.loongnix.cn/loongnix/
+</code></pre><h2 id=2-开启sshd服务>2. 开启sshd服务
+<a class=anchor href=#2-%e5%bc%80%e5%90%afsshd%e6%9c%8d%e5%8a%a1>#</a></h2><p>Loongnixi桌面系统默认关闭sshd服务，开启方法:</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo apt install openssh-server
+loongson@loongson-pc:~$ systemctl start ssh
+loongson@loongson-pc:~$ systemctl status ssh
+</code></pre><h2 id=3-安装auditd软件包>3. 安装auditd软件包
+<a class=anchor href=#3-%e5%ae%89%e8%a3%85auditd%e8%bd%af%e4%bb%b6%e5%8c%85>#</a></h2><p>Loongnix系统默认不集成auditd软件包，若使用过程中用到审计功能，需手动安装auditd软件包:</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo apt install auditd &amp;&amp; systemctl start auditd &amp;&amp; systemctl status auditd
+</code></pre><h2 id=4-制作rootfs文件系统>4. 制作rootfs文件系统
+<a class=anchor href=#4-%e5%88%b6%e4%bd%9crootfs%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f>#</a></h2><p>已安装debootstrap的前提下，使用以下方法制作rootfs文件系统：</p><pre tabindex=0><code class=language-auto data-lang=auto>debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/
+chroot iso debootstrap/debootstrap --second-stage
+cd iso
+chroot .
+</code></pre><p>执行debootstrap操作时，如果遇到下述错误现象：</p><pre tabindex=0><code class=language-auto data-lang=auto>root@loongson-pc:/home# debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu iso http://10.2.5.28/os/loongnix-desktop-la64-20/debian
+E: No such script: /usr/share/debootstrap/scripts/DaoXiangHu
+</code></pre><p>解决方法是：</p><pre tabindex=0><code class=language-auto data-lang=auto>ln -s /usr/share/debootstrap/scripts/sid /usr/share/debootstrap/scripts/DaoXiangHu
+</code></pre><h2 id=5-锁定屏幕界面无法点击功能按键>5. 锁定屏幕界面无法点击功能按键
+<a class=anchor href=#5-%e9%94%81%e5%ae%9a%e5%b1%8f%e5%b9%95%e7%95%8c%e9%9d%a2%e6%97%a0%e6%b3%95%e7%82%b9%e5%87%bb%e5%8a%9f%e8%83%bd%e6%8c%89%e9%94%ae>#</a></h2><p>锁定屏幕界面无法点击"切换用户、解锁、留言等"功能按键,此时,可以按一下ESC键，留言、解锁、取消等按键即可点击。</p><h2 id=6-密码复杂度要求>6. 密码复杂度要求
+<a class=anchor href=#6-%e5%af%86%e7%a0%81%e5%a4%8d%e6%9d%82%e5%ba%a6%e8%a6%81%e6%b1%82>#</a></h2><p>修改普通用户密码或者root密码时，若密码复杂度较低，会报告“无效的密码： 没有足够的字符分类”、“无效的密码： 太短了”等提示。 出于安全考虑，Loongnix系统中提高了密码设置规则的复杂度，用户在设置密码时需包含四类字符(数字，小写字母，大写字母，特殊符号)且密码长度不低于8位。</p><h2 id=7-home键不能调用开始菜单>7. home键不能调用开始菜单
+<a class=anchor href=#7-home%e9%94%ae%e4%b8%8d%e8%83%bd%e8%b0%83%e7%94%a8%e5%bc%80%e5%a7%8b%e8%8f%9c%e5%8d%95>#</a></h2><p>Loongnix系统使用mate桌面，如果要打开开始菜单可以使用Alt+F1的快捷键。</p><h2 id=8-运行命令vulkaninfo会报错>8. 运行命令vulkaninfo会报错
+<a class=anchor href=#8-%e8%bf%90%e8%a1%8c%e5%91%bd%e4%bb%a4vulkaninfo%e4%bc%9a%e6%8a%a5%e9%94%99>#</a></h2><p>vulkan的使用需要显卡的支持，amd显卡vulkaninfo输出正常。</p><h2 id=9-使用npm安装软件包>9. 使用npm安装软件包
+<a class=anchor href=#9-%e4%bd%bf%e7%94%a8npm%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85>#</a></h2><p>先配置软件源再安装all架构的npm软件包，版本是7.5.2+ds-2。 需配置的软件源是：</p><pre tabindex=0><code class=language-auto data-lang=auto>deb [arch=amd64] https://mirrors.ustc.edu.cn/debian/ bullseye main non-free contrib
+</code></pre><h2 id=10-图形环境下修改系统语言>10. 图形环境下修改系统语言
+<a class=anchor href=#10-%e5%9b%be%e5%bd%a2%e7%8e%af%e5%a2%83%e4%b8%8b%e4%bf%ae%e6%94%b9%e7%b3%bb%e7%bb%9f%e8%af%ad%e8%a8%80>#</a></h2><p>安装lightdm-gtk-greeter-settings软件包。</p><h2 id=11-unit-firewalldservice-could-not-be-found>11. unit-firewalldservice-could-not-be-found
+<a class=anchor href=#11-unit-firewalldservice-could-not-be-found>#</a></h2><p>需安装firewalld软件包。</p><h2 id=12-配置软件包仓库>12. 配置软件包仓库
+<a class=anchor href=#12-%e9%85%8d%e7%bd%ae%e8%bd%af%e4%bb%b6%e5%8c%85%e4%bb%93%e5%ba%93>#</a></h2><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo vim /etc/apt/sources.list    //参考已有的格式，增加deb * deb-src *，保存退出
+loongson@loongson-pc:~$ sudo apt-get update
+</code></pre><h2 id=13-查看系统版本信息>13. 查看系统版本信息
+<a class=anchor href=#13-%e6%9f%a5%e7%9c%8b%e7%b3%bb%e7%bb%9f%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af>#</a></h2><p>查看系统及版本信息：</p><pre tabindex=0><code class=language-auto data-lang=auto>  cat /etc/os-release
+</code></pre><h2 id=14-查看系统已安装软件包>14. 查看系统已安装软件包
+<a class=anchor href=#14-%e6%9f%a5%e7%9c%8b%e7%b3%bb%e7%bb%9f%e5%b7%b2%e5%ae%89%e8%a3%85%e8%bd%af%e4%bb%b6%e5%8c%85>#</a></h2><p>查看系统上所有已安装的软件包：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ dpkg -list
+</code></pre><h2 id=15-查询软件包文件列表>15. 查询软件包文件列表
+<a class=anchor href=#15-%e6%9f%a5%e8%af%a2%e8%bd%af%e4%bb%b6%e5%8c%85%e6%96%87%e4%bb%b6%e5%88%97%e8%a1%a8>#</a></h2><p>查询某个软件包打包的所有文件：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ dpkg --listfiles 包名
+</code></pre><h2 id=16-编译安装非loongnix程序>16. 编译安装非loongnix程序
+<a class=anchor href=#16-%e7%bc%96%e8%af%91%e5%ae%89%e8%a3%85%e9%9d%9eloongnix%e7%a8%8b%e5%ba%8f>#</a></h2><p>/usr/local/目录不受Loongnix软件包管理系统的控制。 用户可以将程序的源代码放在/usr/local/src /中，将二进制文件放入/usr/local/bin/，将库放入 /usr/local/lib/，将配置文件放入 /usr/local/etc/。 如果您的程序或文件确实必须放置在其他目录中，仍可以将它们存储在中/usr/local/目录，但需创建符号链接。</p><h2 id=17-loongnix-20loongarch64镜像默认密码>17. loongnix-20loongarch64镜像默认密码
+<a class=anchor href=#17-loongnix-20loongarch64%e9%95%9c%e5%83%8f%e9%bb%98%e8%ae%a4%e5%af%86%e7%a0%81>#</a></h2><pre tabindex=0><code class=language-auto data-lang=auto>Loongnix-20.loongarch64镜像的默认密码是：
+Loongson20
+</code></pre><h2 id=18-升级最新系统版本>18. 升级最新系统版本
+<a class=anchor href=#18-%e5%8d%87%e7%ba%a7%e6%9c%80%e6%96%b0%e7%b3%bb%e7%bb%9f%e7%89%88%e6%9c%ac>#</a></h2><p>举例：若操作系统是loongnix-20.loongarch64.rc1版本，系统需升级至龙芯外网源的最新系统版本。</p><p>（1）操作方法</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo apt update
+loongson@loongson-pc:~$ sudo apt install linux-image-loongson-3 linux-headers-loongson-3
+loongson@loongson-pc:~$ apt upgrade
+</code></pre><p>（2）重启后查询系统版本和内核版本</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ uname -a
+输出：
+Linux loongson-pc 4.19.0-13-loongson-3 #1 SMP Tue Aug 17 01:55:23 UTC 2021 loongarch64 loongarch64 loongarch64 GNU/Linux
+loongson@loongson-pc:~$ cat /etc/issue
+输出：Loongnix GNU/Linux 20 RC3 \n \l
+</code></pre><h2 id=19-切换xfce主题>19. 切换xfce主题
+<a class=anchor href=#19-%e5%88%87%e6%8d%a2xfce%e4%b8%bb%e9%a2%98>#</a></h2><p>（1）安装xfce桌面</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo apt-get install xorg xfce4
+</code></pre><p>（2）安装桌面主题和图标主题</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo apt-get install whitesur-gtk-theme tela-circle-icon-theme
+</code></pre><p>（3）切换xfce桌面</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo update-alternatives --config x-session-manager
+</code></pre><p>输入3，启动xfce桌面。回显如下：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo update-alternatives --config x-session-manager
+有 3 个候选项可用于替换 x-session-manager (提供 /usr/bin/x-session-manager)。
+
+  选择       路径                  优先级  状态
+------------------------------------------------------------
+* 0            /usr/bin/mate-session    50        自动模式
+  1            /usr/bin/mate-session    50        手动模式
+  2            /usr/bin/startxfce4      50        手动模式
+  3            /usr/bin/xfce4-session   40        手动模式
+
+要维持当前值[*]请按&lt;回车键&gt;，或者键入选择的编号：3
+</code></pre><p>(4) 重启系统</p><h2 id=20-使用init3或telinit-3黑屏>20. 使用init3或telinit-3黑屏
+<a class=anchor href=#20-%e4%bd%bf%e7%94%a8init3%e6%88%96telinit-3%e9%bb%91%e5%b1%8f>#</a></h2><p>目前systemd 分配的虚拟终端为tty1～6为字符终端，tty7为gui终端。init 3后，显示仍在tty7终端，但图形界面已经关掉，因此出现黑屏现象，出现此现象为正常现象。 如果想使用init 3 后，出现字符界面，可以提供两种实现的方法：</p><pre tabindex=0><code class=language-auto data-lang=auto>方法一：将gui终端显示在tty1
+修改/etc/lightdm/lightdm.conf文件，minimum-vt =1
+重启lightdm服务，systemctl restart lightdm
+</code></pre><pre tabindex=0><code class=language-auto data-lang=auto>方法二：初始化tty7的字符终端
+修改/etc/systemd/logind.conf文件，NAutoVTs=7
+重启系统
+</code></pre><h2 id=21-u盘格式化为ext4后宿主为root而当前用户>21. u盘格式化为ext4后宿主为root而当前用户
+<a class=anchor href=#21-u%e7%9b%98%e6%a0%bc%e5%bc%8f%e5%8c%96%e4%b8%baext4%e5%90%8e%e5%ae%bf%e4%b8%bb%e4%b8%baroot%e8%80%8c%e5%bd%93%e5%89%8d%e7%94%a8%e6%88%b7>#</a></h2><p>解决方法：</p><pre tabindex=0><code class=language-auto data-lang=auto>chown -R loongson:loongson u盘设备名
+</code></pre><h2 id=22-命令行模式中文显示乱码>22. 命令行模式中文显示乱码
+<a class=anchor href=#22-%e5%91%bd%e4%bb%a4%e8%a1%8c%e6%a8%a1%e5%bc%8f%e4%b8%ad%e6%96%87%e6%98%be%e7%a4%ba%e4%b9%b1%e7%a0%81>#</a></h2><p>解决方法：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ dpkg -l |grep zhcon //判断是否安装zhcon软件包
+loongson@loongson-pc:~$ sudo apt install zhcon
+loongson@loongson-pc:~$ zhcon --utf8  //字符界面执行
+</code></pre><h2 id=23-软件光标切换成硬件光标>23. 软件光标切换成硬件光标
+<a class=anchor href=#23-%e8%bd%af%e4%bb%b6%e5%85%89%e6%a0%87%e5%88%87%e6%8d%a2%e6%88%90%e7%a1%ac%e4%bb%b6%e5%85%89%e6%a0%87>#</a></h2><p>目前loongnix系统中默认使能的是软件光标。 将软件光标切换成硬件光标的方法：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo vim /usr/share/X11/xorg.conf.d/20-loongson.conf
+Option          &#34;SWcursor&#34;      &#34;true&#34;
+修改为
+Option          &#34;SWcursor&#34;      &#34;false&#34;
+</code></pre><h2 id=24-桌面系统手动分区注意事项>24. 桌面系统手动分区注意事项
+<a class=anchor href=#24-%e6%a1%8c%e9%9d%a2%e7%b3%bb%e7%bb%9f%e6%89%8b%e5%8a%a8%e5%88%86%e5%8c%ba%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9>#</a></h2><table><thead><tr><th>分区</th><th>介绍</th><th>分区挂载点</th><th>分区文件系统格式</th><th>推荐大小（仅供参考，可自行修改）</th><th>备注</th></tr></thead><tbody><tr><td>efi分区</td><td>efi系统分区是一个FAT16或FAT32格式的物理分区，支持EFI模式的电脑需要从 ESP 启动系统，ESP是系统引导分区。</td><td>/boot/efi</td><td>fat32</td><td>300MB</td><td>pmon固件可不分，uefi固件必须分，同时需要勾选esp标识</td></tr><tr><td>boot分区</td><td>boot分区是操作系统的内核及在引导过程中使用的文件存放的分区。</td><td>/boot</td><td>ext2/3/4</td><td>300MB</td><td>可以不分，如想在PMON固件下分boot分区时，必须将boot分区分为ext2/3/4或fat32/16格式的文件系统</td></tr><tr><td>根分区</td><td>根分区就是root分区，用于存放系统数据的分区</td><td>/</td><td>均支持,推荐xfs</td><td>>= 20G</td><td>必须要分，最小10G</td></tr><tr><td>data分区</td><td>data分区用于存放用户数据、应用数据的分区</td><td>/data</td><td>均支持,推荐xfs</td><td>除去其余分区之外的所有磁盘大小</td><td>可以不分，但会影响后续使用新版系统升级功能时，数据丢失的情况。最小分5G可以安装系统，但是后续新建用户和安装应用软件可能会出现磁盘不足的情况。</td></tr><tr><td>restore分区</td><td>restore分区用于系统备份功能使用的分区，该分区为隐藏状态</td><td>/restore</td><td>均支持推荐xfs</td><td>>= 20G</td><td>可以不分，但会影响后续使用新版系统升级功能时，数据丢失的情况。最小分区大小和根分区一致</td></tr><tr><td>swap分区</td><td>swap分区，即交换区，系统在物理内存（运行内存）不够时，与Swap分区进行交换</td><td>无挂载点</td><td>linuxswap</td><td>>=8G</td><td>可以不分，但是当内存不够用时，系统可能会卡死;最小分2G</td></tr></tbody></table><h2 id=25-igbuioko模块的编译方法>25. igbuioko模块的编译方法
+<a class=anchor href=#25-igbuioko%e6%a8%a1%e5%9d%97%e7%9a%84%e7%bc%96%e8%af%91%e6%96%b9%e6%b3%95>#</a></h2><p>igb_uio.ko模块是独立于dpdk提供的。 编译igb_uio.ko模块对应的代码获取位置是：
+<a href=http://git.dpdk.org/dpdk-kmods/>http://git.dpdk.org/dpdk-kmods/</a> 编译方法：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$git clone http://dpdk.org/git/dpdk-kmods
+loongson@loongson-pc:~$cd dpdk-kmods
+loongson@loongson-pc:~$make
+loongson@loongson-pc:~/dpdk-kmods/linux/igb_uio$ ls igb_uio.ko
+igb_uio.ko
+</code></pre><p>如果在编译igb_uio.ko时报错，需要内核中默认支持CONFIG_UIO=m</p><h2 id=26-查看内存页大小>26. 查看内存页大小
+<a class=anchor href=#26-%e6%9f%a5%e7%9c%8b%e5%86%85%e5%ad%98%e9%a1%b5%e5%a4%a7%e5%b0%8f>#</a></h2><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ getconf PAGESIZE
+16384
+loongson@loongson-pc:~$ arch
+loongarch64
+</code></pre><h2 id=27-默认软件源仓库>27. 默认软件源仓库
+<a class=anchor href=#27-%e9%bb%98%e8%ae%a4%e8%bd%af%e4%bb%b6%e6%ba%90%e4%bb%93%e5%ba%93>#</a></h2><p>（1）Loongnix-20版本mate主题默认集成的软件源</p><pre tabindex=0><code class=language-auto data-lang=auto>root@loongson-pc:/home/loongson# cat /etc/apt/sources.list
+deb http://pkg.loongnix.cn/loongnix DaoXiangHu-stable main contrib non-free
+</code></pre><p>（2）Loongnix-20版本cartoons主题默认集成的软件源</p><pre tabindex=0><code class=language-auto data-lang=auto>root@loongson-pc:/home/loongson# cat /etc/apt/sources.list
+deb http://pkg.loongnix.cn/loongnix DaoXiangHu-stable main contrib non-free
+deb http://pkg.loongnix.cn/loongnix DaoXiangHu-cartoons main contrib non-free
+</code></pre><h2 id=28-查看内核和编译器版本>28. 查看内核和编译器版本
+<a class=anchor href=#28-%e6%9f%a5%e7%9c%8b%e5%86%85%e6%a0%b8%e5%92%8c%e7%bc%96%e8%af%91%e5%99%a8%e7%89%88%e6%9c%ac>#</a></h2><p>（1）内核版本</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ dpkg -l |grep linux-libc-dev
+ii  linux-libc-dev                               4.19.190-rc6.lnd.1                             loongarch64  Linux support headers for userspace development
+loongson@loongson-pc:~$ uname -a
+Linux loongson-pc 4.19.0-17-loongson-3 #1 SMP 4.19.190-6 Thu Mar 31 01:15:47 UTC 2022 loongarch64 loongarch64 loongarch64 GNU/Linux
+</code></pre><p>（2）gcc编译器版本</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ gcc --version
+gcc (Loongnix 8.3.0-6.lnd.vec.30) 8.3.0
+Copyright (C) 2018 Free Software Foundation, Inc.
+This is free software; see the source for copying conditions.  There is NO
+warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+</code></pre><h2 id=29-取消密码复杂度设置>29. 取消密码复杂度设置
+<a class=anchor href=#29-%e5%8f%96%e6%b6%88%e5%af%86%e7%a0%81%e5%a4%8d%e6%9d%82%e5%ba%a6%e8%ae%be%e7%bd%ae>#</a></h2><p>安装Loongnix系统时对设置的密码无复杂度要求。 修改密码时，密码复杂度遵循的规则是:密码长度最短为8，大写、小写、数字、字符这4类中，应至少满足3类。 在Loongnix-20.2.loongarch64系统中，修改密码时取消密码复杂度规则。 以用户名为“loongson”举例：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ cat /etc/issue
+Loongnix GNU/Linux 20 Release 2 \n \l
+loongson@loongson-pc:~$ sudo su
+[sudo] loongson 的密码：
+root@loongson-pc:/home/loongson# passwd loongson   //设置新的密码为loongson，不再有复杂度要求
+新的 密码：
+重新输入新的 密码：
+passwd：已成功更新密码
+</code></pre><h2 id=30-在mate-terminal终端配置软件包源代码的源地址>30. 在mate-terminal终端配置软件包源代码的源地址
+<a class=anchor href=#30-%e5%9c%a8mate-terminal%e7%bb%88%e7%ab%af%e9%85%8d%e7%bd%ae%e8%bd%af%e4%bb%b6%e5%8c%85%e6%ba%90%e4%bb%a3%e7%a0%81%e7%9a%84%e6%ba%90%e5%9c%b0%e5%9d%80>#</a></h2><p>软件包源代码的源地址配置方法,以Loongnix-20.2.loongarch64版本mate主题的系统为例：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo echo &#34;deb-src http://pkg.loongnix.cn/loongnix DaoXiangHu-stable main contrib non-free&#34; &gt;&gt;/etc/apt/sources.list
+loongson@loongson-pc:~$ sudo apt update
+</code></pre><h2 id=31-loongnix桌面系统获取源代码>31. loongnix桌面系统获取源代码
+<a class=anchor href=#31-loongnix%e6%a1%8c%e9%9d%a2%e7%b3%bb%e7%bb%9f%e8%8e%b7%e5%8f%96%e6%ba%90%e4%bb%a3%e7%a0%81>#</a></h2><p>Loongnix桌面系统如何获取源代码? 以mate-panel为例：</p><p>（1）mate-terminal终端获取mate-panel源代码</p><pre tabindex=0><code class=language-auto data-lang=auto>root@loongson-pc:/home/loongson# cat /etc/apt/sources.list
+deb http://pkg.loongnix.cn/loongnix DaoXiangHu-stable main contrib non-free
+deb-src http://pkg.loongnix.cn/loongnix DaoXiangHu-stable main contrib non-free
+root@loongson-pc:/home/loongson# apt source mate-panel
+Reading package lists... Done
+NOTICE: &#39;mate-panel&#39; packaging is maintained in the &#39;Git&#39; version control system at:
+https://salsa.debian.org/debian-mate-team/mate-panel.git
+......省略......
+dpkg-source: info: extracting mate-panel in mate-panel-1.20.5
+dpkg-source: info: unpacking mate-panel_1.20.5.orig.tar.xz
+dpkg-source: info: unpacking mate-panel_1.20.5-1.1.lnd.4.debian.tar.xz
+dpkg-source: info: using patch list from debian/patches/series
+dpkg-source: info: applying 0001_RDA-support-Make-MATE-panel-aware-of-being-run-insid.patch
+dpkg-source: info: applying 0002_mate-panel-panel-menu-items.c-Only-offer-Shutdown-bu.patch
+dpkg-source: info: applying 0003_configure.ac-Report-RDA-support-status-in-configurat.patch
+dpkg-source: info: applying 0004_configure.ac-Explicitly-require-in-RDA-0.0.3.patch
+dpkg-source: info: applying 0005_change_default_layout.patch
+dpkg-source: info: applying 0006_add_loongnix_layout.patch
+dpkg-source: info: applying 0007_add_switch_loongnix_layout.patch
+dpkg-source: info: applying 0008_add_def_weather_temperature.patch
+dpkg-source: info: applying 0009_add_restrictions_to_loongnix_layout.patch
+</code></pre><p>（2）网页获取mate-panel源代码</p><pre tabindex=0><code class=language-auto data-lang=auto>http://pkg.loongnix.cn/loongnix/pool/main/m/mate-panel/
+</code></pre><h2 id=32-loongnix-201livecdcartoon系统升级后桌面无图标显示>32. loongnix-201livecdcartoon系统升级后桌面无图标显示
+<a class=anchor href=#32-loongnix-201livecdcartoon%e7%b3%bb%e7%bb%9f%e5%8d%87%e7%ba%a7%e5%90%8e%e6%a1%8c%e9%9d%a2%e6%97%a0%e5%9b%be%e6%a0%87%e6%98%be%e7%a4%ba>#</a></h2><p>解决办法:</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$ sudo apt update
+loongson@loongson-pc:~$ sudo apt upgrade
+loongson@loongson-pc:~$ sudo apt install cartoon-desktop-environment
+</code></pre><h2 id=33-kpatch-升级到097后生成的模块文件运行时报错>33. kpatch-升级到097后生成的模块文件运行时报错
+<a class=anchor href=#33-kpatch-%e5%8d%87%e7%ba%a7%e5%88%b0097%e5%90%8e%e7%94%9f%e6%88%90%e7%9a%84%e6%a8%a1%e5%9d%97%e6%96%87%e4%bb%b6%e8%bf%90%e8%a1%8c%e6%97%b6%e6%8a%a5%e9%94%99>#</a></h2><p>解决办法： 升级内核到4.19.190-7以上版本</p><p>©龙芯开源社区 all right reserved，powered by Gitbook文档更新时间： 2023-12-21 12:36:52</p></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/LoongUser/loonguser.github.io/commit/a4877e3e85d756c32c90b2be88e039a202384459 title='最后修改者 AydenMeng | June 22, 2024' target=_blank rel=noopener><img src=/svg/calendar.svg class=book-icon alt=Calendar>
+<span>June 22, 2024</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#1-loongnix桌面系统源>1. loongnix桌面系统源</a></li><li><a href=#2-开启sshd服务>2. 开启sshd服务</a></li><li><a href=#3-安装auditd软件包>3. 安装auditd软件包</a></li><li><a href=#4-制作rootfs文件系统>4. 制作rootfs文件系统</a></li><li><a href=#5-锁定屏幕界面无法点击功能按键>5. 锁定屏幕界面无法点击功能按键</a></li><li><a href=#6-密码复杂度要求>6. 密码复杂度要求</a></li><li><a href=#7-home键不能调用开始菜单>7. home键不能调用开始菜单</a></li><li><a href=#8-运行命令vulkaninfo会报错>8. 运行命令vulkaninfo会报错</a></li><li><a href=#9-使用npm安装软件包>9. 使用npm安装软件包</a></li><li><a href=#10-图形环境下修改系统语言>10. 图形环境下修改系统语言</a></li><li><a href=#11-unit-firewalldservice-could-not-be-found>11. unit-firewalldservice-could-not-be-found</a></li><li><a href=#12-配置软件包仓库>12. 配置软件包仓库</a></li><li><a href=#13-查看系统版本信息>13. 查看系统版本信息</a></li><li><a href=#14-查看系统已安装软件包>14. 查看系统已安装软件包</a></li><li><a href=#15-查询软件包文件列表>15. 查询软件包文件列表</a></li><li><a href=#16-编译安装非loongnix程序>16. 编译安装非loongnix程序</a></li><li><a href=#17-loongnix-20loongarch64镜像默认密码>17. loongnix-20loongarch64镜像默认密码</a></li><li><a href=#18-升级最新系统版本>18. 升级最新系统版本</a></li><li><a href=#19-切换xfce主题>19. 切换xfce主题</a></li><li><a href=#20-使用init3或telinit-3黑屏>20. 使用init3或telinit-3黑屏</a></li><li><a href=#21-u盘格式化为ext4后宿主为root而当前用户>21. u盘格式化为ext4后宿主为root而当前用户</a></li><li><a href=#22-命令行模式中文显示乱码>22. 命令行模式中文显示乱码</a></li><li><a href=#23-软件光标切换成硬件光标>23. 软件光标切换成硬件光标</a></li><li><a href=#24-桌面系统手动分区注意事项>24. 桌面系统手动分区注意事项</a></li><li><a href=#25-igbuioko模块的编译方法>25. igbuioko模块的编译方法</a></li><li><a href=#26-查看内存页大小>26. 查看内存页大小</a></li><li><a href=#27-默认软件源仓库>27. 默认软件源仓库</a></li><li><a href=#28-查看内核和编译器版本>28. 查看内核和编译器版本</a></li><li><a href=#29-取消密码复杂度设置>29. 取消密码复杂度设置</a></li><li><a href=#30-在mate-terminal终端配置软件包源代码的源地址>30. 在mate-terminal终端配置软件包源代码的源地址</a></li><li><a href=#31-loongnix桌面系统获取源代码>31. loongnix桌面系统获取源代码</a></li><li><a href=#32-loongnix-201livecdcartoon系统升级后桌面无图标显示>32. loongnix-201livecdcartoon系统升级后桌面无图标显示</a></li><li><a href=#33-kpatch-升级到097后生成的模块文件运行时报错>33. kpatch-升级到097后生成的模块文件运行时报错</a></li></ul></li></ul></nav></div></aside></main></body></html>
