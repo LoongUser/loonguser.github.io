@@ -1,9 +1,3 @@
----
-weight: 1
-bookFlatSection: true
-title: "龙芯玩机指南"
----
-
 # 龙芯玩机指南
 
 ## 摘要
