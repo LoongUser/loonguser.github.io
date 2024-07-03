@@ -1,7 +1,7 @@
 ---
 title: 内核编译
 author: MarsDoge
-categories: 内核
+categories: 2. 系统
 toc: true
 ---
 

@@ -6,7 +6,7 @@
 
 ## 投稿及反馈
 
-如果你有想投稿或者想知道的内容, 可以给我们发邮件, 也可以直接给本仓库贡献代码:
+如果你有想投稿或者想知道的内容(龙芯相关), 可以给我们发邮件, 也可以直接给本仓库贡献代码:
 
 - <aydenmeng@yeah.net>
 - <dongyan0314@gmail.com>
@@ -57,3 +57,10 @@
 |龙芯俱乐部:|[http://www.openloongson.org/kl/](http://www.openloongson.org/kl/)|
 |LoongArch开放社区(武老师作品)|[https://loongarch.dev/zh-cn/](https://loongarch.dev/zh-cn/)|
 |loonguser(本站)|[https://loonguser.github.io/](https://loonguser.github.io/)<br>[https://loonguser.gitee.io/](https://loonguser.gitee.io/)|
+
+### 其他
+
+| 站点 | 地址 |
+|-- | -- |
+|龙芯实验室|[https://loongsonlab.github.io/](https://loongsonlab.github.io/)|
+|芯创实验室文件分发站点|[https://files.loonglab.cn/](https://files.loonglab.cn/)|

@@ -5,6 +5,8 @@ categories: 1. 固件
 toc: true
 ---
 
+> 更新: 新`pmon`固件已支持`efi_stub`, 详情查看[10.1节](pmon/#101-加载grub)
+
 ## 1. 查看设备
 
 ```
@@ -188,6 +190,16 @@ Press 'c' to command-line.
                                                  Booting system in [2] second(s)
 
 ```
+
+## 10.1. 加载grub
+
+最新`pmon`固件已经支持`efi_stub`, 支持像`UEFI`一样加载`grub.efi`.
+
+```
+PMON> bootefi /dev/fs/fat@usb0a/EFI/BOOT/BOOTLOONARCH64.efi
+```
+![GRUB主界面](/images/uefi/7.png)
+
 
 ## 11. 查看文件
 
