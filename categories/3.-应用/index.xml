@@ -17,7 +17,9 @@ watch data mask; cont 检测通用寄存器, 当通用寄存器中和data一致�
 d1/d4/d8 addr length 按照1字节, 4字节, 8字节, 依次dump length个addr寄存器中的值.
 m1/m4/m8 addr data1 data2&amp;hellip; 按照1字节, 4字节, 8字节, 依次将dataX 写入addr地址.
 disas addr length 反汇编addr处开始length长的内容.
-csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item><item><title>在龙芯3A5000上运行Windows程序</title><link>https://loonguser.github.io/applications/lat/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/lat/</guid><description>文章来源: https://zhuanlan.zhihu.com/p/436405217
+csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item><item><title>龙芯平台使用clash</title><link>https://loonguser.github.io/applications/clash/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/clash/</guid><description> 旧世界(Loongnix) # 来源: https://bbs.loongarch.org/d/177-loongnixclash
+下载后:
+unzip -x clash1130-loong64.zip ./clash -d path_to_config.yaml 新世界 # Archlinux # pacman -S clash clash -d path_to_config.yaml</description></item><item><title>在龙芯3A5000上运行Windows程序</title><link>https://loonguser.github.io/applications/lat/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/lat/</guid><description>文章来源: https://zhuanlan.zhihu.com/p/436405217
 2022-03-18：本文所述操作步骤较为繁琐，另写了一篇操作简单的替代本文内容：
 guee：包教包会：龙芯3A5000上运行任意Windows软件161 赞同 · 25 评论文章 龙芯3A5000是龙芯最新的桌面CPU，它基于龙芯自主设计的LoongArch架构（指令集），性能接近市场主流CPU水平。因为各种操作系统和应用程序都与指令集相关，所以x86架构（指令集）的CPU就不能直接运行ARM架构（指令集）的应用程序，反之亦然。因此诞生了各种各样的二进制（指令）翻译技术，用于跨架构模拟运行其它平台的操作系统和应用程序，各种二进制（指令）翻译技术可以分为软件翻译、硬件翻译、软硬结合的翻译这三大类。我先简述一下二进制翻译技术，然后再给出在UOS和龙芯3A5000上运行任何Windows程序的方法。
 二进制翻译技术简述 # 以软件方式进行二进制（指令）翻译必须存在一个宿主系统，模拟器程序在宿主系统上运行。比如各种游戏模拟器，用来在电脑上玩红白机游戏、街机游戏、PS游戏等，以纯软件的方式构建了一个虚拟的主机环境，让那些游戏程序成为缸中之脑，游戏程序执行的所有指令、请求的所有资源都是由翻译软件模拟出来的，但它以为自己是在真正的主机中运行。

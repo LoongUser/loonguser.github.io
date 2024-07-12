@@ -36,7 +36,9 @@ watch data mask; cont 检测通用寄存器, 当通用寄存器中和data一致�
 d1/d4/d8 addr length 按照1字节, 4字节, 8字节, 依次dump length个addr寄存器中的值.
 m1/m4/m8 addr data1 data2&amp;hellip; 按照1字节, 4字节, 8字节, 依次将dataX 写入addr地址.
 disas addr length 反汇编addr处开始length长的内容.
-csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item><item><title>内核编译</title><link>https://loonguser.github.io/system/kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/kernel/</guid><description>龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
+csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item><item><title>龙芯平台使用clash</title><link>https://loonguser.github.io/applications/clash/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/clash/</guid><description> 旧世界(Loongnix) # 来源: https://bbs.loongarch.org/d/177-loongnixclash
+下载后:
+unzip -x clash1130-loong64.zip ./clash -d path_to_config.yaml 新世界 # Archlinux # pacman -S clash clash -d path_to_config.yaml</description></item><item><title>内核编译</title><link>https://loonguser.github.io/system/kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/kernel/</guid><description>龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
 vmlinux+vmlinuz libmodules RamDisk_initrd 准备阶段 # 下面以LoongArch架构的编译为例. 编译器采用Gcc交叉编译LoongArch版本
 编译器版本 : loongarch64-linux-gnu-gcc-8.3.0 配置文件 采用龙芯默认配置: cp arch/loongarch/configs/loongson3_defconfig .config 开始编译 # vmlinux/vmlinuz
 执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-(此为编译器路径 which gcc) menuconfig 进入图形化配置界面,开关相关功能,我们直接Esc退出.
