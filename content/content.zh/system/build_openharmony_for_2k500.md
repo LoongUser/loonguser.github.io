@@ -154,4 +154,4 @@ hb build
 
 构建内核所需的支持LoongArch架构的mkimage，是个u-boot工具程序
 
-[mkimage.zip](https://bbs.loongarch.org/api/fof/download/d221fad5-8876-4235-97e0-5664644cf17e/3328/kAVs06MUPHPpp9r8BDdLNnVONXg8QGIlIGYJBP3G)
+[mkimage.zip](https://bbs.loongarch.org/d/435-2k500openharmony)

@@ -37,13 +37,13 @@ toc: true
 
 　　龙芯的二进制翻译系统仍在开发当中，尚未公开技术资料，但当前已经有可以使用的测试版本。我仅仅根据对当前状态分析的结果，简单描述一下它的基本结构如下图，可能不太准确，也不够详细，意会就好。
 
-  
+
 
 ![](https://pic4.zhimg.com/v2-98a539045961f14026c58803e7f1f757_b.jpg)
 
 ![](https://pic4.zhimg.com/80/v2-98a539045961f14026c58803e7f1f757_720w.webp)
 
-  
+
 
 　　基于龙芯LoongArch架构（指令集）的CPU，在运行原生的LoongArch指令集的程序时，不需要二进制翻译，可以直接运行。
 
@@ -69,7 +69,7 @@ toc: true
 
 ![](https://pic2.zhimg.com/80/v2-63eed8c737b9dd96dec571c7bc3352b1_720w.webp)
 
-  
+
 
 [龙芯3A5000运行Windows程序，微信、PS，扫雷绝对不卡15.2 万播放 · 163 赞同视频![点击可播放视频](https://pic4.zhimg.com/v2-02ba5aea38a8bd887a6b118f598f1e00_r.jpg?source=2231c908)​](https://www.zhihu.com/zvideo/1445505380252610560)
 
@@ -77,33 +77,33 @@ toc: true
 
 　　在安装了PhotoShop（Wine）之后，在“/opt/apps/com.pscs6.deepin/files”文件夹中的files.7z和run.sh是我们需要用到的。
 
-  
+
 
 ![](https://pic1.zhimg.com/v2-dbf73097fce4923da02e66dcc0310ff8_b.jpg)
 
 ![](https://pic1.zhimg.com/80/v2-dbf73097fce4923da02e66dcc0310ff8_720w.webp)
 
-  
+
 
 　　如果你已经运行过刚刚安装的PhotoShop，那么在“/home/用户名/.deepinwine”文件夹中会有“Deepin-CS6”文件夹，“.deepinwine”是隐藏文件夹，在Linux中文件（夹）名字前面加“.”表示隐藏，在文件管理器中看不到，需要手工在地址栏输入才能打开。它里面的内容如下：
 
-  
+
 
 ![](https://pic3.zhimg.com/v2-83c7bb3afe85e8c40e1b2ff559ad587e_b.jpg)
 
 ![](https://pic3.zhimg.com/80/v2-83c7bb3afe85e8c40e1b2ff559ad587e_720w.webp)
 
-  
+
 
 　　dosdevices文件夹中的内容是虚拟硬盘盘符和com接口的链接文件，比如“c:”文件就链接到“drive\_c”文件夹。“drive\_c”文件夹是虚拟的Windodws系统的C盘，里面的内容一看就眼熟：
 
-  
+
 
 ![](https://pic2.zhimg.com/v2-4bff50334b47e32ae65a5b5876aa50fd_b.jpg)
 
 ![](https://pic2.zhimg.com/80/v2-4bff50334b47e32ae65a5b5876aa50fd_720w.webp)
 
-  
+
 
 　　如果你要向这个由Wine虚拟的Windows环境中安装软件，或复制绿色软件来运行，就把“drive\_c”当成Windows的C盘来用，都往里面复制就行了。其实直接使用PhotoShop的这个Wine环境文件夹也可以，但是为了避免一些麻烦，比如防止意外卸载了PhotoShop之后你放在里面的软件也被一同删除，我们还是最好自己弄个单独的环境。另外说明一下，这是32位的Wine环境，不能运行64位的Windows程序，如果要运行64位的程序，需要手工配置64位的环境，因为UOS还没有提供直接安装的64位Windows程序。
 
@@ -158,7 +158,7 @@ $START_SHELL_PATH $BOTTLENAME $APPVER "$EXEC_PATH" "$@"
 
 [龙芯3A5000运行Windows程序，微信、PS，扫雷绝对不卡15.2 万播放 · 163 赞同视频![点击可播放视频](https://pic2.zhimg.com/v2-02ba5aea38a8bd887a6b118f598f1e00_r.jpg?source=2231c908)​](https://www.zhihu.com/zvideo/1445505380252610560)
 
-  
+
 
 [龙芯3A5000二进制翻译玩Windows版《愤怒的小鸟》3458 播放 · 17 赞同视频![点击可播放视频](https://pic1.zhimg.com/v2-4605f5396efbbb06a15ad2052794682a_r.jpg?source=2231c908)​](https://www.zhihu.com/zvideo/1445888415606276096)
 

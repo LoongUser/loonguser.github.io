@@ -64,3 +64,21 @@
 |-- | -- |
 |龙芯实验室|[https://loongsonlab.github.io/](https://loongsonlab.github.io/)|
 |芯创实验室文件分发站点|[https://files.loonglab.cn/](https://files.loonglab.cn/)|
+
+## 贡献本仓库
+
+文档目录在:`content/content.zh/`下, 按`1. 固件`, `2. 系统`, `3. 应用`分为三类, 文章`header`模板如下:
+
+> ```markdown
+> ---
+> title: Grub编译与调试
+> author: Ayden Meng
+> categories: 1. 固件
+> toc: true
+> ---
+> ```
+
+`Tips`:
+
+1. 完成后可以执行根目录下的:`./genmenu.sh`生成目录信息.
+2. 想要转载的文章可以通过`https://markdown.devtool.tech/app`右上角的采集功能, 将相应网页指定的`html`元素复制后转换成`markdown`语言.
