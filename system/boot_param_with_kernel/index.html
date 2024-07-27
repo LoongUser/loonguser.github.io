@@ -1,0 +1,439 @@
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content='龙芯平台常用启动参数 # 增加串口 # console=ttyS0,115200 earlycon=uart,mmio,0x1fe001e0 注意:
+console即是指控制台输出, ttyS0是龙芯默认的串口终端, 波特率是115200. earlycon是用来打印早期acpi初始化过程的参数, 在使用dts传参时可能不可用. 核数限制 # nr_cpus=3 maxcpus=3 多核调度限制 # isolcpus=0-1,3-5 示例可以使0,1,3,4,5核不参与调度, 即被孤立.
+禁用SMP # nosmp 串口调试休眠 # no_console_suspend 在s3和s4的过程中, 串口将打印执行流程.
+设置替代初始化进程 # rdinit=/sbin/my_init init=/sbin/my_init 减少内核启动时的输出 # quiet 设置日志级别 # loglevel=3 设置根文件系统所在设备 # root=/dev/sda3 加载ramdisk # initrd=/path/to/initrd.img 设置PCI属性 # 如禁用msi
+pci=nomsi 设置挂载参数 # mount_param=noatime 设置SELinux启用 # selinux=1 禁用gpu驱动 # gsgpu.LG100_support=0 使能lsdc驱动 # lsdc.modeset=1 内核参数查询 # 龙芯系统支持的内核启动参数可以使用如下命令查看:
+cat System.map-4.19.0-19-loongson-3 | grep "__setup_str_" | sed &#39;s/.'><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/system/boot_param_with_kernel/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="龙芯系统启动参数"><meta property="og:description" content='龙芯平台常用启动参数 # 增加串口 # console=ttyS0,115200 earlycon=uart,mmio,0x1fe001e0 注意:
+console即是指控制台输出, ttyS0是龙芯默认的串口终端, 波特率是115200. earlycon是用来打印早期acpi初始化过程的参数, 在使用dts传参时可能不可用. 核数限制 # nr_cpus=3 maxcpus=3 多核调度限制 # isolcpus=0-1,3-5 示例可以使0,1,3,4,5核不参与调度, 即被孤立.
+禁用SMP # nosmp 串口调试休眠 # no_console_suspend 在s3和s4的过程中, 串口将打印执行流程.
+设置替代初始化进程 # rdinit=/sbin/my_init init=/sbin/my_init 减少内核启动时的输出 # quiet 设置日志级别 # loglevel=3 设置根文件系统所在设备 # root=/dev/sda3 加载ramdisk # initrd=/path/to/initrd.img 设置PCI属性 # 如禁用msi
+pci=nomsi 设置挂载参数 # mount_param=noatime 设置SELinux启用 # selinux=1 禁用gpu驱动 # gsgpu.LG100_support=0 使能lsdc驱动 # lsdc.modeset=1 内核参数查询 # 龙芯系统支持的内核启动参数可以使用如下命令查看:
+cat System.map-4.19.0-19-loongson-3 | grep "__setup_str_" | sed &#39;s/.'><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="system"><meta property="article:modified_time" content="2024-07-27T17:42:23+08:00"><title>龙芯系统启动参数 | 龙芯玩机指南</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.d37184993c0833712b1f65fac32bb1e48b2a089eb387acbd83becd91aeeb45b2.js integrity="sha256-03GEmTwIM3ErH2X6wyux5IsqCJ6zh6y9g77Nka7rRbI=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
+<label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
+Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/firmware/>如何更新固件</a></li><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/gen_sys_file/>生成系统下的一些文件</a></li><li><a href=/system/install_archlinux/>新世界Archlinux系统安装</a></li><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/update_system/>如何更新系统</a></li><li><a href=/system/Loongnix_FAQ/>Loongnix_FAQ</a></li><li><a href=/system/kernel/>内核编译</a></li><li><a href=/system/build_openharmony_for_2k500/>龙芯2K500先锋派OpenHarmony构建指北</a></li><li><a href=/system/boot_param_with_kernel/ class=active>龙芯系统启动参数</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li><li><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></li><li><a href=/applications/lat/>在龙芯3A5000上运行Windows程序</a></li><li><a href=/applications/clash/>龙芯平台使用clash</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
+</label><strong>龙芯系统启动参数</strong>
+<label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav id=TableOfContents><ul><li><ul><li><a href=#龙芯平台常用启动参数>龙芯平台常用启动参数</a><ul><li><a href=#增加串口>增加串口</a></li><li><a href=#核数限制>核数限制</a></li><li><a href=#多核调度限制>多核调度限制</a></li><li><a href=#禁用smp>禁用SMP</a></li><li><a href=#串口调试休眠>串口调试休眠</a></li><li><a href=#设置替代初始化进程>设置替代初始化进程</a></li><li><a href=#减少内核启动时的输出>减少内核启动时的输出</a></li><li><a href=#设置日志级别>设置日志级别</a></li><li><a href=#设置根文件系统所在设备>设置根文件系统所在设备</a></li><li><a href=#加载ramdisk>加载ramdisk</a></li><li><a href=#设置pci属性>设置PCI属性</a></li><li><a href=#设置挂载参数>设置挂载参数</a></li><li><a href=#设置selinux启用>设置SELinux启用</a></li><li><a href=#禁用gpu驱动>禁用gpu驱动</a></li><li><a href=#使能lsdc驱动>使能lsdc驱动</a></li></ul></li><li><a href=#内核参数查询>内核参数查询</a></li><li><a href=#模块参数查看>模块参数查看</a></li></ul></li></ul></nav></aside></header><article class=markdown><h2 id=龙芯平台常用启动参数>龙芯平台常用启动参数
+<a class=anchor href=#%e9%be%99%e8%8a%af%e5%b9%b3%e5%8f%b0%e5%b8%b8%e7%94%a8%e5%90%af%e5%8a%a8%e5%8f%82%e6%95%b0>#</a></h2><h3 id=增加串口>增加串口
+<a class=anchor href=#%e5%a2%9e%e5%8a%a0%e4%b8%b2%e5%8f%a3>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>console<span style=color:#f92672>=</span>ttyS0,115200 earlycon<span style=color:#f92672>=</span>uart,mmio,0x1fe001e0
+</span></span></code></pre></div><p>注意:</p><ul><li><code>console</code>即是指控制台输出, <code>ttyS0</code>是龙芯默认的串口终端, 波特率是<code>115200</code>.</li><li><code>earlycon</code>是用来打印早期<code>acpi</code>初始化过程的参数, 在使用<code>dts</code>传参时可能不可用.</li></ul><h3 id=核数限制>核数限制
+<a class=anchor href=#%e6%a0%b8%e6%95%b0%e9%99%90%e5%88%b6>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nr_cpus<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span> maxcpus<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span>
+</span></span></code></pre></div><h3 id=多核调度限制>多核调度限制
+<a class=anchor href=#%e5%a4%9a%e6%a0%b8%e8%b0%83%e5%ba%a6%e9%99%90%e5%88%b6>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>isolcpus<span style=color:#f92672>=</span>0-1,3-5
+</span></span></code></pre></div><p>示例可以使<code>0,1,3,4,5</code>核不参与调度, 即被孤立.</p><h3 id=禁用smp>禁用SMP
+<a class=anchor href=#%e7%a6%81%e7%94%a8smp>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nosmp
+</span></span></code></pre></div><h3 id=串口调试休眠>串口调试休眠
+<a class=anchor href=#%e4%b8%b2%e5%8f%a3%e8%b0%83%e8%af%95%e4%bc%91%e7%9c%a0>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>no_console_suspend
+</span></span></code></pre></div><p>在<code>s3</code>和<code>s4</code>的过程中, 串口将打印执行流程.</p><h3 id=设置替代初始化进程>设置替代初始化进程
+<a class=anchor href=#%e8%ae%be%e7%bd%ae%e6%9b%bf%e4%bb%a3%e5%88%9d%e5%a7%8b%e5%8c%96%e8%bf%9b%e7%a8%8b>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rdinit<span style=color:#f92672>=</span>/sbin/my_init
+</span></span></code></pre></div><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>init<span style=color:#f92672>=</span>/sbin/my_init
+</span></span></code></pre></div><h3 id=减少内核启动时的输出>减少内核启动时的输出
+<a class=anchor href=#%e5%87%8f%e5%b0%91%e5%86%85%e6%a0%b8%e5%90%af%e5%8a%a8%e6%97%b6%e7%9a%84%e8%be%93%e5%87%ba>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>quiet
+</span></span></code></pre></div><h3 id=设置日志级别>设置日志级别
+<a class=anchor href=#%e8%ae%be%e7%bd%ae%e6%97%a5%e5%bf%97%e7%ba%a7%e5%88%ab>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>loglevel<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span>
+</span></span></code></pre></div><h3 id=设置根文件系统所在设备>设置根文件系统所在设备
+<a class=anchor href=#%e8%ae%be%e7%bd%ae%e6%a0%b9%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e6%89%80%e5%9c%a8%e8%ae%be%e5%a4%87>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>root<span style=color:#f92672>=</span>/dev/sda3
+</span></span></code></pre></div><h3 id=加载ramdisk>加载ramdisk
+<a class=anchor href=#%e5%8a%a0%e8%bd%bdramdisk>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>initrd<span style=color:#f92672>=</span>/path/to/initrd.img
+</span></span></code></pre></div><h3 id=设置pci属性>设置PCI属性
+<a class=anchor href=#%e8%ae%be%e7%bd%aepci%e5%b1%9e%e6%80%a7>#</a></h3><p>如禁用<code>msi</code></p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pci<span style=color:#f92672>=</span>nomsi
+</span></span></code></pre></div><h3 id=设置挂载参数>设置挂载参数
+<a class=anchor href=#%e8%ae%be%e7%bd%ae%e6%8c%82%e8%bd%bd%e5%8f%82%e6%95%b0>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mount_param<span style=color:#f92672>=</span>noatime
+</span></span></code></pre></div><h3 id=设置selinux启用>设置SELinux启用
+<a class=anchor href=#%e8%ae%be%e7%bd%aeselinux%e5%90%af%e7%94%a8>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>selinux<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><h3 id=禁用gpu驱动>禁用gpu驱动
+<a class=anchor href=#%e7%a6%81%e7%94%a8gpu%e9%a9%b1%e5%8a%a8>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>gsgpu.LG100_support<span style=color:#f92672>=</span><span style=color:#ae81ff>0</span>
+</span></span></code></pre></div><h3 id=使能lsdc驱动>使能lsdc驱动
+<a class=anchor href=#%e4%bd%bf%e8%83%bdlsdc%e9%a9%b1%e5%8a%a8>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>lsdc.modeset<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><h2 id=内核参数查询>内核参数查询
+<a class=anchor href=#%e5%86%85%e6%a0%b8%e5%8f%82%e6%95%b0%e6%9f%a5%e8%af%a2>#</a></h2><p>龙芯系统支持的内核启动参数可以使用如下命令查看:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cat System.map-4.19.0-19-loongson-3 | grep <span style=color:#e6db74>&#34;__setup_str_&#34;</span> | sed <span style=color:#e6db74>&#39;s/.*__setup_str_//g&#39;</span>
+</span></span></code></pre></div><p>这些启动参数涵盖了<code>Linux</code>内核启动时可以配置的众多方面，从初始化行为到硬件配置。下面是这些参数的一些简要说明及使用样例, 具体以内核源码为准.</p><p>初始化相关</p><ul><li><code>initcall_blacklist</code>: 禁止特定的初始化回调函数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>initcall_blacklist<span style=color:#f92672>=</span>my_initcall
+</span></span></code></pre></div><ul><li><code>rdinit_setup</code>: 设置替代初始化进程。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rdinit<span style=color:#f92672>=</span>/sbin/my_init
+</span></span></code></pre></div><ul><li><code>init_setup</code>: 设置初始化进程。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>init<span style=color:#f92672>=</span>/sbin/my_init
+</span></span></code></pre></div><ul><li><code>loglevel</code>: 设置日志级别。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>loglevel<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span>
+</span></span></code></pre></div><ul><li><code>quiet_kernel</code>: 减少内核启动时的输出。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>quiet
+</span></span></code></pre></div><ul><li><code>debug_kernel</code>: 开启内核调试。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>debug
+</span></span></code></pre></div><ul><li><code>set_reset_devices</code>: 设置需要重置的设备列表。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>reset_devices<span style=color:#f92672>=</span>pci0000:00/0000:00:01.0
+</span></span></code></pre></div><ul><li><code>root_delay_setup</code>: 设置在尝试挂载根文件系统之前等待的时间。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>root_delay<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>
+</span></span></code></pre></div><ul><li><code>fs_names_setup</code>: 设置文件系统名称。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>fs_names<span style=color:#f92672>=</span>xfs,ext4
+</span></span></code></pre></div><ul><li><code>root_data_setup</code>: 设置根文件系统的数据。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>root_data<span style=color:#f92672>=</span>root<span style=color:#f92672>=</span>/dev/sda1 ro
+</span></span></code></pre></div><ul><li><code>rootwait_setup</code>: 设置是否等待根文件系统可用。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rootwait
+</span></span></code></pre></div><ul><li><code>root_dev_setup</code>: 设置根设备。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>root<span style=color:#f92672>=</span>/dev/sda1
+</span></span></code></pre></div><ul><li><code>readwrite</code>: 标记根文件系统为可读写。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rw
+</span></span></code></pre></div><ul><li><code>readonly</code>: 标记根文件系统为只读。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ro
+</span></span></code></pre></div><ul><li><code>load_ramdisk</code>: 加载ramdisk。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>initrd<span style=color:#f92672>=</span>/path/to/initrd.img
+</span></span></code></pre></div><ul><li><code>no_initrd</code>: 不使用initrd。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>no_initrd
+</span></span></code></pre></div><ul><li><code>retain_initrd_param</code>: 保留initrd参数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>retain_initrd_param
+</span></span></code></pre></div><ul><li><code>lpj_setup</code>: 设置每秒的循环数（loops per jiffy）。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>lpj<span style=color:#f92672>=</span><span style=color:#ae81ff>5000000</span>
+</span></span></code></pre></div><ul><li><code>early_parse_memmap</code>: 早期解析内存映射。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>early_parse_memmap
+</span></span></code></pre></div><ul><li><code>early_parse_mem</code>: 早期解析内存参数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>early_parse_mem
+</span></span></code></pre></div><ul><li><code>loongson_syscall_disable</code>: 禁用特定的Loongson系统调用。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>loongson_syscall_disable<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>rd_size_early</code>: 设置早期的根设备大小。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rd_size_early<span style=color:#f92672>=</span>512M
+</span></span></code></pre></div><ul><li><code>rd_start_early</code>: 设置早期的根设备起始位置。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>rd_start_early<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>early_initrd</code>: 设置早期的initrd。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>early_initrd<span style=color:#f92672>=</span>/path/to/early-initrd.img
+</span></span></code></pre></div><ul><li><code>debug_alt</code>: 启用备用调试选项。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>debug_alt
+</span></span></code></pre></div><ul><li><code>set_pv_time</code>: 设置PV（Para-virtualized）时间。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>set_pv_time
+</span></span></code></pre></div><ul><li><code>set_pv_ipi</code>: 设置PV IPI（Interrupt Request）。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>set_pv_ipi
+</span></span></code></pre></div><ul><li><code>coredump_filter_setup</code>: 设置core dump过滤器。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>coredump_filter<span style=color:#f92672>=</span>0x00000000
+</span></span></code></pre></div><ul><li><code>oops_setup</code>: 设置Oops异常处理。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>oops<span style=color:#f92672>=</span>panic
+</span></span></code></pre></div><ul><li><code>mitigations_parse_cmdline</code>: 解析命令行中的缓解措施。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mitigations<span style=color:#f92672>=</span>auto
+</span></span></code></pre></div><ul><li><code>strict_iomem</code>: 启用严格的I/O内存管理。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>strict_iomem<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>reserve_setup</code>: 预留内存区域。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>reserve<span style=color:#f92672>=</span>128M
+</span></span></code></pre></div><ul><li><code>file_caps_disable</code>: 禁用文件能力。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>file_caps_disabled
+</span></span></code></pre></div><ul><li><code>setup_print_fatal_signals</code>: 设置打印致命信号。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>print_fatal_signals<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>reboot_setup</code>: 设置重启行为。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>reboot<span style=color:#f92672>=</span>k
+</span></span></code></pre></div><ul><li><code>setup_schedstats</code>: 设置调度统计。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>schedstats
+</span></span></code></pre></div><ul><li><code>setup_relax_domain_level</code>: 设置放松域级别。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>relax_domain_level<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>sched_debug_setup</code>: 设置调度调试。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sched_debug
+</span></span></code></pre></div><ul><li><code>housekeeping_isolcpus_setup</code>: 设置隔离CPU。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>isolcpus<span style=color:#f92672>=</span>0-3
+</span></span></code></pre></div><ul><li><code>housekeeping_nohz_full_setup</code>: 设置完全nohz（no-Hertz）行为。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nohz_full
+</span></span></code></pre></div><ul><li><code>mem_sleep_default_setup</code>: 设置内存睡眠默认行为。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mem_sleep_default<span style=color:#f92672>=</span>deep
+</span></span></code></pre></div><ul><li><code>nohibernate_setup</code>: 禁用休眠。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nohibernate
+</span></span></code></pre></div><ul><li><code>resumedelay_setup</code>: 设置恢复延迟。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>resumedelay<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>
+</span></span></code></pre></div><ul><li><code>resumewait_setup</code>: 设置恢复等待时间。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>resumewait<span style=color:#f92672>=</span><span style=color:#ae81ff>5</span>
+</span></span></code></pre></div><ul><li><code>hibernate_setup</code>: 设置休眠行为。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>resume<span style=color:#f92672>=</span>/dev/mapper/my-swap
+</span></span></code></pre></div><ul><li><code>resume_setup</code>: 设置恢复行为。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>resume<span style=color:#f92672>=</span>/dev/mapper/my-swap
+</span></span></code></pre></div><ul><li><code>resume_offset_setup</code>: 设置恢复偏移。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>resume_offset<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>noresume_setup</code>: 禁用恢复。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>noresume
+</span></span></code></pre></div><ul><li><code>keep_bootcon_setup</code>: 保持引导控制台设置。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>keep_bootcon
+</span></span></code></pre></div><ul><li><code>console_suspend_disable</code>: 禁用控制台挂起。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>console_suspend_disable
+</span></span></code></pre></div><ul><li><code>console_setup</code>: 设置控制台。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>console<span style=color:#f92672>=</span>ttyS0,115200
+</span></span></code></pre></div><ul><li><code>console_msg_format_setup</code>: 设置控制台消息格式。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>console_msg_format<span style=color:#f92672>=</span>%t %l %u: %m
+</span></span></code></pre></div><ul><li><code>ignore_loglevel_setup</code>: 忽略日志级别设置。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ignore_loglevel
+</span></span></code></pre></div><ul><li><code>log_buf_len_setup</code>: 设置日志缓冲区长度。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>log_buf_len<span style=color:#f92672>=</span>16M
+</span></span></code></pre></div><ul><li><code>control_devkmsg</code>: 控制/dev/kmsg。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>devkmsg<span style=color:#f92672>=</span>on
+</span></span></code></pre></div><ul><li><code>irq_affinity_setup</code>: 设置中断亲和性。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>irqaffinity<span style=color:#f92672>=</span>balanced
+</span></span></code></pre></div><ul><li><code>setup_forced_irqthreads</code>: 强制使用IRQ线程。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>forced_irqthread
+</span></span></code></pre></div><ul><li><code>irqpoll_setup</code>: 设置IRQ轮询模式。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>irqpoll
+</span></span></code></pre></div><ul><li><code>irqfixup_setup</code>: 设置IRQ修复。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>irqfixup
+</span></span></code></pre></div><ul><li><code>noirqdebug_setup</code>: 禁用IRQ调试。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>noirqdebug
+</span></span></code></pre></div><ul><li><code>early_cma</code>: 设置早期CMA（Contiguous Memory Allocator）。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>early_cma<span style=color:#f92672>=</span>128M
+</span></span></code></pre></div><ul><li><code>setup_io_tlb_npages</code>: 设置I/O TLB（Translation Lookaside Buffer）页面数量。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>io_tlb_npages<span style=color:#f92672>=</span><span style=color:#ae81ff>128</span>
+</span></span></code></pre></div><ul><li><code>setup_hrtimer_hres</code>: 设置高分辨率定时器。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>hrtimer_hres<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>ntp_tick_adj_setup</code>: 设置NTP时钟调整。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ntp_tick_adj<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>boot_override_clock</code>: 覆盖时钟。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>boot_override_clock
+</span></span></code></pre></div><ul><li><code>boot_override_clocksource</code>: 覆盖时钟源。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>boot_override_clocksource<span style=color:#f92672>=</span>pit
+</span></span></code></pre></div><ul><li><code>skew_tick</code>: 设置skew tick。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>skew_tick
+</span></span></code></pre></div><ul><li><code>setup_tick_nohz</code>: 设置nohz（no-Hertz）行为。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>tick_nohz<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>maxcpus</code>: 设置最大CPU数量。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>maxcpus<span style=color:#f92672>=</span><span style=color:#ae81ff>8</span>
+</span></span></code></pre></div><ul><li><code>nrcpus</code>: 设置CPU数量。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nrcpus<span style=color:#f92672>=</span><span style=color:#ae81ff>4</span>
+</span></span></code></pre></div><ul><li><code>nosmp</code>: 禁用SMP（Symmetric Multi-Processing）。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nosmp
+</span></span></code></pre></div><ul><li><code>cgroup_disable</code>: 禁用cgroup。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cgroup_disable
+</span></span></code></pre></div><ul><li><code>cgroup_no_v1</code>: 禁用cgroup v1。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cgroup_no_v1
+</span></span></code></pre></div><ul><li><code>audit_backlog_limit_set</code>: 设置审计队列限制。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>audit_backlog_limit<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>audit_enable</code>: 启用审计。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>audit<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>hung_task_panic_setup</code>: 设置Hung Task Panic行为。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>hung_task_panic
+</span></span></code></pre></div><ul><li><code>softlockup_all_cpu_backtrace_setup</code>: 设置Soft Lockup All CPU Backtrace。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>softlockup_all_cpu_backtrace
+</span></span></code></pre></div><ul><li><code>nosoftlockup_setup</code>: 禁用软锁死检测。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nosoftlockup
+</span></span></code></pre></div><ul><li><code>nowatchdog_setup</code>: 禁用Watchdog。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>nowatchdog
+</span></span></code></pre></div><ul><li><code>softlockup_panic_setup</code>: 设置Soft Lockup Panic行为。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>softlockup_panic
+</span></span></code></pre></div><ul><li><code>delayacct_setup_disable</code>: 禁用Delay Account。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>delayacct_disable
+</span></span></code></pre></div><ul><li><code>set_graph_max_depth_function</code>: 设置图的最大深度。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>graph_max_depth_function<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>
+</span></span></code></pre></div><ul><li><code>set_graph_notrace_function</code>: 设置不跟踪函数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>graph_notrace_function<span style=color:#f92672>=</span>my_function
+</span></span></code></pre></div><ul><li><code>set_graph_function</code>: 设置跟踪函数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>graph_function<span style=color:#f92672>=</span>my_function
+</span></span></code></pre></div><ul><li><code>set_ftrace_filter</code>: 设置ftrace过滤器。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ftrace_filter<span style=color:#f92672>=</span>my_function
+</span></span></code></pre></div><ul><li><code>set_ftrace_notrace</code>: 设置ftrace不跟踪。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ftrace_notrace<span style=color:#f92672>=</span>my_function
+</span></span></code></pre></div><ul><li><code>set_tracing_thresh</code>: 设置跟踪阈值。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>tracing_thresh<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>set_buf_size</code>: 设置缓冲区大小。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>buf_size<span style=color:#f92672>=</span>16K
+</span></span></code></pre></div><ul><li><code>set_tracepoint_printk</code>: 设置tracepoint printk。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>tracepoint_printk<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>set_trace_boot_clock</code>: 设置跟踪启动时钟。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>trace_boot_clock<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>set_trace_boot_options</code>: 设置跟踪启动选项。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>trace_boot_options<span style=color:#f92672>=</span>trace
+</span></span></code></pre></div><ul><li><code>boot_alloc_snapshot</code>: 设置启动分配快照。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>boot_alloc_snapshot<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>stop_trace_on_warning</code>: 设置在警告时停止跟踪。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>stop_trace_on_warning
+</span></span></code></pre></div><ul><li><code>set_ftrace_dump_on_oops</code>: 设置在Oops时转储ftrace。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ftrace_dump_on_oops
+</span></span></code></pre></div><ul><li><code>set_cmdline_ftrace</code>: 设置命令行ftrace。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cmdline_ftrace<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>enable_stacktrace</code>: 启用栈跟踪。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>enable_stacktrace
+</span></span></code></pre></div><ul><li><code>setup_trace_event</code>: 设置跟踪事件。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>trace_event<span style=color:#f92672>=</span>my_event
+</span></span></code></pre></div><ul><li><code>setup_elfcorehdr</code>: 设置ELF Core Header。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>elfcorehdr
+</span></span></code></pre></div><ul><li><code>set_hashdist</code>: 设置哈希分布。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>hashdist<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>cmdline_parse_movablecore</code>: 解析movablecore命令行。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>movablecore<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>cmdline_parse_kernelcore</code>: 解析kernelcore命令行。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>kernelcore<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>setup_numa_zonelist_order</code>: 设置NUMA区域列表顺序。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>numa_zonelist_order<span style=color:#f92672>=</span>node,zone
+</span></span></code></pre></div><ul><li><code>set_mminit_loglevel</code>: 设置内存初始化日志级别。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mminit_loglevel<span style=color:#f92672>=</span><span style=color:#ae81ff>2</span>
+</span></span></code></pre></div><ul><li><code>percpu_alloc_setup</code>: 设置per-CPU分配。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>percpu_alloc<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>setup_slab_nomerge</code>: 设置slab不合并。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>slab_nomerge
+</span></span></code></pre></div><ul><li><code>slub_nomerge</code>: 设置SLUB不合并。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>slub_nomerge
+</span></span></code></pre></div><ul><li><code>disable_randmaps</code>: 禁用随机映射。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>disable_randmaps
+</span></span></code></pre></div><ul><li><code>cmdline_parse_stack_guard_gap</code>: 解析堆栈保护间隙。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>stack_guard_gap<span style=color:#f92672>=</span><span style=color:#ae81ff>16</span>
+</span></span></code></pre></div><ul><li><code>early_memblock</code>: 设置早期内存块。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>early_memblock<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>hugetlb_default_setup</code>: 设置 HugeTLB 默认配置。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>hugetlb_default<span style=color:#f92672>=</span>always
+</span></span></code></pre></div><ul><li><code>hugetlb_nrpages_setup</code>: 设置 HugeTLB 页面数量。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>hugetlb_nrpages<span style=color:#f92672>=</span><span style=color:#ae81ff>128</span>
+</span></span></code></pre></div><ul><li><code>setup_numabalancing</code>: 设置NUMA平衡。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>numabalancing<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>early_page_poison_param</code>: 设置早期页面中毒参数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>early_page_poison<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>setup_slub_memcg_sysfs</code>: 设置SLUB memcg sysfs。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>slub_memcg_sysfs
+</span></span></code></pre></div><ul><li><code>setup_slub_min_objects</code>: 设置SLUB最小对象数量。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>slub_min_objects<span style=color:#f92672>=</span><span style=color:#ae81ff>128</span>
+</span></span></code></pre></div><ul><li><code>setup_slub_max_order</code>: 设置SLUB最大顺序。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>slub_max_order<span style=color:#f92672>=</span><span style=color:#ae81ff>6</span>
+</span></span></code></pre></div><ul><li><code>setup_slub_min_order</code>: 设置SLUB最小顺序。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>slub_min_order<span style=color:#f92672>=</span><span style=color:#ae81ff>3</span>
+</span></span></code></pre></div><ul><li><code>cmdline_parse_movable_node</code>: 解析movable node命令行。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>movable_node<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>setup_memhp_default_state</code>: 设置内存热插拔默认状态。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>memhp_default_state<span style=color:#f92672>=</span>off
+</span></span></code></pre></div><ul><li><code>parse_memtest</code>: 解析内存测试命令行参数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>memtest<span style=color:#f92672>=</span>on
+</span></span></code></pre></div><ul><li><code>setup_transparent_hugepage</code>: 设置透明 Huge Page。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>transparent_hugepage<span style=color:#f92672>=</span>always
+</span></span></code></pre></div><ul><li><code>enable_swap_account</code>: 启用交换分区会计。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>swapaccount<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>cgroup_memory</code>: 设置cgroup内存。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cgroup_memory<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>set_dhash_entries</code>: 设置dhash entries。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>dhash_entries<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>set_ihash_entries</code>: 设置ihash entries。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ihash_entries<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>set_mphash_entries</code>: 设置mphash entries。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mphash_entries<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>set_mhash_entries</code>: 设置mhash entries。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mhash_entries<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>choose_lsm</code>: 选择LSM（Linux Security Module）。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>choose_lsm<span style=color:#f92672>=</span>selinux
+</span></span></code></pre></div><ul><li><code>checkreqprot_setup</code>: 设置检查请求保护。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>checkreqprot<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>selinux_enabled_setup</code>: 设置SELinux启用。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>selinux<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>enforcing_setup</code>: 设置强制模式。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>enforcing<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>tomoyo_trigger_setup</code>: 设置Tomoyo触发器。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>tomoyo_trigger<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>tomoyo_loader_setup</code>: 设置Tomoyo加载器。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>tomoyo_loader<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>apparmor_enabled_setup</code>: 设置AppArmor启用。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>apparmor<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>integrity_audit_setup</code>: 设置完整性审计。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>integrity<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>ca_keys_setup</code>: 设置CA密钥。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ca_keys<span style=color:#f92672>=</span>/etc/ssl/certs/ca-certificates.crt
+</span></span></code></pre></div><ul><li><code>elevator_setup</code>: 设置电梯算法。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>elevator<span style=color:#f92672>=</span>cfq
+</span></span></code></pre></div><ul><li><code>force_gpt_fn</code>: 设置强制GPT功能。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>force_gpt_fn<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>ddebug_setup_query</code>: 设置ddebug查询。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>ddebug<span style=color:#f92672>=</span>on
+</span></span></code></pre></div><ul><li><code>pci_setup</code>: 设置PCI。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pci<span style=color:#f92672>=</span>nomsi
+</span></span></code></pre></div><ul><li><code>pcie_port_pm_setup</code>: 设置PCIe端口PM。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pcie_port_pm<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>pcie_port_setup</code>: 设置PCIe端口。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pcie_port<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>pcie_aspm_disable</code>: 禁用PCIe ASPM。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pcie_aspm<span style=color:#f92672>=</span>off
+</span></span></code></pre></div><ul><li><code>pcie_pme_setup</code>: 设置PCIe PME。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pcie_pme<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>no_scroll</code>: 禁用滚动。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>no_scroll
+</span></span></code></pre></div><ul><li><code>text_mode</code>: 设置文本模式。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>text
+</span></span></code></pre></div><ul><li><code>video_setup</code>: 设置视频。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>video<span style=color:#f92672>=</span>vesafb:mode<span style=color:#f92672>=</span>1024x768
+</span></span></code></pre></div><ul><li><code>fb_console_setup</code>: 设置帧缓冲控制台。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>fbcon<span style=color:#f92672>=</span>map:vesa
+</span></span></code></pre></div><ul><li><code>acpi_force_32bit_fadt_addr</code>: 强制使用32位FADT地址。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_force_32bit_fadt_addr
+</span></span></code></pre></div><ul><li><code>acpi_force_table_verification_setup</code>: 设置ACPI表验证。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_force_table_verification
+</span></span></code></pre></div><ul><li><code>acpi_parse_apic_instance</code>: 解析APIC实例。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_parse_apic_instance
+</span></span></code></pre></div><ul><li><code>osi_setup</code>: 设置OSI（Operating System Identification）。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>osi<span style=color:#f92672>=</span>Linux
+</span></span></code></pre></div><ul><li><code>acpi_disable_return_repair</code>: 禁用ACPI返回修复。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_disable_return_repair
+</span></span></code></pre></div><ul><li><code>acpi_no_static_ssdt_setup</code>: 禁用静态SSDT。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_no_static_ssdt
+</span></span></code></pre></div><ul><li><code>acpi_enforce_resources_setup</code>: 设置ACPI资源强制。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_enforce_resources
+</span></span></code></pre></div><ul><li><code>acpi_no_auto_serialize_setup</code>: 禁用ACPI自动序列化。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_no_auto_serialize
+</span></span></code></pre></div><ul><li><code>acpi_os_name_setup</code>: 设置ACPI OS名称。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_os_name<span style=color:#f92672>=</span>Linux
+</span></span></code></pre></div><ul><li><code>setup_acpi_rsdp</code>: 设置ACPI RSDP。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_rsdp<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>acpi_backlight</code>: 设置ACPI背光。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_backlight<span style=color:#f92672>=</span>vendor
+</span></span></code></pre></div><ul><li><code>acpi_irq_balance_set</code>: 设置ACPI IRQ平衡。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_irq_balance<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>acpi_irq_nobalance_set</code>: 设置ACPI IRQ不平衡。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_irq_nobalance<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>acpi_irq_pci</code>: 设置ACPI IRQ PCI。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_irq_pci<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>acpi_irq_isa</code>: 设置ACPI IRQ ISA。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_irq_isa<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>acpi_gpe_set_masked_gpes</code>: 设置ACPI GPE屏蔽。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>acpi_gpe_masked_gpes<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>disable_acpi_watchdog</code>: 禁用ACPI Watchdog。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>disable_acpi_watchdog
+</span></span></code></pre></div><ul><li><code>disable_acpi_memory_hotplug</code>: 禁用ACPI内存热插拔。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>disable_acpi_memory_hotplug
+</span></span></code></pre></div><ul><li><code>pnp_setup_reserve_mem</code>: 设置PNP预留内存。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pnp_setup_reserve_mem
+</span></span></code></pre></div><ul><li><code>pnp_setup_reserve_io</code>: 设置PNP预留I/O。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pnp_setup_reserve_io
+</span></span></code></pre></div><ul><li><code>pnp_setup_reserve_dma</code>: 设置PNP预留DMA。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pnp_setup_reserve_dma
+</span></span></code></pre></div><ul><li><code>pnp_setup_reserve_irq</code>: 设置PNP预留IRQ。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pnp_setup_reserve_irq
+</span></span></code></pre></div><ul><li><code>pnpacpi_setup</code>: 设置PNP ACPI。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pnpacpi_setup
+</span></span></code></pre></div><ul><li><code>sysrq_always_enabled_setup</code>: 设置sysrq始终启用。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>sysrq_always_enabled
+</span></span></code></pre></div><ul><li><code>param_setup_earlycon</code>: 设置早期控制台参数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>earlycon
+</span></span></code></pre></div><ul><li><code>parse_trust_cpu</code>: 解析信任CPU参数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>trust_cpu
+</span></span></code></pre></div><ul><li><code>iommu_set_def_domain_type</code>: 设置默认IOMMU域类型。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>iommu_set_def_domain_type<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>la_iommu_setup</code>: 设置LA IOMMU。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>la_iommu<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>deferred_probe_timeout_setup</code>: 设置延迟探测超时。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>deferred_probe_timeout<span style=color:#f92672>=</span><span style=color:#ae81ff>10</span>
+</span></span></code></pre></div><ul><li><code>mount_param</code>: 设置挂载参数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>mount_param<span style=color:#f92672>=</span>noatime
+</span></span></code></pre></div><ul><li><code>pd_ignore_unused_setup</code>: 设置PD忽略未使用。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pd_ignore_unused
+</span></span></code></pre></div><ul><li><code>stmmac_cmdline_opt</code>: 设置STMMAC命令行选项。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>stmmac_cmdline_opt<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>cpuidle_sysfs_setup</code>: 设置CPUidle sysfs。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>cpuidle_sysfs<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>efivar_ssdt_setup</code>: 设置EFI变量SSDT。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>efivar_ssdt<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>parse_efi_cmdline</code>: 解析EFI命令行。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>parse_efi_cmdline<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>setup_noefi</code>: 设置无EFI。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>noefi
+</span></span></code></pre></div><ul><li><code>parse_ras_param</code>: 解析RAS参数。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>parse_ras_param<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>netdev_boot_setup</code>: 设置网络设备引导。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>netdev_boot_setup<span style=color:#f92672>=</span><span style=color:#ae81ff>1</span>
+</span></span></code></pre></div><ul><li><code>set_thash_entries</code>: 设置THash entries。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>thash_entries<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>set_tcpmhash_entries</code>: 设置TCP mhash entries。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>tcpmhash_entries<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>set_uhash_entries</code>: 设置UHash entries。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>uhash_entries<span style=color:#f92672>=</span><span style=color:#ae81ff>1024</span>
+</span></span></code></pre></div><ul><li><code>debug_boot_weak_hash_enable</code>: 启用弱哈希调试。
+使用示例:</li></ul><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>debug_boot_weak_hash_enable
+</span></span></code></pre></div><p>这些参数覆盖了从低级别的硬件配置到高级别的系统行为。根据你的具体需求，你可以使用这些参数来微调内核的启动过程和配置。</p><h2 id=模块参数查看>模块参数查看
+<a class=anchor href=#%e6%a8%a1%e5%9d%97%e5%8f%82%e6%95%b0%e6%9f%a5%e7%9c%8b>#</a></h2><p>可以用如下命令:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>root@loongson-pc:/lib/modules/4.19.0-19-loongson-3# modinfo kernel/drivers/gpu/drm/gsgpu/gpu/gsgpu.ko
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>......
+</span></span><span style=display:flex><span>name:           gsgpu
+</span></span><span style=display:flex><span>parm:           LG100_support:LG100 support <span style=color:#f92672>(</span>1 <span style=color:#f92672>=</span> enabled <span style=color:#f92672>(</span>default<span style=color:#f92672>)</span>, 0 <span style=color:#f92672>=</span> disabled <span style=color:#f92672>(</span>int<span style=color:#f92672>)</span>
+</span></span><span style=display:flex><span>......
+</span></span></code></pre></div></article><footer class=book-footer><div class="flex flex-wrap justify-between"><div><a class="flex align-center" href=https://github.com/LoongUser/loonguser.github.io/commit/fd49bc73ef6e1f922c41c6cc94bfff17bb284ed5 title='最后修改者 AydenMeng | July 27, 2024' target=_blank rel=noopener><img src=/svg/calendar.svg class=book-icon alt=Calendar>
+<span>July 27, 2024</span></a></div></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><div class=book-comments></div><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav id=TableOfContents><ul><li><ul><li><a href=#龙芯平台常用启动参数>龙芯平台常用启动参数</a><ul><li><a href=#增加串口>增加串口</a></li><li><a href=#核数限制>核数限制</a></li><li><a href=#多核调度限制>多核调度限制</a></li><li><a href=#禁用smp>禁用SMP</a></li><li><a href=#串口调试休眠>串口调试休眠</a></li><li><a href=#设置替代初始化进程>设置替代初始化进程</a></li><li><a href=#减少内核启动时的输出>减少内核启动时的输出</a></li><li><a href=#设置日志级别>设置日志级别</a></li><li><a href=#设置根文件系统所在设备>设置根文件系统所在设备</a></li><li><a href=#加载ramdisk>加载ramdisk</a></li><li><a href=#设置pci属性>设置PCI属性</a></li><li><a href=#设置挂载参数>设置挂载参数</a></li><li><a href=#设置selinux启用>设置SELinux启用</a></li><li><a href=#禁用gpu驱动>禁用gpu驱动</a></li><li><a href=#使能lsdc驱动>使能lsdc驱动</a></li></ul></li><li><a href=#内核参数查询>内核参数查询</a></li><li><a href=#模块参数查看>模块参数查看</a></li></ul></li></ul></nav></div></aside></main></body></html>

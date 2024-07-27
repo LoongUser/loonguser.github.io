@@ -36,14 +36,20 @@ watch data mask; cont 检测通用寄存器, 当通用寄存器中和data一致�
 d1/d4/d8 addr length 按照1字节, 4字节, 8字节, 依次dump length个addr寄存器中的值.
 m1/m4/m8 addr data1 data2&amp;hellip; 按照1字节, 4字节, 8字节, 依次将dataX 写入addr地址.
 disas addr length 反汇编addr处开始length长的内容.
-csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item><item><title>龙芯平台使用clash</title><link>https://loonguser.github.io/applications/clash/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/clash/</guid><description>旧世界(Loongnix) # 来源: https://bbs.loongarch.org/d/177-loongnixclash
+csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item><item><title>龙芯平台使用clash</title><link>https://loonguser.github.io/applications/clash/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/clash/</guid><description> 旧世界(Loongnix) # 来源: https://bbs.loongarch.org/d/177-loongnixclash
 下载后:
 unzip -x clash1130-loong64.zip ./clash -d dir_include_config.yaml 其中dir_include_config.yaml是config.yaml所在的文件夹路径.
 然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:
 http: port: 127.0.0.1 7890 https: port: 127.0.0.1 7890 socks: port: 127.0.0.1 7891 具体端口号信息在config.yaml中查看.
 新世界 # Archlinux # pacman -S clash clash -d dir_include_config.yaml 其中dir_include_config.yaml是config.yaml所在的文件夹路径.
 然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:
-http: port: 127.0.0.1 7890 https: port: 127.0.0.1 7890 socks: port: 127.0.0.1 7891 具体端口号信息在config.yaml中查看.</description></item><item><title>内核编译</title><link>https://loonguser.github.io/system/kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/kernel/</guid><description>龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
+http: port: 127.0.0.1 7890 https: port: 127.0.0.1 7890 socks: port: 127.0.0.1 7891 具体端口号信息在config.yaml中查看.
+Country.mmdb # wget https://gitee.com/mirrors/Pingtunnel/raw/master/GeoLite2-Country.mmdb -O Country.mmdb</description></item><item><title>龙芯系统启动参数</title><link>https://loonguser.github.io/system/boot_param_with_kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/boot_param_with_kernel/</guid><description>龙芯平台常用启动参数 # 增加串口 # console=ttyS0,115200 earlycon=uart,mmio,0x1fe001e0 注意:
+console即是指控制台输出, ttyS0是龙芯默认的串口终端, 波特率是115200. earlycon是用来打印早期acpi初始化过程的参数, 在使用dts传参时可能不可用. 核数限制 # nr_cpus=3 maxcpus=3 多核调度限制 # isolcpus=0-1,3-5 示例可以使0,1,3,4,5核不参与调度, 即被孤立.
+禁用SMP # nosmp 串口调试休眠 # no_console_suspend 在s3和s4的过程中, 串口将打印执行流程.
+设置替代初始化进程 # rdinit=/sbin/my_init init=/sbin/my_init 减少内核启动时的输出 # quiet 设置日志级别 # loglevel=3 设置根文件系统所在设备 # root=/dev/sda3 加载ramdisk # initrd=/path/to/initrd.img 设置PCI属性 # 如禁用msi
+pci=nomsi 设置挂载参数 # mount_param=noatime 设置SELinux启用 # selinux=1 禁用gpu驱动 # gsgpu.LG100_support=0 使能lsdc驱动 # lsdc.modeset=1 内核参数查询 # 龙芯系统支持的内核启动参数可以使用如下命令查看:
+cat System.map-4.19.0-19-loongson-3 | grep &amp;#34;__setup_str_&amp;#34; | sed &amp;#39;s/.</description></item><item><title>内核编译</title><link>https://loonguser.github.io/system/kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/kernel/</guid><description>龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
 vmlinux+vmlinuz libmodules RamDisk_initrd 准备阶段 # 下面以LoongArch架构的编译为例. 编译器采用Gcc交叉编译LoongArch版本
 编译器版本 : loongarch64-linux-gnu-gcc-8.3.0 配置文件 采用龙芯默认配置: cp arch/loongarch/configs/loongson3_defconfig .config 开始编译 # vmlinux/vmlinuz
 执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-(此为编译器路径 which gcc) menuconfig 进入图形化配置界面,开关相关功能,我们直接Esc退出.
