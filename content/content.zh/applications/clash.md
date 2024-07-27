@@ -53,3 +53,9 @@ socks:              port:
 ```
 
 具体端口号信息在`config.yaml`中查看.
+
+## Country.mmdb
+
+```
+wget https://gitee.com/mirrors/Pingtunnel/raw/master/GeoLite2-Country.mmdb -O Country.mmdb
+```

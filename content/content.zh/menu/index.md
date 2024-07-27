@@ -16,6 +16,7 @@ headless: true
   - [Loongnix_FAQ]({{< relref "/system/Loongnix_FAQ" >}})
   - [内核编译]({{< relref "/system/kernel" >}})
   - [龙芯2K500先锋派OpenHarmony构建指北]({{< relref "/system/build_openharmony_for_2k500" >}})
+  - [龙芯系统启动参数]({{< relref "/system/boot_param_with_kernel" >}})
 
 - [**应用**]({{< relref "/applications/" >}})
   - [3A6000上搭建hexo博客]({{< relref "/applications/blog" >}})
