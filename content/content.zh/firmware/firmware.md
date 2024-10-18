@@ -102,6 +102,9 @@ root@loongson-pc:/home/loongson/OsTools# reboot
 ```
 
 ## 在系统下备份当前固件
+
+注: 此方法为固件备份, `UEFI`和`PMON`均可使用.
+
 ```
 root@loongson-pc:/home/loongson# git clone https://github.com/MarsDoge/OsTools.git
 root@loongson-pc:/home/loongson# cd OsTools
