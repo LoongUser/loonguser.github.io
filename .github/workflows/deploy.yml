@@ -16,9 +16,9 @@ jobs:
                   fetch-depth: 0
 
             - name: Setup Hugo
-              uses: peaceiris/actions-hugo@v2
+              uses: peaceiris/actions-hugo@v3
               with:
-                  hugo-version: "latest"
+                  hugo-version: '0.134.2'
                   extended: true
 
             - name: Build Web
