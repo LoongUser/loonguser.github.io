@@ -1,11 +1,46 @@
-<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="1. Initrd # 通常, lib/modules/下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成Initrd:
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  1. Initrd
+  #
+
+通常, lib/modules/下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成Initrd:
+
+  1.1 dracut命令
+  #
+
+ls lib/modules/* | xargs -I N dracut --kver N --force
+
+  1.2 mkinitramfs命令
+  #
+
+ls lib/modules/* | xargs -I N mkinitramfs /lib/modules/N -o /boot/initrd.img-N 
+
+  2. GRUB
+  #
+
+
+  2.1 Grub
+  #
+
+通常, Grub安装在当前启动系统所在的磁盘上, 如下命令可以找到当前磁盘. (希望将Grub安装在其他盘的同学, 看明白自己想要的效果)
+[root@mxd ~]# lsblk -P | grep &#34;$(lsblk -P | grep -w 'MOUNTPOINTS=&#34;/&#34;' | sed 's/.*MAJ:MIN=&#34;\([^:]*\).*/\1/g'):0&#34; | awk -F '&#34;' '{print &#34;/dev/&#34; $2}'
+/dev/nvme0n1
+再通过grub-install或者grub2-install命令安装进磁盘:
+grub-install /dev/nvme0n1
+
+  2.2 grub.cfg
+  #
+
+grub-mkconfig -o /boot/grub/grub.cfg
+
+  2.3 grub.efi
+  #
+
+grub-mkimage -c /boot/grub/grub.cfg -o /boot/efi/EFI/BOOT/BOOTLOONGARCH64.EFI -O loongarch64-efi
+2.1节中生成grub可以让bios找到启动设备, 自动启动."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/system/gen_sys_file/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="生成系统下的一些文件"><meta property="og:description" content=" 1. Initrd # 通常, lib/modules/下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成Initrd:
 1.1 dracut命令 # ls lib/modules/* | xargs -I N dracut --kver N --force 1.2 mkinitramfs命令 # ls lib/modules/* | xargs -I N mkinitramfs /lib/modules/N -o /boot/initrd.img-N 2. GRUB # 2.1 Grub # 通常, Grub安装在当前启动系统所在的磁盘上, 如下命令可以找到当前磁盘. (希望将Grub安装在其他盘的同学, 看明白自己想要的效果)
 [root@mxd ~]# lsblk -P | grep &#34;$(lsblk -P | grep -w 'MOUNTPOINTS=&#34;/&#34;' | sed 's/.*MAJ:MIN=&#34;\([^:]*\).*/\1/g'):0&#34; | awk -F '&#34;' '{print &#34;/dev/&#34; $2}' /dev/nvme0n1 再通过grub-install或者grub2-install命令安装进磁盘:
-grub-install /dev/nvme0n1 2."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/system/gen_sys_file/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="生成系统下的一些文件"><meta property="og:description" content="1. Initrd # 通常, lib/modules/下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成Initrd:
-1.1 dracut命令 # ls lib/modules/* | xargs -I N dracut --kver N --force 1.2 mkinitramfs命令 # ls lib/modules/* | xargs -I N mkinitramfs /lib/modules/N -o /boot/initrd.img-N 2. GRUB # 2.1 Grub # 通常, Grub安装在当前启动系统所在的磁盘上, 如下命令可以找到当前磁盘. (希望将Grub安装在其他盘的同学, 看明白自己想要的效果)
-[root@mxd ~]# lsblk -P | grep &#34;$(lsblk -P | grep -w 'MOUNTPOINTS=&#34;/&#34;' | sed 's/.*MAJ:MIN=&#34;\([^:]*\).*/\1/g'):0&#34; | awk -F '&#34;' '{print &#34;/dev/&#34; $2}' /dev/nvme0n1 再通过grub-install或者grub2-install命令安装进磁盘:
-grub-install /dev/nvme0n1 2."><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="system"><meta property="article:modified_time" content="2023-11-27T15:27:44+08:00"><title>生成系统下的一些文件 | 龙芯玩机指南</title>
-<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.d37184993c0833712b1f65fac32bb1e48b2a089eb387acbd83becd91aeeb45b2.js integrity="sha256-03GEmTwIM3ErH2X6wyux5IsqCJ6zh6y9g77Nka7rRbI=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+grub-install /dev/nvme0n1 2.2 grub.cfg # grub-mkconfig -o /boot/grub/grub.cfg 2.3 grub.efi # grub-mkimage -c /boot/grub/grub.cfg -o /boot/efi/EFI/BOOT/BOOTLOONGARCH64.EFI -O loongarch64-efi 2.1节中生成grub可以让bios找到启动设备, 自动启动."><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="system"><meta property="article:modified_time" content="2023-11-27T15:27:44+08:00"><title>生成系统下的一些文件 | 龙芯玩机指南</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.baa9ab2ee5f7a736eb778472694b3059d256ce1ea6684d96d377882f821a2c16.js integrity="sha256-uqmrLuX3pzbrd4RyaUswWdJWzh6maE2W03eIL4IaLBY=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
 <input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
 <label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
 Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/firmware/>如何更新固件</a></li><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/gen_sys_file/ class=active>生成系统下的一些文件</a></li><li><a href=/system/install_archlinux/>新世界Archlinux系统安装</a></li><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/update_system/>如何更新系统</a></li><li><a href=/system/Loongnix_FAQ/>Loongnix_FAQ</a></li><li><a href=/system/kernel/>内核编译</a></li><li><a href=/system/build_openharmony_for_2k500/>龙芯2K500先锋派OpenHarmony构建指北</a></li><li><a href=/system/boot_param_with_kernel/>龙芯系统启动参数</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li><li><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></li><li><a href=/applications/lat/>在龙芯3A5000上运行Windows程序</a></li><li><a href=/applications/clash/>龙芯平台使用clash</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>

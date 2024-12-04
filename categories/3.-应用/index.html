@@ -1,5 +1,5 @@
 <!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/categories/3.-%E5%BA%94%E7%94%A8/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="3. 应用"><meta property="og:locale" content="zh"><meta property="og:type" content="website"><title>3. 应用 | 龙芯玩机指南</title>
-<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.d37184993c0833712b1f65fac32bb1e48b2a089eb387acbd83becd91aeeb45b2.js integrity="sha256-03GEmTwIM3ErH2X6wyux5IsqCJ6zh6y9g77Nka7rRbI=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=https://loonguser.github.io/categories/3.-%E5%BA%94%E7%94%A8/index.xml title=龙芯玩机指南></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.baa9ab2ee5f7a736eb778472694b3059d256ce1ea6684d96d377882f821a2c16.js integrity="sha256-uqmrLuX3pzbrd4RyaUswWdJWzh6maE2W03eIL4IaLBY=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script><link rel=alternate type=application/rss+xml href=https://loonguser.github.io/categories/3.-%E5%BA%94%E7%94%A8/index.xml title=龙芯玩机指南></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
 <input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
 <label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
 Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/firmware/>如何更新固件</a></li><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/gen_sys_file/>生成系统下的一些文件</a></li><li><a href=/system/install_archlinux/>新世界Archlinux系统安装</a></li><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/update_system/>如何更新系统</a></li><li><a href=/system/Loongnix_FAQ/>Loongnix_FAQ</a></li><li><a href=/system/kernel/>内核编译</a></li><li><a href=/system/build_openharmony_for_2k500/>龙芯2K500先锋派OpenHarmony构建指北</a></li><li><a href=/system/boot_param_with_kernel/>龙芯系统启动参数</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li><li><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></li><li><a href=/applications/lat/>在龙芯3A5000上运行Windows程序</a></li><li><a href=/applications/clash/>龙芯平台使用clash</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
@@ -7,65 +7,168 @@ Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></
 <label for=toc-control><img src=/svg/toc.svg class=book-icon alt="Table of Contents"></label></div><aside class="hidden clearfix"><nav><ul><li class=book-section-flat><strong>Categories</strong><ul><li class="flex justify-between"><a href=/categories/1.-%E5%9B%BA%E4%BB%B6/>1. 固件</a>
 <span>4</span></li><li class="flex justify-between"><a href=/categories/2.-%E7%B3%BB%E7%BB%9F/>2. 系统</a>
 <span>8</span></li><li class="flex justify-between"><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a>
-<span>6</span></li></ul></li><li class=book-section-flat><strong>Tags</strong><ul></ul></li></ul></nav></aside></header><article class="markdown book-post"><h2><a href=/applications/gogs/>3A6000上搭建gogs</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p>pacman -S mariadb mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql systemctl start mysql mariadb --initialize-insecure --user=mysql --datadir='./data' mysql -u root [root@mxd gitrepo]# mysql -u root mysql: Deprecated program name. It will be removed in a future release, use '/usr/bin/mariadb' instead Welcome to the MariaDB monitor. Commands end with ; or \g. Your MariaDB connection id is 8 Server version: 11.0.2-MariaDB Arch Linux Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others. Type 'help;' or '\h' for help.
-<a href=/applications/gogs/>...</a></p></article><article class="markdown book-post"><h2><a href=/applications/blog/>3A6000上搭建hexo博客</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p>pacman -S nodejs npm git npm config set proxy="http://127.0.0.1:7890" npm install -g hexo-cli mkdir loongsonwiki cd loongsonwiki hexo init git clone https://github.com/hdxw/hexo-theme-prowiki.git themes/hexo-theme-prowiki git submodule add https://github.com/hdxw/hexo-theme-prowiki.git themes/hexo-theme-prowiki vim _config.yml diff --git a/_config.yml b/_config.yml index 02b67a4..2391977 100644 --- a/_config.yml +++ b/_config.yml @@ -97,7 +97,7 @@ ignore: # Extensions ## Plugins: https://hexo.io/plugins/ ## Themes: https://hexo.io/themes/ -theme: landscape +theme: hexo-theme-prowiki # Deployment ## Docs: https://hexo.io/docs/one-command-deployment</p></article><article class="markdown book-post"><h2><a href=/applications/qemu/>Qemu使用</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p>部分环境准备: # qemu: https://gitlab.com/qemu-project/qemu.git
-固件: https://github.com/loongson/Firmware/raw/main/LoongArchVirtMachine/edk2-loongarch64-code.fd
-系统: http://pkg.loongnix.cn/loongnix/isos/Loongnix-20.5/
-qemu安装 # # Arch系 pacman -S qemu-system-loongarch64 # Debian系 apt install qemu-system-loongarch64 # Fedora系 yum install qemu-system-loongarch64 自己编译安装:
-git clone https://gitlab.com/qemu-project/qemu.git cd qemu mkdir build4la cd build4la ../configure --target-list=loongarch64-softmmu --enable-kvm --disable-werror --enable-vnc --enable-debug --enable-gdb make -j 8 qemu使用 # qemu启动固件: # ./qemu-system-loongarch64 -m 4G -smp 1 --cpu la464 --machine virt -bios edk2-loongarch64-code.fd -display none --serial stdio 参数说明:
-./qemu-system-loongarch64: 这是QEMU模拟器的可执行文件，用于模拟LoongArch64架构的系统。
--m 4G: 指定为虚拟机分配4GB内存（4096MB）。
-<a href=/applications/qemu/>...</a></p></article><article class="markdown book-post"><h2><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p>使用串口时:
-cd /tmp/ejtag-debug/ ./la_ejtag_debug_gpio -t source configs/configs.ls3a5000 在本机上运行时:
-cd /path/ejtag-debug/ ./la_ejtag_debug_usb -t source configs/configs.ls3a5000 cpus 查看pc
-set 查看通用寄存器及部分csr寄存器, 此时pc停在set时运行的地址.
-cont 从set处继续运行
-hb addr; cont 断点到addr处, 等待触发断点.
-hbls 查看断点
-watch data; cont 检测通用寄存器, 当通用寄存器中和data一致时, 断点此处.
-watchls 查看数据检测点.
-watch data mask; cont 检测通用寄存器, 当通用寄存器中和data一致时, 断点此处. mask可以设置掩码.
-d1/d4/d8 addr length 按照1字节, 4字节, 8字节, 依次dump length个addr寄存器中的值.
-m1/m4/m8 addr data1 data2&mldr; 按照1字节, 4字节, 8字节, 依次将dataX 写入addr地址.
-disas addr length 反汇编addr处开始length长的内容.
-csrs d8 num length 从第num个csr寄存器连续读出length个值.
-<a href=/applications/ejtag/>...</a></p></article><article class="markdown book-post"><h2><a href=/applications/clash/>龙芯平台使用clash</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p>旧世界(Loongnix) # 来源: https://bbs.loongarch.org/d/177-loongnixclash
-下载后:
-unzip -x clash1130-loong64.zip ./clash -d dir_include_config.yaml 其中dir_include_config.yaml是config.yaml所在的文件夹路径.
-然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:
-http: port: 127.0.0.1 7890 https: port: 127.0.0.1 7890 socks: port: 127.0.0.1 7891 具体端口号信息在config.yaml中查看.
-新世界 # Archlinux # pacman -S clash clash -d dir_include_config.yaml 其中dir_include_config.yaml是config.yaml所在的文件夹路径.
-然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:
-http: port: 127.0.0.1 7890 https: port: 127.0.0.1 7890 socks: port: 127.0.0.1 7891 具体端口号信息在config.yaml中查看.
-Country.mmdb # wget https://gitee.com/mirrors/Pingtunnel/raw/master/GeoLite2-Country.mmdb -O Country.mmdb</p></article><article class="markdown book-post"><h2><a href=/applications/lat/>在龙芯3A5000上运行Windows程序</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p>文章来源: https://zhuanlan.zhihu.com/p/436405217
-2022-03-18：本文所述操作步骤较为繁琐，另写了一篇操作简单的替代本文内容：
-guee：包教包会：龙芯3A5000上运行任意Windows软件161 赞同 · 25 评论文章 龙芯3A5000是龙芯最新的桌面CPU，它基于龙芯自主设计的LoongArch架构（指令集），性能接近市场主流CPU水平。因为各种操作系统和应用程序都与指令集相关，所以x86架构（指令集）的CPU就不能直接运行ARM架构（指令集）的应用程序，反之亦然。因此诞生了各种各样的二进制（指令）翻译技术，用于跨架构模拟运行其它平台的操作系统和应用程序，各种二进制（指令）翻译技术可以分为软件翻译、硬件翻译、软硬结合的翻译这三大类。我先简述一下二进制翻译技术，然后再给出在UOS和龙芯3A5000上运行任何Windows程序的方法。
-二进制翻译技术简述 # 以软件方式进行二进制（指令）翻译必须存在一个宿主系统，模拟器程序在宿主系统上运行。比如各种游戏模拟器，用来在电脑上玩红白机游戏、街机游戏、PS游戏等，以纯软件的方式构建了一个虚拟的主机环境，让那些游戏程序成为缸中之脑，游戏程序执行的所有指令、请求的所有资源都是由翻译软件模拟出来的，但它以为自己是在真正的主机中运行。
-模拟通用计算机的CPU和相关硬件环境要比模拟游戏主机复杂得多。这方面的代表软件，有开源的可虚拟多种架构的qemu、苹果的rosetta 2、以及微软Windows11在arm上模拟x86和在x86上模拟arm的技术等等。其中qemu可以在多种架构（指令集）之间相互转换，不但只支持动态翻译，而且性能最低，平均运行效率仅为原生性能的5%左右。苹果和微软都是一对一的专用翻译，且与操作系统深度结合，效率较高。
-硬件翻译以Transmeta CPU为代表，它的CPU本身是一种“超长指令字”架构，但在指令译码的阶段，接受的是x86指令，然后把x86指令转换为它自己的指令来运行。这种方式使它的CPU看起来就是一块x86架构的CPU，并且不需要对电脑中的其它硬件进行模拟，各种支持x86指令集的操作系统和应用程序都可以在使用Transmeta CPU的电脑上直接安装运行。Intel/AMD现在的CPU其实也是硬件翻译技术的代表，它们内部是执行的“微码（类似于精简指令集）”，而对于的表现则依然是x86架构的处理器。
-龙芯的LoongArch架构（指令集）则代表了第三个分类，即软件和硬件结合的二进制翻译方式。这种方式既有软件翻译的灵活性，又能接近或达到硬件翻译的效率，兼具二者的优点。龙芯的二进制翻译本质上也是软件翻译，但是对软件翻译中比较耗时的处理提供了专门的硬件指令来加速翻译过程，因此称它为软硬结合的二进制翻译技术。龙芯之所以不使用纯硬件的翻译方式，是因为我们必须建立自主的软件生态体系。如果像Transmeta那样对外表现为x86的CPU，那么它能直接运行的就只有基于x86的操作系统和应用程序，生存状况高度依赖于Intel和微软的态度，因此它虽然在Intel的诉讼中获胜，但却在Intel对市场的操作下惨然离场。
-龙芯的LoongArch架构（指令集）本身是一种独立的，完善的指令系统，可以建立独立于x86/ARM之外的软件生态体系。**龙芯的二进制翻译技术主要是在LoongArch原生软件生态建设的初期，用于补充原生软件的不足，LoongArch架构和龙芯CPU的生存不依赖于Intel/ARM/MS/Google等主导的软件生态。**二进制翻译技术具有单方面的决定权，任何公司都没有理由阻止任何软件以二进制翻译的方式在某种原生不支持的架构上运行。即使软件开发商以检测CPU型号等技术手段阻止运行，那么以软件为主体的二进制翻译技术也能轻松解决这个问题，而固化在CPU硬件中的各种信息和特征则不可能像软件那样在线升级。以软件翻译为主体的二进制翻译，甚至可以针对特定程序把自己模拟成特定的CPU型号。
-即使要翻译的目标架构频繁升级指令集版本，增加新的指令，不断推陈出新，对于龙芯来说，要模拟最新的CPU和指令集，也只是更新一下软件的事儿。而那些需要架构授权的CPU产品，如果没有购买到新版本的架构授权，那就无论如何发布多少个新款CPU产品，都不可能兼容新版架构的新指令。
-龙芯二进制翻译系统的简单结构说明 # 龙芯的二进制翻译系统仍在开发当中，尚未公开技术资料，但当前已经有可以使用的测试版本。我仅仅根据对当前状态分析的结果，简单描述一下它的基本结构如下图，可能不太准确，也不够详细，意会就好。
-基于龙芯LoongArch架构（指令集）的CPU，在运行原生的LoongArch指令集的程序时，不需要二进制翻译，可以直接运行。
-在运行基于其它架构（指令集）的Linux程序时，由龙芯的二进制翻译模块对指令进行转译。程序对Linux的API调用，可以直接由操作系统本身提供支持。
-在运行Windows（x86）的程序时，由于Linux系统本身不能提供Windows系统的API，因此需要使用Wine来提供对Windows API的支持。Wine是给Windows（x86）程序提供虚拟的API接口，而不负责对指令的转译，因此只用wine并不能在非x86的CPU运行Windows程序。在x86的应用程序中，不但程序自身逻辑以及第三方库的二进制代码都是x86指令，而且用于调用Windows API的二进制代码也是x86指令，如果没有二进制翻译，在LoongArch上Windows程序甚至连程序入口的代码都不能执行，也无法调用Window API，程序自身的代码和第三方库就更不可能运行了。
-操作系统API（应用程序编程接口）是由操作系统提供给应用程序的接口，在Linux上运行Windows程序时，假如调用读取文件数据的API，就可以由Wine给应用程序提供这个接口，但接口内部不再是Windows的代码，而是由Wine去调用Linux的相关接口来实现相同的功能，这就是对API的模拟。在应用程序读取到数据之后做的操作，就不在Wine的管辖范围内了。比如程序取得数据后可能加密解密、可能作为图像数据计算对比度、可能作为音频数据计算特殊音效……这些操作可能是由程序自身代码来完成，也可能是调用其它的库文件的接口来实现。这些在Wine支持范围之外的代码，在x86架构（指令集）的CPU上是由CPU直接执行，在LoongArch架构（指令集）的CPU上，就只能由二进制翻译模块转译为LoongArch的指令来执行。
-操作系统和应用程序对CPU指令的使用，是属于ABI（应用程序二进制接口）的一部分，ABI的层级很低，是二进制代码的规范。在基于LoongArch架构的CPU上运行x86程序时，就是由二进制翻译模块来处理对指令的转译，也就是对x86的ABI规范的模拟。不管是Linux还是Windows的应用程序，只要它不是LoongArch原生指令集的，最终都需要经过二进制翻译才能在龙芯的CPU上运行。
-龙芯的二进制翻译模块当前和qemu一样也是只支持动态翻译，但效率比原生的qemu高出一个数量级。将来会支持动、静态结合的翻译模式，也就是程序运行时的动态翻译结果可以保留下来，下次运行相同的程序就直接使用翻译的结果，仅对程序运行时修改自身代码等行为需要动态翻译。这样可以降低翻译的CPU消耗，翻译运行的效率可以大幅度提高，预计运行x86程序可以达到80%的原生效率。这里的80%是指平均80%，而不像某些纯软件的翻译方案仅对特定类型程序翻译效率较高，就笼统地宣传“高效率”。
-在龙芯3A5000上实战运行Windows程序 # 最简单的方式，是在使用3A5000的电脑上安装统信的UOS系统，然后等着UOS系统的应用商店中提供了什么Windows软件，就安装什么软件，可以无障碍，无门槛，无后顾之忧……可是Windows的软件千奇百怪，UOS的应用商店不可能提供所有的Windows软件，那么我们就需要动动小手，自己解决自己的需求。
-目前只有UOS for 3A5000（体验版）系统中集成了龙芯的二进制翻译模块，而龙芯自己的Loongnix为什么反而还没有提供二进制翻译的支持呢？“体验版”这三个字很重要，是否稳定无关紧要。龙芯的Loongnix却是已经正式发布的产品，对于龙芯的行业用户来说，往系统中更新一个还没有开发完成的、可能不稳定的功能模块，大概不是什么喜闻乐见的事情。因此我下面就以UOS为例说明一下如何在龙芯3A5000上运行“任何”的Windows软件，“任何”是指可以尝试任何软件，但不能保证所有软件都能正常运行。
-**UOS中已经集成了龙芯二进制翻译模块，但要运行Windows软件仍然需要一个Wine环境。**UOS本身有多个版本的Wine，有经过深度/统信改良了效率和兼容性的deepin-wine，也有原生的版本，我们要使用deepin-wine。最简单的方式是从UOS应用商店中安装一个由Wine支持的软件，环境就自动配置好了。如果使用Loongnix或其它的系统，就需要手工完成这个过程，可能还需要从UOS复制一些文件和配置，比较麻烦。建议安装的软件是PhotoShop，因为PhotoShop是一个很大很复杂的软件，能够让PhotoShop正常运行的环境，就能让大多数软件正常运行。
-龙芯3A5000运行Windows程序，微信、PS，扫雷绝对不卡15.2 万播放 · 163 赞同视频 ​
-UOS对Wine版软件的组织方式是给每个软件一套单独的Windows环境，也就是说每个软件包中都有配套的Windows、Program Files、ProgramData、User等系统文件夹。这些文件夹和软件本身，都被打包成一个files.7z文件，安装到“/opt/apps”文件夹下以包名命名的子文件夹中。软件首次运行时，files.7z被解压到“/home/用户名/.deepinwine/”文件夹中，并自动配置相关的运行环境。这种方式的好处是每个软件都相对独立，避免因某些共用文件的版本不同导致不能运行，坏处就是会增加许多额外的文件。但实际增加的文件体积并不会很大，因为前面说了Wine只是提供虚拟的API接口，因此包中的操作系统的DLL文件实际都是只有接口没有代码的“代理”版本，每个文件只几KB大小。系统DLL接口的功能是由Wine文件夹中的对应的.so文件来实现的。只有系统DLL之外的，软件自身的以及第三方的DLL文件才是“真实”的DLL文件。
-在安装了PhotoShop（Wine）之后，在“/opt/apps/com.pscs6.deepin/files”文件夹中的files.7z和run.sh是我们需要用到的。
-如果你已经运行过刚刚安装的PhotoShop，那么在“/home/用户名/.deepinwine”文件夹中会有“Deepin-CS6”文件夹，“.deepinwine”是隐藏文件夹，在Linux中文件（夹）名字前面加“.”表示隐藏，在文件管理器中看不到，需要手工在地址栏输入才能打开。它里面的内容如下：
-dosdevices文件夹中的内容是虚拟硬盘盘符和com接口的链接文件，比如“c:”文件就链接到“drive_c”文件夹。“drive_c”文件夹是虚拟的Windodws系统的C盘，里面的内容一看就眼熟：
-如果你要向这个由Wine虚拟的Windows环境中安装软件，或复制绿色软件来运行，就把“drive_c”当成Windows的C盘来用，都往里面复制就行了。其实直接使用PhotoShop的这个Wine环境文件夹也可以，但是为了避免一些麻烦，比如防止意外卸载了PhotoShop之后你放在里面的软件也被一同删除，我们还是最好自己弄个单独的环境。另外说明一下，这是32位的Wine环境，不能运行64位的Windows程序，如果要运行64位的程序，需要手工配置64位的环境，因为UOS还没有提供直接安装的64位Windows程序。
-先把前面在“/opt/apps/com.pscs6.deepin/files”中看到的files.7z复制到“/home/用户名/.deepinwine”文件夹中，然后在files.7z上单击右键，在右键菜单中选择“解压到当前文件夹”。然后“/home/用户名/.deepinwine”下面就会多出一个“files”文件夹，把它改个名字，比如“MyGames”或者像我一样改成“Default”。这个文件夹中的内容和之前“Deepin-CS6”文件夹中的一样，但你不需要在这里运行PhotoShop，因此可以把“/home/guee/.deepinwine/Default/drive_c/Program Files”里面的Adoeb删除掉，节省一些空间。
-再然后可以把下载到的绿色软件或者安装程序等都复制到“/home/guee/.deepinwine/Default/drive_c”中你喜欢的位置，最后把前面看到的“run.sh”复制出来进行一些修改，就可以运行它们了。当然也可以复制下面的内容，保存为一个扩展名为“.sh”的文件，注意要在文件属性的“权限管理”中设置“允许以程序执行”。
-#!/bin/sh #在/home/guee/.deepinwine/下面你的Windows环境所在的子文件夹名。 BOTTLENAME="Default" #Wine的版本 APPVER="13.0deepin6~wine5" #要运行的程序的路径，你的drive_c文件夹就是c:/，后是相对于它的路径。 #注意Linux中的路径分隔符是/,而Windows中是\，这里按照Linux的规则写。 EXEC_PATH="c:/ali213-AngryBirdschs/AngryBirds.exe" #启动Wine的脚本程序，是Wine自带的。 START_SHELL_PATH="/opt/deepinwine/tools/run_v4.sh" #大概是这个程序关联的文档类型，这里设置为""。 export MIME_TYPE="" #Wine的主程序，这是环境变量，在run_v4.sh这个启动脚本中会使用它。 export APPRUN_CMD="deepin-wine5-stable" #语言环境设置 export PATCH_LOADER_ENV="LC_ALL=zh_CN.
-<a href=/applications/lat/>...</a></p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav><ul><li class=book-section-flat><strong>Categories</strong><ul><li class="flex justify-between"><a href=/categories/1.-%E5%9B%BA%E4%BB%B6/>1. 固件</a>
+<span>6</span></li></ul></li><li class=book-section-flat><strong>Tags</strong><ul></ul></li></ul></nav></aside></header><article class="markdown book-post"><h2><a href=/applications/gogs/>3A6000上搭建gogs</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p><pre tabindex=0><code>pacman -S mariadb
+mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+systemctl start mysql
+mariadb --initialize-insecure --user=mysql --datadir=&#39;./data&#39;
+mysql -u root
+
+[root@mxd gitrepo]# mysql -u root
+mysql: Deprecated program name. It will be removed in a future release, use &#39;/usr/bin/mariadb&#39; instead
+Welcome to the MariaDB monitor.  Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 11.0.2-MariaDB Arch Linux
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type &#39;help;&#39; or &#39;\h&#39; for help. Type &#39;\c&#39; to clear the current input statement.
+
+MariaDB [(none)]&gt; create user &#39;gogs&#39;@&#39;localhost&#39; identified by &#39;passwd&#39;;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [(none)]&gt; select user,host from mysql.user;
++-------------+-----------+
+| User        | Host      |
++-------------+-----------+
+| PUBLIC      |           |
+|             | localhost |
+| gogs        | localhost |
+| mariadb.sys | localhost |
+| mysql       | localhost |
+| root        | localhost |
+|             | mxd       |
++-------------+-----------+
+7 rows in set (0.001 sec)
+
+MariaDB [(none)]&gt; CREATE DATABASE gogs;
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [(none)]&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| gogs               |
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+6 rows in set (0.000 sec)
+
+MariaDB [(none)]&gt; grant all privileges on gogs.* to &#39;gogs&#39;@&#39;%&#39; identified by &#39;passwd&#39; with grant option;
+Query OK, 0 rows affected (0.001 sec)
+</code></pre><p>build gogs:</p><a href=/applications/gogs/>...</a></p></article><article class="markdown book-post"><h2><a href=/applications/blog/>3A6000上搭建hexo博客</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p><pre tabindex=0><code>pacman -S nodejs npm git
+npm config set proxy=&#34;http://127.0.0.1:7890&#34;
+npm install -g hexo-cli
+</code></pre><pre tabindex=0><code>mkdir loongsonwiki
+cd loongsonwiki
+hexo init
+git clone  https://github.com/hdxw/hexo-theme-prowiki.git themes/hexo-theme-prowiki
+git submodule add  https://github.com/hdxw/hexo-theme-prowiki.git themes/hexo-theme-prowiki
+vim _config.yml
+</code></pre><pre tabindex=0><code>diff --git a/_config.yml b/_config.yml
+index 02b67a4..2391977 100644
+--- a/_config.yml
++++ b/_config.yml
+@@ -97,7 +97,7 @@ ignore:
+ # Extensions
+ ## Plugins: https://hexo.io/plugins/
+ ## Themes: https://hexo.io/themes/
+-theme: landscape
++theme: hexo-theme-prowiki
+
+ # Deployment
+ ## Docs: https://hexo.io/docs/one-command-deployment
+</code></pre></p></article><article class="markdown book-post"><h2><a href=/applications/qemu/>Qemu使用</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p><h2 id=部分环境准备>部分环境准备:
+<a class=anchor href=#%e9%83%a8%e5%88%86%e7%8e%af%e5%a2%83%e5%87%86%e5%a4%87>#</a></h2><p>qemu:
+<a href=https://gitlab.com/qemu-project/qemu.git>https://gitlab.com/qemu-project/qemu.git</a></p><p>固件:
+<a href=https://github.com/loongson/Firmware/raw/main/LoongArchVirtMachine/edk2-loongarch64-code.fd>https://github.com/loongson/Firmware/raw/main/LoongArchVirtMachine/edk2-loongarch64-code.fd</a></p><p>系统:
+<a href=http://pkg.loongnix.cn/loongnix/isos/Loongnix-20.5/>http://pkg.loongnix.cn/loongnix/isos/Loongnix-20.5/</a></p><h2 id=qemu安装>qemu安装
+<a class=anchor href=#qemu%e5%ae%89%e8%a3%85>#</a></h2><pre tabindex=0><code># Arch系
+pacman -S qemu-system-loongarch64
+
+# Debian系
+apt install qemu-system-loongarch64
+
+# Fedora系
+yum install qemu-system-loongarch64
+</code></pre><p>自己编译安装:</p><pre tabindex=0><code>git clone https://gitlab.com/qemu-project/qemu.git
+cd qemu
+mkdir build4la
+cd build4la
+../configure --target-list=loongarch64-softmmu --enable-kvm --disable-werror --enable-vnc --enable-debug --enable-gdb
+make -j 8
+</code></pre><h2 id=qemu使用>qemu使用
+<a class=anchor href=#qemu%e4%bd%bf%e7%94%a8>#</a></h2><h3 id=qemu启动固件>qemu启动固件:
+<a class=anchor href=#qemu%e5%90%af%e5%8a%a8%e5%9b%ba%e4%bb%b6>#</a></h3><pre tabindex=0><code>./qemu-system-loongarch64 -m 4G -smp 1 --cpu la464 --machine virt -bios edk2-loongarch64-code.fd -display none --serial stdio
+</code></pre><p>参数说明:</p><p><code>./qemu-system-loongarch64</code>: 这是QEMU模拟器的可执行文件，用于模拟LoongArch64架构的系统。</p><p><code>-m 4G</code>: 指定为虚拟机分配4GB内存（4096MB）。</p><p><code>-smp 1</code>: 设置虚拟机的CPU核心数为1个。</p><a href=/applications/qemu/>...</a></p></article><article class="markdown book-post"><h2><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p><p>使用串口时:</p><pre tabindex=0><code>cd /tmp/ejtag-debug/
+./la_ejtag_debug_gpio -t
+source configs/configs.ls3a5000
+</code></pre><p>在本机上运行时:</p><pre tabindex=0><code>cd /path/ejtag-debug/
+./la_ejtag_debug_usb -t
+source configs/configs.ls3a5000
+</code></pre><ol><li><p><code>cpus</code> 查看<code>pc</code></p></li><li><p><code>set</code> 查看通用寄存器及部分<code>csr</code>寄存器, 此时<code>pc</code>停在<code>set</code>时运行的地址.</p></li><li><p><code>cont</code> 从<code>set</code>处继续运行</p></li><li><p><code>hb</code> <code>addr</code>; <code>cont</code> 断点到<code>addr</code>处, 等待触发断点.</p></li><li><p><code>hbls</code> 查看断点</p></li><li><p><code>watch</code> <code>data</code>; <code>cont</code> 检测通用寄存器, 当通用寄存器中和<code>data</code>一致时, 断点此处.</p></li><li><p><code>watchls</code> 查看数据检测点.</p></li><li><p><code>watch</code> <code>data</code> <code>mask</code>; <code>cont</code> 检测通用寄存器, 当通用寄存器中和<code>data</code>一致时, 断点此处. <code>mask</code>可以设置掩码.</p></li><li><p><code>d1</code>/<code>d4</code>/<code>d8</code> <code>addr</code> <code>length</code> 按照<code>1</code>字节, <code>4</code>字节, <code>8</code>字节, 依次<code>dump</code> <code>length</code>个<code>addr</code>寄存器中的值.</p></li><li><p><code>m1</code>/<code>m4</code>/<code>m8</code> <code>addr</code> <code>data1</code> <code>data2</code>&mldr; 按照<code>1</code>字节, <code>4</code>字节, <code>8</code>字节, 依次将<code>dataX</code> 写入<code>addr</code>地址.</p></li><li><p><code>disas</code> <code>addr</code> <code>length</code> 反汇编<code>addr</code>处开始<code>length</code>长的内容.</p></li><li><p><code>csrs</code> <code>d8</code> <code>num</code> <code>length</code> 从第<code>num</code>个<code>csr</code>寄存器连续读出<code>length</code>个值.</p></li><li><p><code>csrs</code> <code>m8</code> <code>num</code> <code>data</code> 向第<code>num</code>个<code>csr</code>寄存器写入<code>data</code>.</p><a href=/applications/ejtag/>...</a></p></article><article class="markdown book-post"><h2><a href=/applications/clash/>龙芯平台使用clash</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p><h2 id=旧世界loongnix>旧世界(Loongnix)
+<a class=anchor href=#%e6%97%a7%e4%b8%96%e7%95%8cloongnix>#</a></h2><blockquote><p>来源: <code>https://bbs.loongarch.org/d/177-loongnixclash</code></p></blockquote><p>下载后:</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>unzip -x clash1130-loong64.zip
+</span></span><span style=display:flex><span>./clash -d dir_include_config.yaml
+</span></span></code></pre></div><p>其中<code>dir_include_config.yaml</code>是<code>config.yaml</code>所在的文件夹路径.</p><p>然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:</p><pre tabindex=0><code>http:               port:
+    127.0.0.1           7890
+https:              port:
+    127.0.0.1           7890
+socks:              port:
+    127.0.0.1           7891
+</code></pre><p>具体端口号信息在<code>config.yaml</code>中查看.</p><h2 id=新世界>新世界
+<a class=anchor href=#%e6%96%b0%e4%b8%96%e7%95%8c>#</a></h2><h3 id=archlinux>Archlinux
+<a class=anchor href=#archlinux>#</a></h3><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span>pacman -S clash
+</span></span><span style=display:flex><span>clash -d dir_include_config.yaml
+</span></span></code></pre></div><p>其中<code>dir_include_config.yaml</code>是<code>config.yaml</code>所在的文件夹路径.</p><p>然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:</p><pre tabindex=0><code>http:               port:
+    127.0.0.1           7890
+https:              port:
+    127.0.0.1           7890
+socks:              port:
+    127.0.0.1           7891
+</code></pre><p>具体端口号信息在<code>config.yaml</code>中查看.</p><h2 id=countrymmdb>Country.mmdb
+<a class=anchor href=#countrymmdb>#</a></h2><pre tabindex=0><code>wget https://gitee.com/mirrors/Pingtunnel/raw/master/GeoLite2-Country.mmdb -O Country.mmdb
+</code></pre></p></article><article class="markdown book-post"><h2><a href=/applications/lat/>在龙芯3A5000上运行Windows程序</a></h2><div><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a></div><p><blockquote><p>文章来源: <code>https://zhuanlan.zhihu.com/p/436405217</code></p></blockquote><p>2022-03-18：本文所述操作步骤较为繁琐，另写了一篇操作简单的替代本文内容：</p><p><a href=https://zhuanlan.zhihu.com/p/482334107>guee：包教包会：龙芯3A5000上运行任意Windows软件161 赞同 · 25 评论文章
+<img src=https://pic4.zhimg.com/v2-cbb4ce0b260e5f596abf4bf85c37401b_180x120.jpg alt></a></p><hr><p>　　龙芯3A5000是龙芯最新的桌面CPU，它基于龙芯自主设计的LoongArch架构（指令集），性能接近市场主流CPU水平。因为各种操作系统和应用程序都与指令集相关，所以x86架构（指令集）的CPU就不能直接运行ARM架构（指令集）的应用程序，反之亦然。因此诞生了各种各样的二进制（指令）翻译技术，用于跨架构模拟运行其它平台的操作系统和应用程序，各种二进制（指令）翻译技术可以分为软件翻译、硬件翻译、软硬结合的翻译这三大类。我先简述一下二进制翻译技术，然后再给出在UOS和龙芯3A5000上运行任何Windows程序的方法。</p><p><img src=https://pic2.zhimg.com/v2-6dced80ba275d9ba5aa108ea09104e99_b.jpg alt></p><p><img src=https://pic2.zhimg.com/80/v2-6dced80ba275d9ba5aa108ea09104e99_720w.webp alt></p><h2 id=二进制翻译技术简述>二进制翻译技术简述
+<a class=anchor href=#%e4%ba%8c%e8%bf%9b%e5%88%b6%e7%bf%bb%e8%af%91%e6%8a%80%e6%9c%af%e7%ae%80%e8%bf%b0>#</a></h2><p>　　以软件方式进行二进制（指令）翻译必须存在一个宿主系统，模拟器程序在宿主系统上运行。比如各种游戏模拟器，用来在电脑上玩红白机游戏、街机游戏、PS游戏等，以纯软件的方式构建了一个虚拟的主机环境，让那些游戏程序成为缸中之脑，游戏程序执行的所有指令、请求的所有资源都是由翻译软件模拟出来的，但它以为自己是在真正的主机中运行。</p><p>　　模拟通用计算机的CPU和相关硬件环境要比模拟游戏主机复杂得多。这方面的代表软件，有开源的可虚拟多种架构的qemu、苹果的rosetta 2、以及微软Windows11在arm上模拟x86和在x86上模拟arm的技术等等。其中qemu可以在多种架构（指令集）之间相互转换，不但只支持动态翻译，而且性能最低，平均运行效率仅为原生性能的5%左右。苹果和微软都是一对一的专用翻译，且与操作系统深度结合，效率较高。</p><p>　　硬件翻译以Transmeta CPU为代表，它的CPU本身是一种“超长指令字”架构，但在指令译码的阶段，接受的是x86指令，然后把x86指令转换为它自己的指令来运行。这种方式使它的CPU看起来就是一块x86架构的CPU，并且不需要对电脑中的其它硬件进行模拟，各种支持x86指令集的操作系统和应用程序都可以在使用Transmeta CPU的电脑上直接安装运行。Intel/AMD现在的CPU其实也是硬件翻译技术的代表，它们内部是执行的“微码（类似于精简指令集）”，而对于的表现则依然是x86架构的处理器。</p><p>　　龙芯的LoongArch架构（指令集）则代表了第三个分类，即软件和硬件结合的二进制翻译方式。这种方式既有软件翻译的灵活性，又能接近或达到硬件翻译的效率，兼具二者的优点。龙芯的二进制翻译本质上也是软件翻译，但是对软件翻译中比较耗时的处理提供了专门的硬件指令来加速翻译过程，因此称它为软硬结合的二进制翻译技术。龙芯之所以不使用纯硬件的翻译方式，是因为我们必须建立自主的软件生态体系。如果像Transmeta那样对外表现为x86的CPU，那么它能直接运行的就只有基于x86的操作系统和应用程序，生存状况高度依赖于Intel和微软的态度，因此它虽然在Intel的诉讼中获胜，但却在Intel对市场的操作下惨然离场。</p><p>　　龙芯的LoongArch架构（指令集）本身是一种独立的，完善的指令系统，可以建立独立于x86/ARM之外的软件生态体系。**龙芯的二进制翻译技术主要是在LoongArch原生软件生态建设的初期，用于补充原生软件的不足，LoongArch架构和龙芯CPU的生存不依赖于Intel/ARM/MS/Google等主导的软件生态。**二进制翻译技术具有单方面的决定权，任何公司都没有理由阻止任何软件以二进制翻译的方式在某种原生不支持的架构上运行。即使软件开发商以检测CPU型号等技术手段阻止运行，那么以软件为主体的二进制翻译技术也能轻松解决这个问题，而固化在CPU硬件中的各种信息和特征则不可能像软件那样在线升级。以软件翻译为主体的二进制翻译，甚至可以针对特定程序把自己模拟成特定的CPU型号。</p><p>　　即使要翻译的目标架构频繁升级指令集版本，增加新的指令，不断推陈出新，对于龙芯来说，要模拟最新的CPU和指令集，也只是更新一下软件的事儿。而那些需要架构授权的CPU产品，如果没有购买到新版本的架构授权，那就无论如何发布多少个新款CPU产品，都不可能兼容新版架构的新指令。</p><h2 id=龙芯二进制翻译系统的简单结构说明>龙芯二进制翻译系统的简单结构说明
+<a class=anchor href=#%e9%be%99%e8%8a%af%e4%ba%8c%e8%bf%9b%e5%88%b6%e7%bf%bb%e8%af%91%e7%b3%bb%e7%bb%9f%e7%9a%84%e7%ae%80%e5%8d%95%e7%bb%93%e6%9e%84%e8%af%b4%e6%98%8e>#</a></h2><p>　　龙芯的二进制翻译系统仍在开发当中，尚未公开技术资料，但当前已经有可以使用的测试版本。我仅仅根据对当前状态分析的结果，简单描述一下它的基本结构如下图，可能不太准确，也不够详细，意会就好。</p><p><img src=https://pic4.zhimg.com/v2-98a539045961f14026c58803e7f1f757_b.jpg alt></p><p><img src=https://pic4.zhimg.com/80/v2-98a539045961f14026c58803e7f1f757_720w.webp alt></p><p>　　基于龙芯LoongArch架构（指令集）的CPU，在运行原生的LoongArch指令集的程序时，不需要二进制翻译，可以直接运行。</p><p>　　在运行基于其它架构（指令集）的Linux程序时，由龙芯的二进制翻译模块对指令进行转译。程序对Linux的API调用，可以直接由操作系统本身提供支持。</p><p>　　<em>在运行Windows（x86）的程序时，由于Linux系统本身不能提供Windows系统的API，因此需要使用Wine来提供对Windows API的支持。Wine是给Windows（x86）程序提供虚拟的API接口，而不负责对指令的转译，因此只用wine并不能在非x86的CPU运行Windows程序。<strong>在x86的应用程序中，不但程序自身逻辑以及第三方库的二进制代码都是x86指令，而且用于调用Windows API的二进制代码也是x86指令，如果没有二进制翻译，在LoongArch上Windows程序甚至连程序入口的代码都不能执行，也无法调用Window API，程序自身的代码和第三方库就更不可能运行了。</strong></em></p><p>　　操作系统API（应用程序编程接口）是由操作系统提供给应用程序的接口，在Linux上运行Windows程序时，假如调用读取文件数据的API，就可以由Wine给应用程序提供这个接口，但接口内部不再是Windows的代码，而是由Wine去调用Linux的相关接口来实现相同的功能，这就是对API的模拟。在应用程序读取到数据之后做的操作，就不在Wine的管辖范围内了。比如程序取得数据后可能加密解密、可能作为图像数据计算对比度、可能作为音频数据计算特殊音效……这些操作可能是由程序自身代码来完成，也可能是调用其它的库文件的接口来实现。<em><strong>这些在Wine支持范围之外的代码，在x86架构（指令集）的CPU上是由CPU直接执行，在LoongArch架构（指令集）的CPU上，就只能由二进制翻译模块转译为LoongArch的指令来执行。</strong></em></p><p>　　操作系统和应用程序对CPU指令的使用，是属于ABI（应用程序二进制接口）的一部分，ABI的层级很低，是二进制代码的规范。在基于LoongArch架构的CPU上运行x86程序时，就是由二进制翻译模块来处理对指令的转译，也就是对x86的ABI规范的模拟。不管是Linux还是Windows的应用程序，只要它不是LoongArch原生指令集的，最终都需要经过二进制翻译才能在龙芯的CPU上运行。</p><p>　　龙芯的二进制翻译模块当前和qemu一样也是只支持动态翻译，但效率比原生的qemu高出一个数量级。将来会支持动、静态结合的翻译模式，也就是程序运行时的动态翻译结果可以保留下来，下次运行相同的程序就直接使用翻译的结果，仅对程序运行时修改自身代码等行为需要动态翻译。这样可以降低翻译的CPU消耗，翻译运行的效率可以大幅度提高，预计运行x86程序可以达到80%的原生效率。这里的80%是指平均80%，而不像某些纯软件的翻译方案仅对特定类型程序翻译效率较高，就笼统地宣传“高效率”。</p><h2 id=在龙芯3a5000上实战运行windows程序>在龙芯3A5000上实战运行Windows程序
+<a class=anchor href=#%e5%9c%a8%e9%be%99%e8%8a%af3a5000%e4%b8%8a%e5%ae%9e%e6%88%98%e8%bf%90%e8%a1%8cwindows%e7%a8%8b%e5%ba%8f>#</a></h2><p>　　最简单的方式，是在使用3A5000的电脑上安装统信的UOS系统，然后等着UOS系统的应用商店中提供了什么Windows软件，就安装什么软件，可以无障碍，无门槛，无后顾之忧……可是Windows的软件千奇百怪，UOS的应用商店不可能提供所有的Windows软件，那么我们就需要动动小手，自己解决自己的需求。</p><p>　　目前只有UOS for 3A5000（体验版）系统中集成了龙芯的二进制翻译模块，而龙芯自己的Loongnix为什么反而还没有提供二进制翻译的支持呢？“体验版”这三个字很重要，是否稳定无关紧要。龙芯的Loongnix却是已经正式发布的产品，对于龙芯的行业用户来说，往系统中更新一个还没有开发完成的、可能不稳定的功能模块，大概不是什么喜闻乐见的事情。因此我下面就以UOS为例说明一下如何在龙芯3A5000上运行“任何”的Windows软件，“任何”是指可以尝试任何软件，但不能保证所有软件都能正常运行。</p><p>　　**UOS中已经集成了龙芯二进制翻译模块，但要运行Windows软件仍然需要一个Wine环境。**UOS本身有多个版本的Wine，有经过深度/统信改良了效率和兼容性的deepin-wine，也有原生的版本，我们要使用deepin-wine。最简单的方式是从UOS应用商店中安装一个由Wine支持的软件，环境就自动配置好了。如果使用Loongnix或其它的系统，就需要手工完成这个过程，可能还需要从UOS复制一些文件和配置，比较麻烦。建议安装的软件是PhotoShop，因为PhotoShop是一个很大很复杂的软件，能够让PhotoShop正常运行的环境，就能让大多数软件正常运行。</p><p><img src=https://pic2.zhimg.com/v2-63eed8c737b9dd96dec571c7bc3352b1_b.jpg alt></p><p><img src=https://pic2.zhimg.com/80/v2-63eed8c737b9dd96dec571c7bc3352b1_720w.webp alt></p><p><a href=https://www.zhihu.com/zvideo/1445505380252610560>龙芯3A5000运行Windows程序，微信、PS，扫雷绝对不卡15.2 万播放 · 163 赞同视频
+<img src="https://pic4.zhimg.com/v2-02ba5aea38a8bd887a6b118f598f1e00_r.jpg?source=2231c908" alt=点击可播放视频>​</a></p><p>　　UOS对Wine版软件的组织方式是给每个软件一套单独的Windows环境，也就是说每个软件包中都有配套的Windows、Program Files、ProgramData、User等系统文件夹。这些文件夹和软件本身，都被打包成一个files.7z文件，安装到“/opt/apps”文件夹下以包名命名的子文件夹中。软件首次运行时，files.7z被解压到“/home/用户名/.deepinwine/”文件夹中，并自动配置相关的运行环境。这种方式的好处是每个软件都相对独立，避免因某些共用文件的版本不同导致不能运行，坏处就是会增加许多额外的文件。但实际增加的文件体积并不会很大，因为前面说了Wine只是提供虚拟的API接口，因此包中的操作系统的DLL文件实际都是只有接口没有代码的“代理”版本，每个文件只几KB大小。系统DLL接口的功能是由Wine文件夹中的对应的.so文件来实现的。只有系统DLL之外的，软件自身的以及第三方的DLL文件才是“真实”的DLL文件。</p><p>　　在安装了PhotoShop（Wine）之后，在“/opt/apps/com.pscs6.deepin/files”文件夹中的files.7z和run.sh是我们需要用到的。</p><p><img src=https://pic1.zhimg.com/v2-dbf73097fce4923da02e66dcc0310ff8_b.jpg alt></p><p><img src=https://pic1.zhimg.com/80/v2-dbf73097fce4923da02e66dcc0310ff8_720w.webp alt></p><p>　　如果你已经运行过刚刚安装的PhotoShop，那么在“/home/用户名/.deepinwine”文件夹中会有“Deepin-CS6”文件夹，“.deepinwine”是隐藏文件夹，在Linux中文件（夹）名字前面加“.”表示隐藏，在文件管理器中看不到，需要手工在地址栏输入才能打开。它里面的内容如下：</p><p><img src=https://pic3.zhimg.com/v2-83c7bb3afe85e8c40e1b2ff559ad587e_b.jpg alt></p><p><img src=https://pic3.zhimg.com/80/v2-83c7bb3afe85e8c40e1b2ff559ad587e_720w.webp alt></p><p>　　dosdevices文件夹中的内容是虚拟硬盘盘符和com接口的链接文件，比如“c:”文件就链接到“drive_c”文件夹。“drive_c”文件夹是虚拟的Windodws系统的C盘，里面的内容一看就眼熟：</p><p><img src=https://pic2.zhimg.com/v2-4bff50334b47e32ae65a5b5876aa50fd_b.jpg alt></p><p><img src=https://pic2.zhimg.com/80/v2-4bff50334b47e32ae65a5b5876aa50fd_720w.webp alt></p><p>　　如果你要向这个由Wine虚拟的Windows环境中安装软件，或复制绿色软件来运行，就把“drive_c”当成Windows的C盘来用，都往里面复制就行了。其实直接使用PhotoShop的这个Wine环境文件夹也可以，但是为了避免一些麻烦，比如防止意外卸载了PhotoShop之后你放在里面的软件也被一同删除，我们还是最好自己弄个单独的环境。另外说明一下，这是32位的Wine环境，不能运行64位的Windows程序，如果要运行64位的程序，需要手工配置64位的环境，因为UOS还没有提供直接安装的64位Windows程序。</p><p>　　先把前面在“/opt/apps/com.pscs6.deepin/files”中看到的files.7z复制到“/home/用户名/.deepinwine”文件夹中，然后在files.7z上单击右键，在右键菜单中选择“解压到当前文件夹”。然后“/home/用户名/.deepinwine”下面就会多出一个“files”文件夹，把它改个名字，比如“MyGames”或者像我一样改成“Default”。这个文件夹中的内容和之前“Deepin-CS6”文件夹中的一样，但你不需要在这里运行PhotoShop，因此可以把“/home/guee/.deepinwine/Default/drive_c/Program Files”里面的Adoeb删除掉，节省一些空间。</p><p>　　再然后可以把下载到的绿色软件或者安装程序等都复制到“/home/guee/.deepinwine/Default/drive_c”中你喜欢的位置，最后把前面看到的“run.sh”复制出来进行一些修改，就可以运行它们了。当然也可以复制下面的内容，保存为一个扩展名为“.sh”的文件，注意要在文件属性的“权限管理”中设置“允许以程序执行”。</p><div class=highlight><pre tabindex=0 style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-bash data-lang=bash><span style=display:flex><span><span style=color:#75715e>#!/bin/sh
+</span></span></span><span style=display:flex><span><span style=color:#75715e></span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#在/home/guee/.deepinwine/下面你的Windows环境所在的子文件夹名。</span>
+</span></span><span style=display:flex><span>BOTTLENAME<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;Default&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#Wine的版本</span>
+</span></span><span style=display:flex><span>APPVER<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;13.0deepin6~wine5&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#要运行的程序的路径，你的drive_c文件夹就是c:/，后是相对于它的路径。</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#注意Linux中的路径分隔符是/,而Windows中是\，这里按照Linux的规则写。</span>
+</span></span><span style=display:flex><span>EXEC_PATH<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;c:/ali213-AngryBirdschs/AngryBirds.exe&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#启动Wine的脚本程序，是Wine自带的。</span>
+</span></span><span style=display:flex><span>START_SHELL_PATH<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;/opt/deepinwine/tools/run_v4.sh&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#大概是这个程序关联的文档类型，这里设置为&#34;&#34;。</span>
+</span></span><span style=display:flex><span>export MIME_TYPE<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#Wine的主程序，这是环境变量，在run_v4.sh这个启动脚本中会使用它。</span>
+</span></span><span style=display:flex><span>export APPRUN_CMD<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;deepin-wine5-stable&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#语言环境设置</span>
+</span></span><span style=display:flex><span>export PATCH_LOADER_ENV<span style=color:#f92672>=</span><span style=color:#e6db74>&#34;LC_ALL=zh_CN.UTF-8&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#也是环境变量设置</span>
+</span></span><span style=display:flex><span>export SPECIFY_SHELL_DIR<span style=color:#f92672>=</span><span style=color:#e6db74>`</span>dirname $START_SHELL_PATH<span style=color:#e6db74>`</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span>DEEPIN_WINE_BIN_DIR<span style=color:#f92672>=</span><span style=color:#e6db74>`</span>dirname $APPRUN_CMD<span style=color:#e6db74>`</span>
+</span></span><span style=display:flex><span>DEEPIN_WINE_DIR<span style=color:#f92672>=</span><span style=color:#e6db74>`</span>dirname $DEEPIN_WINE_BIN_DIR<span style=color:#e6db74>`</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#export WINEPREDLL=&#34;$ARCHIVE_FILE_DIR/dlls&#34;</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#还是环境变量设置</span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -n <span style=color:#e6db74>&#34;</span>$PATCH_LOADER_ENV<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>[</span> -n <span style=color:#e6db74>&#34;</span>$EXEC_PATH<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span>;<span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    export $PATCH_LOADER_ENV
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span><span style=display:flex><span>
+</span></span><span style=display:flex><span><span style=color:#66d9ef>if</span> <span style=color:#f92672>[</span> -d <span style=color:#e6db74>&#34;</span>$DEEPIN_WINE_BIN_DIR<span style=color:#e6db74>&#34;</span> <span style=color:#f92672>]</span> <span style=color:#f92672>&amp;&amp;</span> <span style=color:#f92672>[</span> <span style=color:#e6db74>&#34;</span>$DEEPIN_WINE_BIN_DIR<span style=color:#e6db74>&#34;</span> !<span style=color:#f92672>=</span> <span style=color:#e6db74>&#34;.&#34;</span> <span style=color:#f92672>]</span>;<span style=color:#66d9ef>then</span>
+</span></span><span style=display:flex><span>    export DEEPIN_WINE_BIN_DIR
+</span></span><span style=display:flex><span><span style=color:#66d9ef>fi</span>
+</span></span><span style=display:flex><span><span style=color:#75715e>#启动Wine，并指定由Wine启动的应用程序。</span>
+</span></span><span style=display:flex><span>$START_SHELL_PATH $BOTTLENAME $APPVER <span style=color:#e6db74>&#34;</span>$EXEC_PATH<span style=color:#e6db74>&#34;</span> <span style=color:#e6db74>&#34;</span>$@<span style=color:#e6db74>&#34;</span>
+</span></span></code></pre></div><p>　　上面的“EXEC_PATH”后面的字符串就是你要运行的程序路径，我是从“游侠网”下载了一个绿色版本的《愤怒的小鸟》，其实看到文件夹名中的“ali213”应该就猜到了。这是绿色软件，如果要运行的不是绿色软件而是安装程序，过程也一样，只要把安装程序设置为要运行的程序就可以了。安装完成后，可以再修改一下运行脚本，把“EXEC_PATH”后面的字符串改为安装完成的程序路径。</p><a href=/applications/lat/>...</a></p></article><footer class=book-footer><div class="flex flex-wrap justify-between"></div><script>(function(){function e(e){const t=window.getSelection(),n=document.createRange();n.selectNodeContents(e),t.removeAllRanges(),t.addRange(n)}document.querySelectorAll("pre code").forEach(t=>{t.addEventListener("click",function(){if(window.getSelection().toString())return;e(t.parentElement),navigator.clipboard&&navigator.clipboard.writeText(t.parentElement.textContent)})})})()</script></footer><label for=menu-control class="hidden book-menu-overlay"></label></div><aside class=book-toc><div class=book-toc-content><nav><ul><li class=book-section-flat><strong>Categories</strong><ul><li class="flex justify-between"><a href=/categories/1.-%E5%9B%BA%E4%BB%B6/>1. 固件</a>
 <span>4</span></li><li class="flex justify-between"><a href=/categories/2.-%E7%B3%BB%E7%BB%9F/>2. 系统</a>
 <span>8</span></li><li class="flex justify-between"><a href=/categories/3.-%E5%BA%94%E7%94%A8/>3. 应用</a>
 <span>6</span></li></ul></li><li class=book-section-flat><strong>Tags</strong><ul></ul></li></ul></nav></div></aside></main></body></html>

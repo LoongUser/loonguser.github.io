@@ -1,4 +1,67 @@
-<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+  龙芯内核编译
+  #
+
+目前龙芯已经由MIPS架构转战LoongArch架构.
+
+vmlinux+vmlinuz
+libmodules
+RamDisk_initrd
+
+
+  准备阶段
+  #
+
+
+下面以LoongArch架构的编译为例.
+编译器采用Gcc交叉编译LoongArch版本
+
+
+编译器版本 :
+loongarch64-linux-gnu-gcc-8.3.0
+配置文件 采用龙芯默认配置:
+cp arch/loongarch/configs/loongson3_defconfig .config
+
+
+  开始编译
+  #
+
+
+vmlinux/vmlinuz
+
+
+执行 make ARCH=loongarch  CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-(此为编译器路径 which gcc)  menuconfig
+
+  
+
+进入图形化配置界面,开关相关功能,我们直接Esc退出.
+
+
+执行 make ARCH=loongarch  CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-  -j 16  //采用16线程进行编译(目前我是在服务器上编译,核数较多). 到此vmlinux/vmlinuz 非压缩和压缩版内核就编译完成.
+  
+System.map 是符号表
+
+
+执行 make modules_install INSTALL_MOD_PATH=./ ARCH=loongarch  CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu- 编译lib/modules/ 驱动模块包,熟悉内核的人都了解,当配置menuconfig的时候,会将M的驱动以modules的形式在内核中加载.
+  
+
+
+
+  将编译的文件进行使用
+  #
+
+
+1.vmlinuz 放在os的/boot/下,并可以修改成自己喜欢的名字 vmlinuz_go
+
+
+2.将lib/modules/下的文件copy到os根目录/lib/modules/
+
+
+3.参考Deebian制作Ramdisk为例: 执行 
+  
+使用draut进行制作,该脚本制作的Ramdisk支持了好几种文件系统,你可以简单制作RamDisk,这里就不详细介绍该命令了.将制作的*.img文件拷贝到/boot下.
+
+dracut 是一个事件驱动的 initramfs 基础设施。dracut(工具)被用来通过拷贝工具和文件，从一个已经安装的系统创建一个 initramfs 镜像，并将镜像与dracut框架结合在一起。"><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/system/kernel/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="内核编译"><meta property="og:description" content=" 龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
 vmlinux+vmlinuz libmodules RamDisk_initrd 准备阶段 # 下面以LoongArch架构的编译为例. 编译器采用Gcc交叉编译LoongArch版本
 编译器版本 : loongarch64-linux-gnu-gcc-8.3.0 配置文件 采用龙芯默认配置: cp arch/loongarch/configs/loongson3_defconfig .config 开始编译 # vmlinux/vmlinuz
 执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-(此为编译器路径 which gcc) menuconfig 进入图形化配置界面,开关相关功能,我们直接Esc退出.
@@ -6,20 +69,8 @@ vmlinux+vmlinuz libmodules RamDisk_initrd 准备阶段 # 下面以LoongArch架�
 执行 make modules_install INSTALL_MOD_PATH=./ ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu- 编译lib/modules/ 驱动模块包,熟悉内核的人都了解,当配置menuconfig的时候,会将M的驱动以modules的形式在内核中加载. 将编译的文件进行使用 # 1.vmlinuz 放在os的/boot/下,并可以修改成自己喜欢的名字 vmlinuz_go
 2.将lib/modules/下的文件copy到os根目录/lib/modules/
 3.参考Deebian制作Ramdisk为例: 执行 使用draut进行制作,该脚本制作的Ramdisk支持了好几种文件系统,你可以简单制作RamDisk,这里就不详细介绍该命令了.将制作的*.img文件拷贝到/boot下.
-dracut 是一个事件驱动的 initramfs 基础设施。dracut(工具)被用来通过拷贝工具和文件，从一个已经安装的系统创建一个 initramfs 镜像，并将镜像与dracut框架结合在一起。
-4.修改grub引导程序,进行加载相应的内核和RamDisk.
-目前 grub在Deebian系统的目录: /boot/efi/boot/grub.cfg 修改linux命令加载的文件名-> vmlinuz_go initrd命令加载的文件名-> initrd."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/system/kernel/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="内核编译"><meta property="og:description" content="龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
-vmlinux+vmlinuz libmodules RamDisk_initrd 准备阶段 # 下面以LoongArch架构的编译为例. 编译器采用Gcc交叉编译LoongArch版本
-编译器版本 : loongarch64-linux-gnu-gcc-8.3.0 配置文件 采用龙芯默认配置: cp arch/loongarch/configs/loongson3_defconfig .config 开始编译 # vmlinux/vmlinuz
-执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-(此为编译器路径 which gcc) menuconfig 进入图形化配置界面,开关相关功能,我们直接Esc退出.
-执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu- -j 16 //采用16线程进行编译(目前我是在服务器上编译,核数较多). 到此vmlinux/vmlinuz 非压缩和压缩版内核就编译完成. System.map 是符号表
-执行 make modules_install INSTALL_MOD_PATH=./ ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu- 编译lib/modules/ 驱动模块包,熟悉内核的人都了解,当配置menuconfig的时候,会将M的驱动以modules的形式在内核中加载. 将编译的文件进行使用 # 1.vmlinuz 放在os的/boot/下,并可以修改成自己喜欢的名字 vmlinuz_go
-2.将lib/modules/下的文件copy到os根目录/lib/modules/
-3.参考Deebian制作Ramdisk为例: 执行 使用draut进行制作,该脚本制作的Ramdisk支持了好几种文件系统,你可以简单制作RamDisk,这里就不详细介绍该命令了.将制作的*.img文件拷贝到/boot下.
-dracut 是一个事件驱动的 initramfs 基础设施。dracut(工具)被用来通过拷贝工具和文件，从一个已经安装的系统创建一个 initramfs 镜像，并将镜像与dracut框架结合在一起。
-4.修改grub引导程序,进行加载相应的内核和RamDisk.
-目前 grub在Deebian系统的目录: /boot/efi/boot/grub.cfg 修改linux命令加载的文件名-> vmlinuz_go initrd命令加载的文件名-> initrd."><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="system"><meta property="article:modified_time" content="2024-07-03T15:14:22+08:00"><title>内核编译 | 龙芯玩机指南</title>
-<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.d37184993c0833712b1f65fac32bb1e48b2a089eb387acbd83becd91aeeb45b2.js integrity="sha256-03GEmTwIM3ErH2X6wyux5IsqCJ6zh6y9g77Nka7rRbI=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+dracut 是一个事件驱动的 initramfs 基础设施。dracut(工具)被用来通过拷贝工具和文件，从一个已经安装的系统创建一个 initramfs 镜像，并将镜像与dracut框架结合在一起。"><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="system"><meta property="article:modified_time" content="2024-07-03T15:14:22+08:00"><title>内核编译 | 龙芯玩机指南</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.baa9ab2ee5f7a736eb778472694b3059d256ce1ea6684d96d377882f821a2c16.js integrity="sha256-uqmrLuX3pzbrd4RyaUswWdJWzh6maE2W03eIL4IaLBY=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
 <input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
 <label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
 Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/firmware/>如何更新固件</a></li><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/gen_sys_file/>生成系统下的一些文件</a></li><li><a href=/system/install_archlinux/>新世界Archlinux系统安装</a></li><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/update_system/>如何更新系统</a></li><li><a href=/system/Loongnix_FAQ/>Loongnix_FAQ</a></li><li><a href=/system/kernel/ class=active>内核编译</a></li><li><a href=/system/build_openharmony_for_2k500/>龙芯2K500先锋派OpenHarmony构建指北</a></li><li><a href=/system/boot_param_with_kernel/>龙芯系统启动参数</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li><li><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></li><li><a href=/applications/lat/>在龙芯3A5000上运行Windows程序</a></li><li><a href=/applications/clash/>龙芯平台使用clash</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>

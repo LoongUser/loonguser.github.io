@@ -1,13 +1,169 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>龙芯玩机指南</title><link>https://loonguser.github.io/firmware/</link><description>Recent content on 龙芯玩机指南</description><generator>Hugo</generator><language>zh</language><atom:link href="https://loonguser.github.io/firmware/index.xml" rel="self" type="application/rss+xml"/><item><title>Grub编译与调试</title><link>https://loonguser.github.io/firmware/grub/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/grub/</guid><description>1. Grub编译 # git clone https://github.com/loongarch64/grub.git cd grub ./bootstrap ./configure --with-platform=efi --target=loongarch64 --prefix=$(pwd) --disable-werror 2. Grub文件生成 # 2.1 grub.efi # ./grub-mkimage -p . -c /boot/mxd.cfg -d ./grub-core/ -O loongarch64-efi -o /boot/mxd.efi $(ls grub-core/ | grep -E &amp;#34;\.mod$&amp;#34; | cut -d &amp;#34;.&amp;#34; -f 1 | uniq) 各参数可在help信息中查看.
-2.2 grub.cfg # ./grub-mkconfig -o /boot/mxd.cfg 除了生成grub.cfg外, 系统下还有一些用于参考的grub默认配置选项, 如: /etc/default/grub, /etc/grub.d等. 倘若修改这些文件, 还需要更新/boot/grub/grub.cfg, 有命令可以做到:
-update-grub 2.3 将grub安装至UEFI引导界面 # grub-install --boot-directory=/boot --efi-directory=/boot/efi --bootload-id=mxd /dev/sda --boot-directory指定在/boot作为根目录, 下寻找grub.</description></item><item><title>PMON的使用方法</title><link>https://loonguser.github.io/firmware/pmon/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/pmon/</guid><description>更新: 新pmon固件已支持efi_stub, 详情查看 10.1节
-1. 查看设备 # PMON&amp;gt; devls syn0 wd0 usb0 sync0, igb0, em0 等字样,表示网络设备, 即网卡
-wd0, nvme0, usb0, cd0等字样表示存储设备, 即硬盘, U盘等.
-2. 查看pci信息 # PMON&amp;gt; pciscan &amp;gt;&amp;gt; BUS 0 &amp;lt;&amp;lt; Dev Fun Device description -------------------------- 0 0 vendor/product: 0x0014/0x7a00 (bridge, host, interface: 0x00, revision: 0x00) 0x00000000:0x00000000 mem @0x00000000, 0 bytes 0 1 vendor/product: 0x0014/0x7a10 (bridge, host, interface: 0x00, revision: 0x01) 0x00000000:0x00000000 mem @0x00000000, 0 bytes 0 2 vendor/product: 0x0014/0x7a20 (bridge, host, interface: 0x00, revision: 0x01) 0x00000000:0x00000000 mem @0x00000000, 0 bytes 0 3 vendor/product: 0x0014/0x7a30 (bridge, host, interface: 0x00, revision: 0x00) 0x00000000:0x00000000 mem @0x00000000, 0 bytes 4 0 vendor/product: 0x0014/0x7a24 (serialbus, USB, interface: 0x10, revision: 0x02) 64-bit mem,low address 0x59648004:0xffff8004 mem @0x59648000, 32768 bytes 0x00000000:0x00000000 mem @0x00000000, 0 bytes .</description></item><item><title>从UEFI如何启动到系统</title><link>https://loonguser.github.io/firmware/uefi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/uefi/</guid><description>UEFI须知 # 1. 进入UEFI setup界面 # 在串口或者显示界面下显示BDS字样的时候(如下图), 稍微按按上下键即可进入Setup界面 2. Setup界面 # 无论是Intel还是loongson, BIOS下都有设置的接口, PMON也有, 无非是显示样式差异, 原理相通. Loongson的UEFI界面如下图
-不同的条目, 用于设置不同的功能. 其中普通用户通常只需要进入BootManager界面选择相应的启动目标即可. 3. BootManager界面 # 在下图区域1中为条目名称, 区域2中为UEFI下解析的路径名(有点专业,不用理解), 总之, 左边看不懂时就看右边, 找相关的关键字, 比如下图, 左侧是设备名, 不太能看出是什么设备, 右侧则有Sata字样可以识别. 4. Shell下操作 # 通常, 正常情况下, 系统直接启动, 用户无法感知上述界面的存在, 但当出现一些问题时, 我们可能需要进入Shell下进行操作, 如上图中的第二个条目, 选中后回车进入下图界面: 4.1. 显示启动设备 # 正常情况下， 进入Shell后仍然会提示启动相关的设备, 如上图, 倘若由于操作过多, 或者显示bug等, 我们还想再次看到相关的显示, 则需要通过map命令再次显示，如下图：
-可以看到, 其实和默认进入Shell的打印是一样的, 不过为了防止打印被冲刷掉, 还是要会一下.
-4.2. 进入设备及查看文件 # 看上图, 图中黄色字体, FS0: , BLK0:等, 可以理解为不同设备的重命名, 其中FS开头的标识表示该设备的文件系统可以识别, BLK开头的表示表示该设备不存在文件系统, 或者文件系统不可识别. 总之对我们有意义的就只有FS开头的标识.</description></item><item><title>如何更新固件</title><link>https://loonguser.github.io/firmware/firmware/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/firmware/</guid><description>在PMON下更新固件 # 详情 PMON使用方法
-从硬盘加载:
-PMON&amp;gt; fload /dev/fs/usb0a/gz.mxd Loading file: /dev/fs/fat@usb0a/gz.mxd dl_offset 900000000f800000 addr 900000000f800000 (bin) - Loaded 993222 bytes Programming flash 900000000f800000:f27c6 into 800000001c000000 Erase end! -Programming end! 从tftp服务器加载:
-PMON&amp;gt; fload tftp://192.168.1.4/gz.mxd Loading file: tftp://192.168.1.4/gz.mxd dl_offset 900000000f800000 addr 900000000f800000 (bin) - Loaded 993222 bytes Programming flash 900000000f800000:f27c6 into 800000001c000000 Erase end! -Programming end! 从http服务器加载:
-PMON&amp;gt; fload http://192.168.1.4/gz.mxd Loading file: http://192.168.1.4/gz.mxd dl_offset 900000000f800000 addr 900000000f800000 (bin) - Loaded 993222 bytes Programming flash 900000000f800000:f27c6 into 800000001c000000 Erase end!</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>龙芯玩机指南</title><link>https://loonguser.github.io/firmware/</link><description>Recent content on 龙芯玩机指南</description><generator>Hugo</generator><language>zh</language><atom:link href="https://loonguser.github.io/firmware/index.xml" rel="self" type="application/rss+xml"/><item><title>Grub编译与调试</title><link>https://loonguser.github.io/firmware/grub/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/grub/</guid><description>&lt;h2 id="1-grub编译">
+ 1. Grub编译
+ &lt;a class="anchor" href="#1-grub%e7%bc%96%e8%af%91">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>git clone https://github.com/loongarch64/grub.git
+cd grub
+./bootstrap
+./configure --with-platform=efi --target=loongarch64 --prefix=$(pwd) --disable-werror
+&lt;/code>&lt;/pre>&lt;h2 id="2-grub文件生成">
+ 2. Grub文件生成
+ &lt;a class="anchor" href="#2-grub%e6%96%87%e4%bb%b6%e7%94%9f%e6%88%90">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="21-grubefi">
+ 2.1 grub.efi
+ &lt;a class="anchor" href="#21-grubefi">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>./grub-mkimage -p . -c /boot/mxd.cfg -d ./grub-core/ -O loongarch64-efi -o /boot/mxd.efi $(ls grub-core/ | grep -E &amp;#34;\.mod$&amp;#34; | cut -d &amp;#34;.&amp;#34; -f 1 | uniq)
+&lt;/code>&lt;/pre>&lt;p>各参数可在&lt;code>help&lt;/code>信息中查看.&lt;/p>
+&lt;h3 id="22-grubcfg">
+ 2.2 grub.cfg
+ &lt;a class="anchor" href="#22-grubcfg">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>./grub-mkconfig -o /boot/mxd.cfg
+&lt;/code>&lt;/pre>&lt;p>除了生成&lt;code>grub.cfg&lt;/code>外, 系统下还有一些用于参考的&lt;code>grub&lt;/code>默认配置选项, 如: &lt;code>/etc/default/grub&lt;/code>, &lt;code>/etc/grub.d&lt;/code>等. 倘若修改这些文件, 还需要更新&lt;code>/boot/grub/grub.cfg&lt;/code>, 有命令可以做到:&lt;/p>
+&lt;pre tabindex="0">&lt;code>update-grub
+&lt;/code>&lt;/pre>&lt;h3 id="23-将grub安装至uefi引导界面">
+ 2.3 将grub安装至UEFI引导界面
+ &lt;a class="anchor" href="#23-%e5%b0%86grub%e5%ae%89%e8%a3%85%e8%87%b3uefi%e5%bc%95%e5%af%bc%e7%95%8c%e9%9d%a2">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>grub-install --boot-directory=/boot --efi-directory=/boot/efi --bootload-id=mxd /dev/sda
+&lt;/code>&lt;/pre>&lt;p>&lt;code>--boot-directory&lt;/code>指定在&lt;code>/boot&lt;/code>作为根目录, 下寻找&lt;code>grub.cfg&lt;/code>和模块.&lt;/p></description></item><item><title>PMON的使用方法</title><link>https://loonguser.github.io/firmware/pmon/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/pmon/</guid><description>&lt;blockquote>
+&lt;p>更新: 新&lt;code>pmon&lt;/code>固件已支持&lt;code>efi_stub&lt;/code>, 详情查看
+ &lt;a href="https://loonguser.github.io/firmware/pmon/#101-%e5%8a%a0%e8%bd%bdgrub">10.1节&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-查看设备">
+ 1. 查看设备
+ &lt;a class="anchor" href="#1-%e6%9f%a5%e7%9c%8b%e8%ae%be%e5%a4%87">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; devls
+syn0
+wd0
+usb0
+&lt;/code>&lt;/pre>&lt;p>&lt;code>sync0&lt;/code>, &lt;code>igb0&lt;/code>, &lt;code>em0&lt;/code> 等字样,表示网络设备, 即网卡&lt;/p>
+&lt;p>&lt;code>wd0&lt;/code>, &lt;code>nvme0&lt;/code>, &lt;code>usb0&lt;/code>, &lt;code>cd0&lt;/code>等字样表示存储设备, 即硬盘, &lt;code>U&lt;/code>盘等.&lt;/p>
+&lt;h2 id="2-查看pci信息">
+ 2. 查看pci信息
+ &lt;a class="anchor" href="#2-%e6%9f%a5%e7%9c%8bpci%e4%bf%a1%e6%81%af">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; pciscan
+&amp;gt;&amp;gt; BUS 0 &amp;lt;&amp;lt;
+Dev Fun Device description
+--------------------------
+ 0 0 vendor/product: 0x0014/0x7a00 (bridge, host, interface: 0x00, revision: 0x00)
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ 0 1 vendor/product: 0x0014/0x7a10 (bridge, host, interface: 0x00, revision: 0x01)
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ 0 2 vendor/product: 0x0014/0x7a20 (bridge, host, interface: 0x00, revision: 0x01)
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ 0 3 vendor/product: 0x0014/0x7a30 (bridge, host, interface: 0x00, revision: 0x00)
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ 4 0 vendor/product: 0x0014/0x7a24 (serialbus, USB, interface: 0x10, revision: 0x02)
+64-bit mem,low address
+0x59648004:0xffff8004 mem @0x59648000, 32768 bytes
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ ......
+ ......
+&lt;/code>&lt;/pre>&lt;h2 id="3-产看固件版本信息">
+ 3. 产看固件版本信息
+ &lt;a class="anchor" href="#3-%e4%ba%a7%e7%9c%8b%e5%9b%ba%e4%bb%b6%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; vers
+PMON: PMON 5.0.3-Release (loongson) #233: Wed Oct 18 15:09:40 CST 2023 commit d044be8f495e97082c8905b131d525ef31ade0b9 Author: Xiangdong Meng &amp;lt;mengxiangdong@loongson.cn&amp;gt; Date: Wed Sep 6 15:15:31 2023 +0800
+&lt;/code>&lt;/pre>&lt;h2 id="4-查看寄存器信息">
+ 4. 查看寄存器信息
+ &lt;a class="anchor" href="#4-%e6%9f%a5%e7%9c%8b%e5%af%84%e5%ad%98%e5%99%a8%e4%bf%a1%e6%81%af">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; d8 0x800000001fe00020 2
+800000001fe00020 : 0000303030364133 0000000000000000 3A6000..........
+&lt;/code>&lt;/pre>&lt;h2 id="5-查看磁盘信息">
+ 5. 查看磁盘信息
+ &lt;a class="anchor" href="#5-%e6%9f%a5%e7%9c%8b%e7%a3%81%e7%9b%98%e4%bf%a1%e6%81%af">#&lt;/a>
+&lt;/h2>
+&lt;p>这里&lt;code>fdisk&lt;/code>命令后面的设备名是在第一节中&lt;code>devls&lt;/code>命令列出来的.&lt;/p></description></item><item><title>从UEFI如何启动到系统</title><link>https://loonguser.github.io/firmware/uefi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/uefi/</guid><description>&lt;h2 id="uefi须知">
+ UEFI须知
+ &lt;a class="anchor" href="#uefi%e9%a1%bb%e7%9f%a5">#&lt;/a>
+&lt;/h2>
+&lt;h2 id="1-进入uefi-setup界面">
+ 1. 进入UEFI setup界面
+ &lt;a class="anchor" href="#1-%e8%bf%9b%e5%85%a5uefi-setup%e7%95%8c%e9%9d%a2">#&lt;/a>
+&lt;/h2>
+&lt;p>在串口或者显示界面下显示&lt;code>BDS&lt;/code>字样的时候(如下图), 稍微按按上下键即可进入&lt;code>Setup&lt;/code>界面
+
+ &lt;img src="https://loonguser.github.io/images/uefi/1.png" alt="UEFI Booting" />&lt;/p>
+&lt;h2 id="2-setup界面">
+ 2. Setup界面
+ &lt;a class="anchor" href="#2-setup%e7%95%8c%e9%9d%a2">#&lt;/a>
+&lt;/h2>
+&lt;p>无论是&lt;code>Intel&lt;/code>还是&lt;code>loongson&lt;/code>, &lt;code>BIOS&lt;/code>下都有设置的接口, &lt;code>PMON&lt;/code>也有, 无非是显示样式差异, 原理相通. &lt;code>Loongson&lt;/code>的&lt;code>UEFI&lt;/code>界面如下图&lt;/p>
+&lt;p>不同的条目, 用于设置不同的功能. 其中普通用户通常只需要进入&lt;code>BootManager&lt;/code>界面选择相应的启动目标即可.
+
+ &lt;img src="https://loonguser.github.io/images/uefi/2.png" alt="Setup" />&lt;/p>
+&lt;h2 id="3-bootmanager界面">
+ 3. BootManager界面
+ &lt;a class="anchor" href="#3-bootmanager%e7%95%8c%e9%9d%a2">#&lt;/a>
+&lt;/h2>
+&lt;p>在下图区域&lt;code>1&lt;/code>中为条目名称, 区域&lt;code>2&lt;/code>中为&lt;code>UEFI&lt;/code>下解析的路径名(有点专业,不用理解), 总之, 左边看不懂时就看右边, 找相关的关键字, 比如下图, 左侧是设备名, 不太能看出是什么设备, 右侧则有&lt;code>Sata&lt;/code>字样可以识别.
+
+ &lt;img src="https://loonguser.github.io/images/uefi/3.png" alt="BootManager" />&lt;/p>
+&lt;h2 id="4-shell下操作">
+ 4. Shell下操作
+ &lt;a class="anchor" href="#4-shell%e4%b8%8b%e6%93%8d%e4%bd%9c">#&lt;/a>
+&lt;/h2>
+&lt;p>通常, 正常情况下, 系统直接启动, 用户无法感知上述界面的存在, 但当出现一些问题时, 我们可能需要进入&lt;code>Shell&lt;/code>下进行操作, 如上图中的第二个条目, 选中后回车进入下图界面:
+
+ &lt;img src="https://loonguser.github.io/images/uefi/4.png" alt="Shell" />&lt;/p>
+&lt;h3 id="41-显示启动设备">
+ 4.1. 显示启动设备
+ &lt;a class="anchor" href="#41-%e6%98%be%e7%a4%ba%e5%90%af%e5%8a%a8%e8%ae%be%e5%a4%87">#&lt;/a>
+&lt;/h3>
+&lt;p>正常情况下， 进入&lt;code>Shell&lt;/code>后仍然会提示启动相关的设备, 如上图, 倘若由于操作过多, 或者显示&lt;code>bug&lt;/code>等, 我们还想再次看到相关的显示, 则需要通过&lt;code>map&lt;/code>命令再次显示，如下图：&lt;/p>
+&lt;p>
+ &lt;img src="https://loonguser.github.io/images/uefi/5.png" alt="map命令" />&lt;/p>
+&lt;p>可以看到, 其实和默认进入&lt;code>Shell&lt;/code>的打印是一样的, 不过为了防止打印被冲刷掉, 还是要会一下.&lt;/p>
+&lt;h3 id="42-进入设备及查看文件">
+ 4.2. 进入设备及查看文件
+ &lt;a class="anchor" href="#42-%e8%bf%9b%e5%85%a5%e8%ae%be%e5%a4%87%e5%8f%8a%e6%9f%a5%e7%9c%8b%e6%96%87%e4%bb%b6">#&lt;/a>
+&lt;/h3>
+&lt;p>看上图, 图中黄色字体, &lt;code>FS0:&lt;/code> , &lt;code>BLK0:&lt;/code>等, 可以理解为不同设备的重命名, 其中&lt;code>FS&lt;/code>开头的标识表示该设备的文件系统可以识别, &lt;code>BLK&lt;/code>开头的表示表示该设备不存在文件系统, 或者文件系统不可识别. 总之对我们有意义的就只有&lt;code>FS&lt;/code>开头的标识.&lt;/p></description></item><item><title>如何更新固件</title><link>https://loonguser.github.io/firmware/firmware/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/firmware/</guid><description>&lt;h2 id="在pmon下更新固件">
+ 在PMON下更新固件
+ &lt;a class="anchor" href="#%e5%9c%a8pmon%e4%b8%8b%e6%9b%b4%e6%96%b0%e5%9b%ba%e4%bb%b6">#&lt;/a>
+&lt;/h2>
+&lt;p>详情
+ &lt;a href="https://loonguser.github.io/firmware/pmon/">PMON使用方法&lt;/a>&lt;/p>
+&lt;p>从硬盘加载:&lt;/p>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; fload /dev/fs/usb0a/gz.mxd
+Loading file: /dev/fs/fat@usb0a/gz.mxd dl_offset 900000000f800000 addr 900000000f800000
+(bin)
+-
+Loaded 993222 bytes
+
+Programming flash 900000000f800000:f27c6 into 800000001c000000
+Erase end!
+-Programming end!
+&lt;/code>&lt;/pre>&lt;p>从tftp服务器加载:&lt;/p>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; fload tftp://192.168.1.4/gz.mxd
+Loading file: tftp://192.168.1.4/gz.mxd dl_offset 900000000f800000 addr 900000000f800000
+(bin)
+-
+Loaded 993222 bytes
+
+Programming flash 900000000f800000:f27c6 into 800000001c000000
+Erase end!
+-Programming end!
+&lt;/code>&lt;/pre>&lt;p>从http服务器加载:&lt;/p>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; fload http://192.168.1.4/gz.mxd
+Loading file: http://192.168.1.4/gz.mxd dl_offset 900000000f800000 addr 900000000f800000
+(bin)
+-
+Loaded 993222 bytes
+
+Programming flash 900000000f800000:f27c6 into 800000001c000000
+Erase end!
+-Programming end!
+&lt;/code>&lt;/pre>&lt;h2 id="在uefi下更新固件">
+ 在UEFI下更新固件
+ &lt;a class="anchor" href="#%e5%9c%a8uefi%e4%b8%8b%e6%9b%b4%e6%96%b0%e5%9b%ba%e4%bb%b6">#&lt;/a>
+&lt;/h2>
+&lt;p>详情
+ &lt;a href="https://loonguser.github.io/firmware/uefi/">uefi使用方法&lt;/a>&lt;/p></description></item></channel></rss>

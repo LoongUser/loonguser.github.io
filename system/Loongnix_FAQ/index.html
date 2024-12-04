@@ -1,4 +1,42 @@
-<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="文章来源: http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html
+<!doctype html><html lang=zh dir=ltr><head><meta charset=UTF-8><meta name=viewport content="width=device-width,initial-scale=1"><meta name=description content="
+文章来源: http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html
+
+
+自2022/11/16日起桌面版软件源的key到期，如本地遇到key的问题，可依照下列方法对Key授权进行升级即可：
+wget 
+  http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb
+dpkg -i debian-archive-keyring_2019.1.lnd.2_all.deb
+apt-key add /usr/share/keyrings/debian-archive-buster-loongarch64-stable.gpg
+
+
+  1. loongnix桌面系统源
+  #
+
+http://pkg.loongnix.cn/loongnix/
+
+  2. 开启sshd服务
+  #
+
+Loongnixi桌面系统默认关闭sshd服务，开启方法:
+loongson@loongson-pc:~$ sudo apt install openssh-server
+loongson@loongson-pc:~$ systemctl start ssh
+loongson@loongson-pc:~$ systemctl status ssh
+
+  3. 安装auditd软件包
+  #
+
+Loongnix系统默认不集成auditd软件包，若使用过程中用到审计功能，需手动安装auditd软件包:
+loongson@loongson-pc:~$ sudo apt install auditd && systemctl start auditd && systemctl status auditd
+
+  4. 制作rootfs文件系统
+  #
+
+已安装debootstrap的前提下，使用以下方法制作rootfs文件系统：
+debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/
+chroot iso debootstrap/debootstrap --second-stage
+cd iso
+chroot .
+执行debootstrap操作时，如果遇到下述错误现象："><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/system/Loongnix_FAQ/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="Loongnix_FAQ"><meta property="og:description" content=" 文章来源: http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html
 自2022/11/16日起桌面版软件源的key到期，如本地遇到key的问题，可依照下列方法对Key授权进行升级即可：
 wget http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb
 dpkg -i debian-archive-keyring_2019.1.lnd.2_all.deb
@@ -6,16 +44,8 @@ apt-key add /usr/share/keyrings/debian-archive-buster-loongarch64-stable.gpg
 1. loongnix桌面系统源 # http://pkg.loongnix.cn/loongnix/ 2. 开启sshd服务 # Loongnixi桌面系统默认关闭sshd服务，开启方法:
 loongson@loongson-pc:~$ sudo apt install openssh-server loongson@loongson-pc:~$ systemctl start ssh loongson@loongson-pc:~$ systemctl status ssh 3. 安装auditd软件包 # Loongnix系统默认不集成auditd软件包，若使用过程中用到审计功能，需手动安装auditd软件包:
 loongson@loongson-pc:~$ sudo apt install auditd && systemctl start auditd && systemctl status auditd 4. 制作rootfs文件系统 # 已安装debootstrap的前提下，使用以下方法制作rootfs文件系统：
-debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/ chroot iso debootstrap/debootstrap --second-stage cd iso chroot ."><meta name=theme-color media="(prefers-color-scheme: light)" content="#ffffff"><meta name=theme-color media="(prefers-color-scheme: dark)" content="#343a40"><meta name=color-scheme content="light dark"><meta property="og:url" content="https://loonguser.github.io/system/Loongnix_FAQ/"><meta property="og:site_name" content="龙芯玩机指南"><meta property="og:title" content="Loongnix_FAQ"><meta property="og:description" content="文章来源: http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html
-自2022/11/16日起桌面版软件源的key到期，如本地遇到key的问题，可依照下列方法对Key授权进行升级即可：
-wget http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb
-dpkg -i debian-archive-keyring_2019.1.lnd.2_all.deb
-apt-key add /usr/share/keyrings/debian-archive-buster-loongarch64-stable.gpg
-1. loongnix桌面系统源 # http://pkg.loongnix.cn/loongnix/ 2. 开启sshd服务 # Loongnixi桌面系统默认关闭sshd服务，开启方法:
-loongson@loongson-pc:~$ sudo apt install openssh-server loongson@loongson-pc:~$ systemctl start ssh loongson@loongson-pc:~$ systemctl status ssh 3. 安装auditd软件包 # Loongnix系统默认不集成auditd软件包，若使用过程中用到审计功能，需手动安装auditd软件包:
-loongson@loongson-pc:~$ sudo apt install auditd && systemctl start auditd && systemctl status auditd 4. 制作rootfs文件系统 # 已安装debootstrap的前提下，使用以下方法制作rootfs文件系统：
-debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/ chroot iso debootstrap/debootstrap --second-stage cd iso chroot ."><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="system"><meta property="article:modified_time" content="2024-06-22T17:38:39+08:00"><title>Loongnix_FAQ | 龙芯玩机指南</title>
-<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.d37184993c0833712b1f65fac32bb1e48b2a089eb387acbd83becd91aeeb45b2.js integrity="sha256-03GEmTwIM3ErH2X6wyux5IsqCJ6zh6y9g77Nka7rRbI=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
+debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/ chroot iso debootstrap/debootstrap --second-stage cd iso chroot . 执行debootstrap操作时，如果遇到下述错误现象："><meta property="og:locale" content="zh"><meta property="og:type" content="article"><meta property="article:section" content="system"><meta property="article:modified_time" content="2024-06-22T17:38:39+08:00"><title>Loongnix_FAQ | 龙芯玩机指南</title>
+<link rel=manifest href=/manifest.json><link rel=icon href=/favicon.png><link rel=stylesheet href=/book.min.f8de3645fe00591b41524aee174e19edd98a22255a2930a0cdc82a94835ba387.css integrity="sha256-+N42Rf4AWRtBUkruF04Z7dmKIiVaKTCgzcgqlINbo4c=" crossorigin=anonymous><script defer src=/flexsearch.min.js></script><script defer src=/zh.search.min.baa9ab2ee5f7a736eb778472694b3059d256ce1ea6684d96d377882f821a2c16.js integrity="sha256-uqmrLuX3pzbrd4RyaUswWdJWzh6maE2W03eIL4IaLBY=" crossorigin=anonymous></script><script defer src=/sw.min.6f6f90fcb8eb1c49ec389838e6b801d0de19430b8e516902f8d75c3c8bd98739.js integrity="sha256-b2+Q/LjrHEnsOJg45rgB0N4ZQwuOUWkC+NdcPIvZhzk=" crossorigin=anonymous></script></head><body dir=ltr><input type=checkbox class="hidden toggle" id=menu-control>
 <input type=checkbox class="hidden toggle" id=toc-control><main class="container flex"><aside class=book-menu><div class=book-menu-content><nav><h2 class=book-brand><a class="flex align-center" href=/><span>龙芯玩机指南</span></a></h2><div class=book-search><input type=text id=book-search-input placeholder=搜索 aria-label=搜索 maxlength=64 data-hotkeys=s/><div class="book-search-spinner hidden"></div><ul id=book-search-results></ul></div><ul class=book-languages><li><input type=checkbox id=languages class=toggle>
 <label for=languages class="flex justify-between"><a role=button class="flex align-center"><img src=/svg/translate.svg class=book-icon alt=Languages>
 Chinese</a></label><ul><li><a href=https://loonguser.github.io/en/>English</a></li><li><a href=https://loonguser.github.io/ru/>Russian</a></li></ul></li></ul><ul><li><p><a href=/firmware/><strong>固件</strong></a></p><ul><li><a href=/firmware/firmware/>如何更新固件</a></li><li><a href=/firmware/grub/>Grub编译与调试</a></li><li><a href=/firmware/uefi/>从UEFI如何启动到系统</a></li><li><a href=/firmware/pmon/>PMON的使用方法</a></li></ul></li><li><p><a href=/system/><strong>系统</strong></a></p><ul><li><a href=/system/gen_sys_file/>生成系统下的一些文件</a></li><li><a href=/system/install_archlinux/>新世界Archlinux系统安装</a></li><li><a href=/system/systeminfo/>系统下查看一些信息</a></li><li><a href=/system/update_system/>如何更新系统</a></li><li><a href=/system/Loongnix_FAQ/ class=active>Loongnix_FAQ</a></li><li><a href=/system/kernel/>内核编译</a></li><li><a href=/system/build_openharmony_for_2k500/>龙芯2K500先锋派OpenHarmony构建指北</a></li><li><a href=/system/boot_param_with_kernel/>龙芯系统启动参数</a></li></ul></li><li><p><a href=/applications/><strong>应用</strong></a></p><ul><li><a href=/applications/blog/>3A6000上搭建hexo博客</a></li><li><a href=/applications/gogs/>3A6000上搭建gogs</a></li><li><a href=/applications/qemu/>Qemu使用</a></li><li><a href=/applications/ejtag/>龙芯lajtag常用技巧</a></li><li><a href=/applications/lat/>在龙芯3A5000上运行Windows程序</a></li><li><a href=/applications/clash/>龙芯平台使用clash</a></li></ul></li></ul></nav><script>(function(){var e=document.querySelector("aside .book-menu-content");addEventListener("beforeunload",function(){localStorage.setItem("menu.scrollTop",e.scrollTop)}),e.scrollTop=localStorage.getItem("menu.scrollTop")})()</script></div></aside><div class=book-page><header class=book-header><div class="flex align-center justify-between"><label for=menu-control><img src=/svg/menu.svg class=book-icon alt=Menu>
@@ -101,7 +131,7 @@ Option          &#34;SWcursor&#34;      &#34;true&#34;
 修改为
 Option          &#34;SWcursor&#34;      &#34;false&#34;
 </code></pre><h2 id=24-桌面系统手动分区注意事项>24. 桌面系统手动分区注意事项
-<a class=anchor href=#24-%e6%a1%8c%e9%9d%a2%e7%b3%bb%e7%bb%9f%e6%89%8b%e5%8a%a8%e5%88%86%e5%8c%ba%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9>#</a></h2><table><thead><tr><th>分区</th><th>介绍</th><th>分区挂载点</th><th>分区文件系统格式</th><th>推荐大小（仅供参考，可自行修改）</th><th>备注</th></tr></thead><tbody><tr><td>efi分区</td><td>efi系统分区是一个FAT16或FAT32格式的物理分区，支持EFI模式的电脑需要从 ESP 启动系统，ESP是系统引导分区。</td><td>/boot/efi</td><td>fat32</td><td>300MB</td><td>pmon固件可不分，uefi固件必须分，同时需要勾选esp标识</td></tr><tr><td>boot分区</td><td>boot分区是操作系统的内核及在引导过程中使用的文件存放的分区。</td><td>/boot</td><td>ext2/3/4</td><td>300MB</td><td>可以不分，如想在PMON固件下分boot分区时，必须将boot分区分为ext2/3/4或fat32/16格式的文件系统</td></tr><tr><td>根分区</td><td>根分区就是root分区，用于存放系统数据的分区</td><td>/</td><td>均支持,推荐xfs</td><td>>= 20G</td><td>必须要分，最小10G</td></tr><tr><td>data分区</td><td>data分区用于存放用户数据、应用数据的分区</td><td>/data</td><td>均支持,推荐xfs</td><td>除去其余分区之外的所有磁盘大小</td><td>可以不分，但会影响后续使用新版系统升级功能时，数据丢失的情况。最小分5G可以安装系统，但是后续新建用户和安装应用软件可能会出现磁盘不足的情况。</td></tr><tr><td>restore分区</td><td>restore分区用于系统备份功能使用的分区，该分区为隐藏状态</td><td>/restore</td><td>均支持推荐xfs</td><td>>= 20G</td><td>可以不分，但会影响后续使用新版系统升级功能时，数据丢失的情况。最小分区大小和根分区一致</td></tr><tr><td>swap分区</td><td>swap分区，即交换区，系统在物理内存（运行内存）不够时，与Swap分区进行交换</td><td>无挂载点</td><td>linuxswap</td><td>>=8G</td><td>可以不分，但是当内存不够用时，系统可能会卡死;最小分2G</td></tr></tbody></table><h2 id=25-igbuioko模块的编译方法>25. igbuioko模块的编译方法
+<a class=anchor href=#24-%e6%a1%8c%e9%9d%a2%e7%b3%bb%e7%bb%9f%e6%89%8b%e5%8a%a8%e5%88%86%e5%8c%ba%e6%b3%a8%e6%84%8f%e4%ba%8b%e9%a1%b9>#</a></h2><table><thead><tr><th style=text-align:left>分区</th><th style=text-align:left>介绍</th><th style=text-align:left>分区挂载点</th><th style=text-align:left>分区文件系统格式</th><th style=text-align:left>推荐大小（仅供参考，可自行修改）</th><th style=text-align:left>备注</th></tr></thead><tbody><tr><td style=text-align:left>efi分区</td><td style=text-align:left>efi系统分区是一个FAT16或FAT32格式的物理分区，支持EFI模式的电脑需要从 ESP 启动系统，ESP是系统引导分区。</td><td style=text-align:left>/boot/efi</td><td style=text-align:left>fat32</td><td style=text-align:left>300MB</td><td style=text-align:left>pmon固件可不分，uefi固件必须分，同时需要勾选esp标识</td></tr><tr><td style=text-align:left>boot分区</td><td style=text-align:left>boot分区是操作系统的内核及在引导过程中使用的文件存放的分区。</td><td style=text-align:left>/boot</td><td style=text-align:left>ext2/3/4</td><td style=text-align:left>300MB</td><td style=text-align:left>可以不分，如想在PMON固件下分boot分区时，必须将boot分区分为ext2/3/4或fat32/16格式的文件系统</td></tr><tr><td style=text-align:left>根分区</td><td style=text-align:left>根分区就是root分区，用于存放系统数据的分区</td><td style=text-align:left>/</td><td style=text-align:left>均支持,推荐xfs</td><td style=text-align:left>>= 20G</td><td style=text-align:left>必须要分，最小10G</td></tr><tr><td style=text-align:left>data分区</td><td style=text-align:left>data分区用于存放用户数据、应用数据的分区</td><td style=text-align:left>/data</td><td style=text-align:left>均支持,推荐xfs</td><td style=text-align:left>除去其余分区之外的所有磁盘大小</td><td style=text-align:left>可以不分，但会影响后续使用新版系统升级功能时，数据丢失的情况。最小分5G可以安装系统，但是后续新建用户和安装应用软件可能会出现磁盘不足的情况。</td></tr><tr><td style=text-align:left>restore分区</td><td style=text-align:left>restore分区用于系统备份功能使用的分区，该分区为隐藏状态</td><td style=text-align:left>/restore</td><td style=text-align:left>均支持推荐xfs</td><td style=text-align:left>>= 20G</td><td style=text-align:left>可以不分，但会影响后续使用新版系统升级功能时，数据丢失的情况。最小分区大小和根分区一致</td></tr><tr><td style=text-align:left>swap分区</td><td style=text-align:left>swap分区，即交换区，系统在物理内存（运行内存）不够时，与Swap分区进行交换</td><td style=text-align:left>无挂载点</td><td style=text-align:left>linuxswap</td><td style=text-align:left>>=8G</td><td style=text-align:left>可以不分，但是当内存不够用时，系统可能会卡死;最小分2G</td></tr></tbody></table><h2 id=25-igbuioko模块的编译方法>25. igbuioko模块的编译方法
 <a class=anchor href=#25-igbuioko%e6%a8%a1%e5%9d%97%e7%9a%84%e7%bc%96%e8%af%91%e6%96%b9%e6%b3%95>#</a></h2><p>igb_uio.ko模块是独立于dpdk提供的。 编译igb_uio.ko模块对应的代码获取位置是：
 <a href=http://git.dpdk.org/dpdk-kmods/>http://git.dpdk.org/dpdk-kmods/</a> 编译方法：</p><pre tabindex=0><code class=language-auto data-lang=auto>loongson@loongson-pc:~$git clone http://dpdk.org/git/dpdk-kmods
 loongson@loongson-pc:~$cd dpdk-kmods

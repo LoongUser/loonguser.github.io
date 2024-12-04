@@ -1,118 +1,955 @@
-<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>龙芯玩机指南</title><link>https://loonguser.github.io/</link><description>Recent content on 龙芯玩机指南</description><generator>Hugo</generator><language>zh</language><atom:link href="https://loonguser.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>3A6000上搭建gogs</title><link>https://loonguser.github.io/applications/gogs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/gogs/</guid><description>pacman -S mariadb mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql systemctl start mysql mariadb --initialize-insecure --user=mysql --datadir=&amp;#39;./data&amp;#39; mysql -u root [root@mxd gitrepo]# mysql -u root mysql: Deprecated program name. It will be removed in a future release, use &amp;#39;/usr/bin/mariadb&amp;#39; instead Welcome to the MariaDB monitor. Commands end with ; or \g. Your MariaDB connection id is 8 Server version: 11.0.2-MariaDB Arch Linux Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others. Type &amp;#39;help;&amp;#39; or &amp;#39;\h&amp;#39; for help.</description></item><item><title>3A6000上搭建hexo博客</title><link>https://loonguser.github.io/applications/blog/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/blog/</guid><description>pacman -S nodejs npm git npm config set proxy=&amp;#34;http://127.0.0.1:7890&amp;#34; npm install -g hexo-cli mkdir loongsonwiki cd loongsonwiki hexo init git clone https://github.com/hdxw/hexo-theme-prowiki.git themes/hexo-theme-prowiki git submodule add https://github.com/hdxw/hexo-theme-prowiki.git themes/hexo-theme-prowiki vim _config.yml diff --git a/_config.yml b/_config.yml index 02b67a4..2391977 100644 --- a/_config.yml +++ b/_config.yml @@ -97,7 +97,7 @@ ignore: # Extensions ## Plugins: https://hexo.io/plugins/ ## Themes: https://hexo.io/themes/ -theme: landscape +theme: hexo-theme-prowiki # Deployment ## Docs: https://hexo.io/docs/one-command-deployment</description></item><item><title>Grub编译与调试</title><link>https://loonguser.github.io/firmware/grub/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/grub/</guid><description>1. Grub编译 # git clone https://github.com/loongarch64/grub.git cd grub ./bootstrap ./configure --with-platform=efi --target=loongarch64 --prefix=$(pwd) --disable-werror 2. Grub文件生成 # 2.1 grub.efi # ./grub-mkimage -p . -c /boot/mxd.cfg -d ./grub-core/ -O loongarch64-efi -o /boot/mxd.efi $(ls grub-core/ | grep -E &amp;#34;\.mod$&amp;#34; | cut -d &amp;#34;.&amp;#34; -f 1 | uniq) 各参数可在help信息中查看.
-2.2 grub.cfg # ./grub-mkconfig -o /boot/mxd.cfg 除了生成grub.cfg外, 系统下还有一些用于参考的grub默认配置选项, 如: /etc/default/grub, /etc/grub.d等. 倘若修改这些文件, 还需要更新/boot/grub/grub.cfg, 有命令可以做到:
-update-grub 2.3 将grub安装至UEFI引导界面 # grub-install --boot-directory=/boot --efi-directory=/boot/efi --bootload-id=mxd /dev/sda --boot-directory指定在/boot作为根目录, 下寻找grub.</description></item><item><title>Loongnix_FAQ</title><link>https://loonguser.github.io/system/Loongnix_FAQ/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/Loongnix_FAQ/</guid><description>文章来源: http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html
-自2022/11/16日起桌面版软件源的key到期，如本地遇到key的问题，可依照下列方法对Key授权进行升级即可：
-wget http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb
-dpkg -i debian-archive-keyring_2019.1.lnd.2_all.deb
-apt-key add /usr/share/keyrings/debian-archive-buster-loongarch64-stable.gpg
-1. loongnix桌面系统源 # http://pkg.loongnix.cn/loongnix/ 2. 开启sshd服务 # Loongnixi桌面系统默认关闭sshd服务，开启方法:
-loongson@loongson-pc:~$ sudo apt install openssh-server loongson@loongson-pc:~$ systemctl start ssh loongson@loongson-pc:~$ systemctl status ssh 3. 安装auditd软件包 # Loongnix系统默认不集成auditd软件包，若使用过程中用到审计功能，需手动安装auditd软件包:
-loongson@loongson-pc:~$ sudo apt install auditd &amp;amp;&amp;amp; systemctl start auditd &amp;amp;&amp;amp; systemctl status auditd 4. 制作rootfs文件系统 # 已安装debootstrap的前提下，使用以下方法制作rootfs文件系统：
-debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/ chroot iso debootstrap/debootstrap --second-stage cd iso chroot .</description></item><item><title>PMON的使用方法</title><link>https://loonguser.github.io/firmware/pmon/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/pmon/</guid><description>更新: 新pmon固件已支持efi_stub, 详情查看 10.1节
-1. 查看设备 # PMON&amp;gt; devls syn0 wd0 usb0 sync0, igb0, em0 等字样,表示网络设备, 即网卡
-wd0, nvme0, usb0, cd0等字样表示存储设备, 即硬盘, U盘等.
-2. 查看pci信息 # PMON&amp;gt; pciscan &amp;gt;&amp;gt; BUS 0 &amp;lt;&amp;lt; Dev Fun Device description -------------------------- 0 0 vendor/product: 0x0014/0x7a00 (bridge, host, interface: 0x00, revision: 0x00) 0x00000000:0x00000000 mem @0x00000000, 0 bytes 0 1 vendor/product: 0x0014/0x7a10 (bridge, host, interface: 0x00, revision: 0x01) 0x00000000:0x00000000 mem @0x00000000, 0 bytes 0 2 vendor/product: 0x0014/0x7a20 (bridge, host, interface: 0x00, revision: 0x01) 0x00000000:0x00000000 mem @0x00000000, 0 bytes 0 3 vendor/product: 0x0014/0x7a30 (bridge, host, interface: 0x00, revision: 0x00) 0x00000000:0x00000000 mem @0x00000000, 0 bytes 4 0 vendor/product: 0x0014/0x7a24 (serialbus, USB, interface: 0x10, revision: 0x02) 64-bit mem,low address 0x59648004:0xffff8004 mem @0x59648000, 32768 bytes 0x00000000:0x00000000 mem @0x00000000, 0 bytes .</description></item><item><title>Qemu使用</title><link>https://loonguser.github.io/applications/qemu/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/qemu/</guid><description>部分环境准备: # qemu: https://gitlab.com/qemu-project/qemu.git
-固件: https://github.com/loongson/Firmware/raw/main/LoongArchVirtMachine/edk2-loongarch64-code.fd
-系统: http://pkg.loongnix.cn/loongnix/isos/Loongnix-20.5/
-qemu安装 # # Arch系 pacman -S qemu-system-loongarch64 # Debian系 apt install qemu-system-loongarch64 # Fedora系 yum install qemu-system-loongarch64 自己编译安装:
-git clone https://gitlab.com/qemu-project/qemu.git cd qemu mkdir build4la cd build4la ../configure --target-list=loongarch64-softmmu --enable-kvm --disable-werror --enable-vnc --enable-debug --enable-gdb make -j 8 qemu使用 # qemu启动固件: # ./qemu-system-loongarch64 -m 4G -smp 1 --cpu la464 --machine virt -bios edk2-loongarch64-code.fd -display none --serial stdio 参数说明:
-./qemu-system-loongarch64: 这是QEMU模拟器的可执行文件，用于模拟LoongArch64架构的系统。
--m 4G: 指定为虚拟机分配4GB内存（4096MB）。</description></item><item><title>从UEFI如何启动到系统</title><link>https://loonguser.github.io/firmware/uefi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/uefi/</guid><description>UEFI须知 # 1. 进入UEFI setup界面 # 在串口或者显示界面下显示BDS字样的时候(如下图), 稍微按按上下键即可进入Setup界面 2. Setup界面 # 无论是Intel还是loongson, BIOS下都有设置的接口, PMON也有, 无非是显示样式差异, 原理相通. Loongson的UEFI界面如下图
-不同的条目, 用于设置不同的功能. 其中普通用户通常只需要进入BootManager界面选择相应的启动目标即可. 3. BootManager界面 # 在下图区域1中为条目名称, 区域2中为UEFI下解析的路径名(有点专业,不用理解), 总之, 左边看不懂时就看右边, 找相关的关键字, 比如下图, 左侧是设备名, 不太能看出是什么设备, 右侧则有Sata字样可以识别. 4. Shell下操作 # 通常, 正常情况下, 系统直接启动, 用户无法感知上述界面的存在, 但当出现一些问题时, 我们可能需要进入Shell下进行操作, 如上图中的第二个条目, 选中后回车进入下图界面: 4.1. 显示启动设备 # 正常情况下， 进入Shell后仍然会提示启动相关的设备, 如上图, 倘若由于操作过多, 或者显示bug等, 我们还想再次看到相关的显示, 则需要通过map命令再次显示，如下图：
-可以看到, 其实和默认进入Shell的打印是一样的, 不过为了防止打印被冲刷掉, 还是要会一下.
-4.2. 进入设备及查看文件 # 看上图, 图中黄色字体, FS0: , BLK0:等, 可以理解为不同设备的重命名, 其中FS开头的标识表示该设备的文件系统可以识别, BLK开头的表示表示该设备不存在文件系统, 或者文件系统不可识别. 总之对我们有意义的就只有FS开头的标识.</description></item><item><title>龙芯2K500先锋派OpenHarmony构建指北</title><link>https://loonguser.github.io/system/build_openharmony_for_2k500/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/build_openharmony_for_2k500/</guid><description>文章来源: https://bbs.loongarch.org/d/435-2k500openharmony
-一、系统需求和环境配置 # 官方推荐系统是ubuntu 20.4，预留60G到80G的磁盘空间，交换分区推荐8G以上，主要环境是python3.9。 也可以使用Debian构建，留意python版本，python3.10及更新版本要改一行代码，才能正常运行hb构建工具。
-需要安装的软件包：
-sudo apt update sudo apt upgrade sudo apt install apt-utils binutils bison flex bc build-essential make mtd-utils gcc-arm-linux-gnueabi u-boot-tools python3.9 python3-pip git zip unzip curl wget gcc g++ ruby dosfstools mtools default-jre default-jdk scons python3-distutils perl openssl libssl-dev cpio git-lfs m4 ccache zlib1g-dev tar rsync liblz4-tool genext2fs binutils-dev device-tree-compiler e2fsprogs git-core gnupg gnutls-bin gperf lib32ncurses5-dev libffi-dev zlib* libelf-dev libx11-dev libgl1-mesa-dev lib32z1-dev xsltproc x11proto-core-dev libc6-dev-i386 libxml2-dev lib32z-dev libdwarf-dev grsync xxd libglib2.</description></item><item><title>龙芯lajtag常用技巧</title><link>https://loonguser.github.io/applications/ejtag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/ejtag/</guid><description>使用串口时:
-cd /tmp/ejtag-debug/ ./la_ejtag_debug_gpio -t source configs/configs.ls3a5000 在本机上运行时:
-cd /path/ejtag-debug/ ./la_ejtag_debug_usb -t source configs/configs.ls3a5000 cpus 查看pc
-set 查看通用寄存器及部分csr寄存器, 此时pc停在set时运行的地址.
-cont 从set处继续运行
-hb addr; cont 断点到addr处, 等待触发断点.
-hbls 查看断点
-watch data; cont 检测通用寄存器, 当通用寄存器中和data一致时, 断点此处.
-watchls 查看数据检测点.
-watch data mask; cont 检测通用寄存器, 当通用寄存器中和data一致时, 断点此处. mask可以设置掩码.
-d1/d4/d8 addr length 按照1字节, 4字节, 8字节, 依次dump length个addr寄存器中的值.
-m1/m4/m8 addr data1 data2&amp;hellip; 按照1字节, 4字节, 8字节, 依次将dataX 写入addr地址.
-disas addr length 反汇编addr处开始length长的内容.
-csrs d8 num length 从第num个csr寄存器连续读出length个值.</description></item><item><title>龙芯平台使用clash</title><link>https://loonguser.github.io/applications/clash/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/clash/</guid><description> 旧世界(Loongnix) # 来源: https://bbs.loongarch.org/d/177-loongnixclash
-下载后:
-unzip -x clash1130-loong64.zip ./clash -d dir_include_config.yaml 其中dir_include_config.yaml是config.yaml所在的文件夹路径.
-然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:
-http: port: 127.0.0.1 7890 https: port: 127.0.0.1 7890 socks: port: 127.0.0.1 7891 具体端口号信息在config.yaml中查看.
-新世界 # Archlinux # pacman -S clash clash -d dir_include_config.yaml 其中dir_include_config.yaml是config.yaml所在的文件夹路径.
-然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:
-http: port: 127.0.0.1 7890 https: port: 127.0.0.1 7890 socks: port: 127.0.0.1 7891 具体端口号信息在config.yaml中查看.
-Country.mmdb # wget https://gitee.com/mirrors/Pingtunnel/raw/master/GeoLite2-Country.mmdb -O Country.mmdb</description></item><item><title>龙芯系统启动参数</title><link>https://loonguser.github.io/system/boot_param_with_kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/boot_param_with_kernel/</guid><description>龙芯平台常用启动参数 # 增加串口 # console=ttyS0,115200 earlycon=uart,mmio,0x1fe001e0 注意:
-console即是指控制台输出, ttyS0是龙芯默认的串口终端, 波特率是115200. earlycon是用来打印早期acpi初始化过程的参数, 在使用dts传参时可能不可用. 核数限制 # nr_cpus=3 maxcpus=3 多核调度限制 # isolcpus=0-1,3-5 示例可以使0,1,3,4,5核不参与调度, 即被孤立.
-禁用SMP # nosmp 串口调试休眠 # no_console_suspend 在s3和s4的过程中, 串口将打印执行流程.
-设置替代初始化进程 # rdinit=/sbin/my_init init=/sbin/my_init 减少内核启动时的输出 # quiet 设置日志级别 # loglevel=3 设置根文件系统所在设备 # root=/dev/sda3 加载ramdisk # initrd=/path/to/initrd.img 设置PCI属性 # 如禁用msi
-pci=nomsi 设置挂载参数 # mount_param=noatime 设置SELinux启用 # selinux=1 禁用gpu驱动 # gsgpu.LG100_support=0 使能lsdc驱动 # lsdc.modeset=1 内核参数查询 # 龙芯系统支持的内核启动参数可以使用如下命令查看:
-cat System.map-4.19.0-19-loongson-3 | grep &amp;#34;__setup_str_&amp;#34; | sed &amp;#39;s/.</description></item><item><title>内核编译</title><link>https://loonguser.github.io/system/kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/kernel/</guid><description>龙芯内核编译 # 目前龙芯已经由MIPS架构转战LoongArch架构.
-vmlinux+vmlinuz libmodules RamDisk_initrd 准备阶段 # 下面以LoongArch架构的编译为例. 编译器采用Gcc交叉编译LoongArch版本
-编译器版本 : loongarch64-linux-gnu-gcc-8.3.0 配置文件 采用龙芯默认配置: cp arch/loongarch/configs/loongson3_defconfig .config 开始编译 # vmlinux/vmlinuz
-执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-(此为编译器路径 which gcc) menuconfig 进入图形化配置界面,开关相关功能,我们直接Esc退出.
-执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu- -j 16 //采用16线程进行编译(目前我是在服务器上编译,核数较多). 到此vmlinux/vmlinuz 非压缩和压缩版内核就编译完成. System.map 是符号表
-执行 make modules_install INSTALL_MOD_PATH=./ ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu- 编译lib/modules/ 驱动模块包,熟悉内核的人都了解,当配置menuconfig的时候,会将M的驱动以modules的形式在内核中加载. 将编译的文件进行使用 # 1.vmlinuz 放在os的/boot/下,并可以修改成自己喜欢的名字 vmlinuz_go
-2.将lib/modules/下的文件copy到os根目录/lib/modules/
-3.参考Deebian制作Ramdisk为例: 执行 使用draut进行制作,该脚本制作的Ramdisk支持了好几种文件系统,你可以简单制作RamDisk,这里就不详细介绍该命令了.将制作的*.img文件拷贝到/boot下.
-dracut 是一个事件驱动的 initramfs 基础设施。dracut(工具)被用来通过拷贝工具和文件，从一个已经安装的系统创建一个 initramfs 镜像，并将镜像与dracut框架结合在一起。
-4.修改grub引导程序,进行加载相应的内核和RamDisk.
-目前 grub在Deebian系统的目录: /boot/efi/boot/grub.cfg 修改linux命令加载的文件名-&amp;gt; vmlinuz_go initrd命令加载的文件名-&amp;gt; initrd.</description></item><item><title>如何更新固件</title><link>https://loonguser.github.io/firmware/firmware/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/firmware/</guid><description>在PMON下更新固件 # 详情 PMON使用方法
-从硬盘加载:
-PMON&amp;gt; fload /dev/fs/usb0a/gz.mxd Loading file: /dev/fs/fat@usb0a/gz.mxd dl_offset 900000000f800000 addr 900000000f800000 (bin) - Loaded 993222 bytes Programming flash 900000000f800000:f27c6 into 800000001c000000 Erase end! -Programming end! 从tftp服务器加载:
-PMON&amp;gt; fload tftp://192.168.1.4/gz.mxd Loading file: tftp://192.168.1.4/gz.mxd dl_offset 900000000f800000 addr 900000000f800000 (bin) - Loaded 993222 bytes Programming flash 900000000f800000:f27c6 into 800000001c000000 Erase end! -Programming end! 从http服务器加载:
-PMON&amp;gt; fload http://192.168.1.4/gz.mxd Loading file: http://192.168.1.4/gz.mxd dl_offset 900000000f800000 addr 900000000f800000 (bin) - Loaded 993222 bytes Programming flash 900000000f800000:f27c6 into 800000001c000000 Erase end!</description></item><item><title>如何更新系统</title><link>https://loonguser.github.io/system/update_system/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/update_system/</guid><description>1 全系统更新: # Debian系:
-apt update &amp;amp;&amp;amp; apt upgrade Redhat系:
-yum update Arch系:
-pacman -Syu 安同 OS (AOSC OS)：
-oma upgrade 2. 单独更新内核 # 2.1 更新自己编译的内核 # 将内核放置/boot下即可(通常/boot是grub.cfg默认指定的根目录)
-更新完记得更新grub.cfg, 见第四节.
-2.2 更新软件源上的内核 # 以Debian系为例, 其余不做演示:
-root@loongson-pc:/home/loongson# apt-cache search linux-header aufs-dkms - DKMS files to build and install aufs linux-headers-4.19.0-17-common - Common header files for Linux 4.19 linux-headers-4.19.0-17-loongson-3 - Linux kernel headers for 4.19 on loongson-3 linux-headers-4.19.0-18-common - Common header files for Linux 4.</description></item><item><title>生成系统下的一些文件</title><link>https://loonguser.github.io/system/gen_sys_file/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/gen_sys_file/</guid><description>1. Initrd # 通常, lib/modules/下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成Initrd:
-1.1 dracut命令 # ls lib/modules/* | xargs -I N dracut --kver N --force 1.2 mkinitramfs命令 # ls lib/modules/* | xargs -I N mkinitramfs /lib/modules/N -o /boot/initrd.img-N 2. GRUB # 2.1 Grub # 通常, Grub安装在当前启动系统所在的磁盘上, 如下命令可以找到当前磁盘. (希望将Grub安装在其他盘的同学, 看明白自己想要的效果)
-[root@mxd ~]# lsblk -P | grep &amp;#34;$(lsblk -P | grep -w &amp;#39;MOUNTPOINTS=&amp;#34;/&amp;#34;&amp;#39; | sed &amp;#39;s/.*MAJ:MIN=&amp;#34;\([^:]*\).*/\1/g&amp;#39;):0&amp;#34; | awk -F &amp;#39;&amp;#34;&amp;#39; &amp;#39;{print &amp;#34;/dev/&amp;#34; $2}&amp;#39; /dev/nvme0n1 再通过grub-install或者grub2-install命令安装进磁盘:
-grub-install /dev/nvme0n1 2.</description></item><item><title>系统下查看一些信息</title><link>https://loonguser.github.io/system/systeminfo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/systeminfo/</guid><description>1. 查看系统版本 # [root@mxd mxd]# cat /etc/os-release NAME=&amp;#34;Arch Linux&amp;#34; PRETTY_NAME=&amp;#34;Arch Linux&amp;#34; ID=arch BUILD_ID=rolling ANSI_COLOR=&amp;#34;38;2;23;147;209&amp;#34; HOME_URL=&amp;#34;https://archlinux.org/&amp;#34; DOCUMENTATION_URL=&amp;#34;https://wiki.archlinux.org/&amp;#34; SUPPORT_URL=&amp;#34;https://bbs.archlinux.org/&amp;#34; BUG_REPORT_URL=&amp;#34;https://bugs.archlinux.org/&amp;#34; PRIVACY_POLICY_URL=&amp;#34;https://terms.archlinux.org/docs/privacy-policy/&amp;#34; LOGO=archlinux-logo 2. 查看内核版本 # [root@mxd mxd]# uname -a Linux mxd 6.5.0-4 #1 SMP PREEMPT Thu, 31 Aug 2023 09:38:08 +0000 loongarch64 GNU/Linux 3. 查看固件版本 # [root@mxd mxd]# cat /sys/firmware/loongson/boardinfo BIOS Information Vendor	: Loongson Version	: Loongson-UDK2018-V4.0.05494-stable202305 ROM Size	: 4096 KB Release Date	: 07/10/23 18:05:47 Board Information Manufacturer	: Loongson Board Name	: Loongson-LS3A6000-7A2000-1w-EVB-V1.</description></item><item><title>新世界Archlinux系统安装</title><link>https://loonguser.github.io/system/install_archlinux/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/install_archlinux/</guid><description>转载文章来源： https://bbs.loongarch.org/d/88-archlinux/28
-本主题多人协作，版主权限可编辑，开源爱好者若要参与协作，可回复中申请权限，或者在QQ群里申请。 # 为了协调一致，本指南基于 @yetist制作的可引导安装镜像，指南覆盖系统引导、安装和具体应用配置。安装配置中遇到的问题，可以在回复中提出。本主题多人协作持续更新，勿催，谢谢！ # 一、龙芯新固件环境下引导盘的制作 # 安装镜像及软件仓库动态，可在如下主题中找到 # https://bbs.loongarch.org/d/67-loongarchlinux-202203/30
-最新镜像下载，随时更新 # https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.16.1-loongarch64.iso
-https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.22.1-loongarch64.iso
-https://mirrors.wsyu.edu.cn/loongarch/archlinux/iso/latest/archlinux-loong64.iso
-引导盘制作 # 准备工作：一块确定状态良好的U盘，容量4G以上即可，制作引导U盘会擦除盘内原始数据，注意备份。
-Linux环境下，插入U盘，系统会识别，不要做任何打开，加载等操作，具体设备名，可使用如下命令
-ls -la /dev/sd* ## U盘一般会识别成硬盘设备，*表示系统动态赋予的一个字符，用以区分不同硬盘 Linux环境下，使用dd这个工具软件 # 注意：x是个字符，用实际内容替换，命令执行需要root用户权限 sudo dd if=loongarchlinux-xxx.iso of=/dev/sdx bs=1M status=progress oflag=direct # 命令执行完成后，建议运行下如下命令，确保U盘写入完整 sudo sync 二、系统引导和安装前的检查 # 使用新固件引导，有两个快捷键会经常用到：
-F2 ----- 激活固件配置界面，可在配置界面的选择引导设备 F12 ----- 激活引导管理菜单，暂时不推荐使用这个方式选择引导设备 使用新固件引导系统，包括引导本主题中制作好的U盘和之前使用grub有区别，具体流程是：
-1、开机前把制作好的U盘插入机器USB接口，建议插入到主板提供的接口上，不建议使用前置接口，躲坑。
-2、开机后出现龙芯logo，快速按F2，直到进入固件配置界面
-3、按如下图示操作：
-&amp;hellip;
-TODO: 需要补充英文界面操作，或说明修改语言方法。
-移动光标到 启动管理 项，回车：
-进入 启动管理 菜单之后，将会看到一系列可选择的启动项，请在列表中找到 EFI System Partition 或 EFI System Partition 2，并选择此项启动：</description></item><item><title>在龙芯3A5000上运行Windows程序</title><link>https://loonguser.github.io/applications/lat/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/lat/</guid><description>文章来源: https://zhuanlan.zhihu.com/p/436405217
-2022-03-18：本文所述操作步骤较为繁琐，另写了一篇操作简单的替代本文内容：
-guee：包教包会：龙芯3A5000上运行任意Windows软件161 赞同 · 25 评论文章 龙芯3A5000是龙芯最新的桌面CPU，它基于龙芯自主设计的LoongArch架构（指令集），性能接近市场主流CPU水平。因为各种操作系统和应用程序都与指令集相关，所以x86架构（指令集）的CPU就不能直接运行ARM架构（指令集）的应用程序，反之亦然。因此诞生了各种各样的二进制（指令）翻译技术，用于跨架构模拟运行其它平台的操作系统和应用程序，各种二进制（指令）翻译技术可以分为软件翻译、硬件翻译、软硬结合的翻译这三大类。我先简述一下二进制翻译技术，然后再给出在UOS和龙芯3A5000上运行任何Windows程序的方法。
-二进制翻译技术简述 # 以软件方式进行二进制（指令）翻译必须存在一个宿主系统，模拟器程序在宿主系统上运行。比如各种游戏模拟器，用来在电脑上玩红白机游戏、街机游戏、PS游戏等，以纯软件的方式构建了一个虚拟的主机环境，让那些游戏程序成为缸中之脑，游戏程序执行的所有指令、请求的所有资源都是由翻译软件模拟出来的，但它以为自己是在真正的主机中运行。
-模拟通用计算机的CPU和相关硬件环境要比模拟游戏主机复杂得多。这方面的代表软件，有开源的可虚拟多种架构的qemu、苹果的rosetta 2、以及微软Windows11在arm上模拟x86和在x86上模拟arm的技术等等。其中qemu可以在多种架构（指令集）之间相互转换，不但只支持动态翻译，而且性能最低，平均运行效率仅为原生性能的5%左右。苹果和微软都是一对一的专用翻译，且与操作系统深度结合，效率较高。
-硬件翻译以Transmeta CPU为代表，它的CPU本身是一种“超长指令字”架构，但在指令译码的阶段，接受的是x86指令，然后把x86指令转换为它自己的指令来运行。这种方式使它的CPU看起来就是一块x86架构的CPU，并且不需要对电脑中的其它硬件进行模拟，各种支持x86指令集的操作系统和应用程序都可以在使用Transmeta CPU的电脑上直接安装运行。Intel/AMD现在的CPU其实也是硬件翻译技术的代表，它们内部是执行的“微码（类似于精简指令集）”，而对于的表现则依然是x86架构的处理器。
-龙芯的LoongArch架构（指令集）则代表了第三个分类，即软件和硬件结合的二进制翻译方式。这种方式既有软件翻译的灵活性，又能接近或达到硬件翻译的效率，兼具二者的优点。龙芯的二进制翻译本质上也是软件翻译，但是对软件翻译中比较耗时的处理提供了专门的硬件指令来加速翻译过程，因此称它为软硬结合的二进制翻译技术。龙芯之所以不使用纯硬件的翻译方式，是因为我们必须建立自主的软件生态体系。如果像Transmeta那样对外表现为x86的CPU，那么它能直接运行的就只有基于x86的操作系统和应用程序，生存状况高度依赖于Intel和微软的态度，因此它虽然在Intel的诉讼中获胜，但却在Intel对市场的操作下惨然离场。
-龙芯的LoongArch架构（指令集）本身是一种独立的，完善的指令系统，可以建立独立于x86/ARM之外的软件生态体系。**龙芯的二进制翻译技术主要是在LoongArch原生软件生态建设的初期，用于补充原生软件的不足，LoongArch架构和龙芯CPU的生存不依赖于Intel/ARM/MS/Google等主导的软件生态。**二进制翻译技术具有单方面的决定权，任何公司都没有理由阻止任何软件以二进制翻译的方式在某种原生不支持的架构上运行。即使软件开发商以检测CPU型号等技术手段阻止运行，那么以软件为主体的二进制翻译技术也能轻松解决这个问题，而固化在CPU硬件中的各种信息和特征则不可能像软件那样在线升级。以软件翻译为主体的二进制翻译，甚至可以针对特定程序把自己模拟成特定的CPU型号。
-即使要翻译的目标架构频繁升级指令集版本，增加新的指令，不断推陈出新，对于龙芯来说，要模拟最新的CPU和指令集，也只是更新一下软件的事儿。而那些需要架构授权的CPU产品，如果没有购买到新版本的架构授权，那就无论如何发布多少个新款CPU产品，都不可能兼容新版架构的新指令。
-龙芯二进制翻译系统的简单结构说明 # 龙芯的二进制翻译系统仍在开发当中，尚未公开技术资料，但当前已经有可以使用的测试版本。我仅仅根据对当前状态分析的结果，简单描述一下它的基本结构如下图，可能不太准确，也不够详细，意会就好。
-基于龙芯LoongArch架构（指令集）的CPU，在运行原生的LoongArch指令集的程序时，不需要二进制翻译，可以直接运行。
-在运行基于其它架构（指令集）的Linux程序时，由龙芯的二进制翻译模块对指令进行转译。程序对Linux的API调用，可以直接由操作系统本身提供支持。
-在运行Windows（x86）的程序时，由于Linux系统本身不能提供Windows系统的API，因此需要使用Wine来提供对Windows API的支持。Wine是给Windows（x86）程序提供虚拟的API接口，而不负责对指令的转译，因此只用wine并不能在非x86的CPU运行Windows程序。在x86的应用程序中，不但程序自身逻辑以及第三方库的二进制代码都是x86指令，而且用于调用Windows API的二进制代码也是x86指令，如果没有二进制翻译，在LoongArch上Windows程序甚至连程序入口的代码都不能执行，也无法调用Window API，程序自身的代码和第三方库就更不可能运行了。
-操作系统API（应用程序编程接口）是由操作系统提供给应用程序的接口，在Linux上运行Windows程序时，假如调用读取文件数据的API，就可以由Wine给应用程序提供这个接口，但接口内部不再是Windows的代码，而是由Wine去调用Linux的相关接口来实现相同的功能，这就是对API的模拟。在应用程序读取到数据之后做的操作，就不在Wine的管辖范围内了。比如程序取得数据后可能加密解密、可能作为图像数据计算对比度、可能作为音频数据计算特殊音效……这些操作可能是由程序自身代码来完成，也可能是调用其它的库文件的接口来实现。这些在Wine支持范围之外的代码，在x86架构（指令集）的CPU上是由CPU直接执行，在LoongArch架构（指令集）的CPU上，就只能由二进制翻译模块转译为LoongArch的指令来执行。
-操作系统和应用程序对CPU指令的使用，是属于ABI（应用程序二进制接口）的一部分，ABI的层级很低，是二进制代码的规范。在基于LoongArch架构的CPU上运行x86程序时，就是由二进制翻译模块来处理对指令的转译，也就是对x86的ABI规范的模拟。不管是Linux还是Windows的应用程序，只要它不是LoongArch原生指令集的，最终都需要经过二进制翻译才能在龙芯的CPU上运行。
-龙芯的二进制翻译模块当前和qemu一样也是只支持动态翻译，但效率比原生的qemu高出一个数量级。将来会支持动、静态结合的翻译模式，也就是程序运行时的动态翻译结果可以保留下来，下次运行相同的程序就直接使用翻译的结果，仅对程序运行时修改自身代码等行为需要动态翻译。这样可以降低翻译的CPU消耗，翻译运行的效率可以大幅度提高，预计运行x86程序可以达到80%的原生效率。这里的80%是指平均80%，而不像某些纯软件的翻译方案仅对特定类型程序翻译效率较高，就笼统地宣传“高效率”。
-在龙芯3A5000上实战运行Windows程序 # 最简单的方式，是在使用3A5000的电脑上安装统信的UOS系统，然后等着UOS系统的应用商店中提供了什么Windows软件，就安装什么软件，可以无障碍，无门槛，无后顾之忧……可是Windows的软件千奇百怪，UOS的应用商店不可能提供所有的Windows软件，那么我们就需要动动小手，自己解决自己的需求。
-目前只有UOS for 3A5000（体验版）系统中集成了龙芯的二进制翻译模块，而龙芯自己的Loongnix为什么反而还没有提供二进制翻译的支持呢？“体验版”这三个字很重要，是否稳定无关紧要。龙芯的Loongnix却是已经正式发布的产品，对于龙芯的行业用户来说，往系统中更新一个还没有开发完成的、可能不稳定的功能模块，大概不是什么喜闻乐见的事情。因此我下面就以UOS为例说明一下如何在龙芯3A5000上运行“任何”的Windows软件，“任何”是指可以尝试任何软件，但不能保证所有软件都能正常运行。
-**UOS中已经集成了龙芯二进制翻译模块，但要运行Windows软件仍然需要一个Wine环境。**UOS本身有多个版本的Wine，有经过深度/统信改良了效率和兼容性的deepin-wine，也有原生的版本，我们要使用deepin-wine。最简单的方式是从UOS应用商店中安装一个由Wine支持的软件，环境就自动配置好了。如果使用Loongnix或其它的系统，就需要手工完成这个过程，可能还需要从UOS复制一些文件和配置，比较麻烦。建议安装的软件是PhotoShop，因为PhotoShop是一个很大很复杂的软件，能够让PhotoShop正常运行的环境，就能让大多数软件正常运行。
-龙芯3A5000运行Windows程序，微信、PS，扫雷绝对不卡15.2 万播放 · 163 赞同视频 ​
-UOS对Wine版软件的组织方式是给每个软件一套单独的Windows环境，也就是说每个软件包中都有配套的Windows、Program Files、ProgramData、User等系统文件夹。这些文件夹和软件本身，都被打包成一个files.7z文件，安装到“/opt/apps”文件夹下以包名命名的子文件夹中。软件首次运行时，files.7z被解压到“/home/用户名/.deepinwine/”文件夹中，并自动配置相关的运行环境。这种方式的好处是每个软件都相对独立，避免因某些共用文件的版本不同导致不能运行，坏处就是会增加许多额外的文件。但实际增加的文件体积并不会很大，因为前面说了Wine只是提供虚拟的API接口，因此包中的操作系统的DLL文件实际都是只有接口没有代码的“代理”版本，每个文件只几KB大小。系统DLL接口的功能是由Wine文件夹中的对应的.so文件来实现的。只有系统DLL之外的，软件自身的以及第三方的DLL文件才是“真实”的DLL文件。
-在安装了PhotoShop（Wine）之后，在“/opt/apps/com.pscs6.deepin/files”文件夹中的files.7z和run.sh是我们需要用到的。
-如果你已经运行过刚刚安装的PhotoShop，那么在“/home/用户名/.deepinwine”文件夹中会有“Deepin-CS6”文件夹，“.deepinwine”是隐藏文件夹，在Linux中文件（夹）名字前面加“.”表示隐藏，在文件管理器中看不到，需要手工在地址栏输入才能打开。它里面的内容如下：
-dosdevices文件夹中的内容是虚拟硬盘盘符和com接口的链接文件，比如“c:”文件就链接到“drive_c”文件夹。“drive_c”文件夹是虚拟的Windodws系统的C盘，里面的内容一看就眼熟：
-如果你要向这个由Wine虚拟的Windows环境中安装软件，或复制绿色软件来运行，就把“drive_c”当成Windows的C盘来用，都往里面复制就行了。其实直接使用PhotoShop的这个Wine环境文件夹也可以，但是为了避免一些麻烦，比如防止意外卸载了PhotoShop之后你放在里面的软件也被一同删除，我们还是最好自己弄个单独的环境。另外说明一下，这是32位的Wine环境，不能运行64位的Windows程序，如果要运行64位的程序，需要手工配置64位的环境，因为UOS还没有提供直接安装的64位Windows程序。
-先把前面在“/opt/apps/com.pscs6.deepin/files”中看到的files.7z复制到“/home/用户名/.deepinwine”文件夹中，然后在files.7z上单击右键，在右键菜单中选择“解压到当前文件夹”。然后“/home/用户名/.deepinwine”下面就会多出一个“files”文件夹，把它改个名字，比如“MyGames”或者像我一样改成“Default”。这个文件夹中的内容和之前“Deepin-CS6”文件夹中的一样，但你不需要在这里运行PhotoShop，因此可以把“/home/guee/.deepinwine/Default/drive_c/Program Files”里面的Adoeb删除掉，节省一些空间。
-再然后可以把下载到的绿色软件或者安装程序等都复制到“/home/guee/.deepinwine/Default/drive_c”中你喜欢的位置，最后把前面看到的“run.sh”复制出来进行一些修改，就可以运行它们了。当然也可以复制下面的内容，保存为一个扩展名为“.sh”的文件，注意要在文件属性的“权限管理”中设置“允许以程序执行”。
-#!/bin/sh #在/home/guee/.deepinwine/下面你的Windows环境所在的子文件夹名。 BOTTLENAME=&amp;#34;Default&amp;#34; #Wine的版本 APPVER=&amp;#34;13.0deepin6~wine5&amp;#34; #要运行的程序的路径，你的drive_c文件夹就是c:/，后是相对于它的路径。 #注意Linux中的路径分隔符是/,而Windows中是\，这里按照Linux的规则写。 EXEC_PATH=&amp;#34;c:/ali213-AngryBirdschs/AngryBirds.exe&amp;#34; #启动Wine的脚本程序，是Wine自带的。 START_SHELL_PATH=&amp;#34;/opt/deepinwine/tools/run_v4.sh&amp;#34; #大概是这个程序关联的文档类型，这里设置为&amp;#34;&amp;#34;。 export MIME_TYPE=&amp;#34;&amp;#34; #Wine的主程序，这是环境变量，在run_v4.sh这个启动脚本中会使用它。 export APPRUN_CMD=&amp;#34;deepin-wine5-stable&amp;#34; #语言环境设置 export PATCH_LOADER_ENV=&amp;#34;LC_ALL=zh_CN.</description></item></channel></rss>
+<?xml version="1.0" encoding="utf-8" standalone="yes"?><rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom"><channel><title>龙芯玩机指南</title><link>https://loonguser.github.io/</link><description>Recent content on 龙芯玩机指南</description><generator>Hugo</generator><language>zh</language><atom:link href="https://loonguser.github.io/index.xml" rel="self" type="application/rss+xml"/><item><title>3A6000上搭建gogs</title><link>https://loonguser.github.io/applications/gogs/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/gogs/</guid><description>&lt;pre tabindex="0">&lt;code>pacman -S mariadb
+mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+systemctl start mysql
+mariadb --initialize-insecure --user=mysql --datadir=&amp;#39;./data&amp;#39;
+mysql -u root
+
+[root@mxd gitrepo]# mysql -u root
+mysql: Deprecated program name. It will be removed in a future release, use &amp;#39;/usr/bin/mariadb&amp;#39; instead
+Welcome to the MariaDB monitor. Commands end with ; or \g.
+Your MariaDB connection id is 8
+Server version: 11.0.2-MariaDB Arch Linux
+
+Copyright (c) 2000, 2018, Oracle, MariaDB Corporation Ab and others.
+
+Type &amp;#39;help;&amp;#39; or &amp;#39;\h&amp;#39; for help. Type &amp;#39;\c&amp;#39; to clear the current input statement.
+
+MariaDB [(none)]&amp;gt; create user &amp;#39;gogs&amp;#39;@&amp;#39;localhost&amp;#39; identified by &amp;#39;passwd&amp;#39;;
+Query OK, 0 rows affected (0.001 sec)
+
+MariaDB [(none)]&amp;gt; select user,host from mysql.user;
++-------------+-----------+
+| User | Host |
++-------------+-----------+
+| PUBLIC | |
+| | localhost |
+| gogs | localhost |
+| mariadb.sys | localhost |
+| mysql | localhost |
+| root | localhost |
+| | mxd |
++-------------+-----------+
+7 rows in set (0.001 sec)
+
+MariaDB [(none)]&amp;gt; CREATE DATABASE gogs;
+Query OK, 1 row affected (0.000 sec)
+
+MariaDB [(none)]&amp;gt; show databases;
++--------------------+
+| Database |
++--------------------+
+| gogs |
+| information_schema |
+| mysql |
+| performance_schema |
+| sys |
+| test |
++--------------------+
+6 rows in set (0.000 sec)
+
+MariaDB [(none)]&amp;gt; grant all privileges on gogs.* to &amp;#39;gogs&amp;#39;@&amp;#39;%&amp;#39; identified by &amp;#39;passwd&amp;#39; with grant option;
+Query OK, 0 rows affected (0.001 sec)
+&lt;/code>&lt;/pre>&lt;p>build gogs:&lt;/p></description></item><item><title>3A6000上搭建hexo博客</title><link>https://loonguser.github.io/applications/blog/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/blog/</guid><description>&lt;pre tabindex="0">&lt;code>pacman -S nodejs npm git
+npm config set proxy=&amp;#34;http://127.0.0.1:7890&amp;#34;
+npm install -g hexo-cli
+&lt;/code>&lt;/pre>&lt;pre tabindex="0">&lt;code>mkdir loongsonwiki
+cd loongsonwiki
+hexo init
+git clone https://github.com/hdxw/hexo-theme-prowiki.git themes/hexo-theme-prowiki
+git submodule add https://github.com/hdxw/hexo-theme-prowiki.git themes/hexo-theme-prowiki
+vim _config.yml
+&lt;/code>&lt;/pre>&lt;pre tabindex="0">&lt;code>diff --git a/_config.yml b/_config.yml
+index 02b67a4..2391977 100644
+--- a/_config.yml
++++ b/_config.yml
+@@ -97,7 +97,7 @@ ignore:
+ # Extensions
+ ## Plugins: https://hexo.io/plugins/
+ ## Themes: https://hexo.io/themes/
+-theme: landscape
++theme: hexo-theme-prowiki
+
+ # Deployment
+ ## Docs: https://hexo.io/docs/one-command-deployment
+&lt;/code>&lt;/pre></description></item><item><title>Grub编译与调试</title><link>https://loonguser.github.io/firmware/grub/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/grub/</guid><description>&lt;h2 id="1-grub编译">
+ 1. Grub编译
+ &lt;a class="anchor" href="#1-grub%e7%bc%96%e8%af%91">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>git clone https://github.com/loongarch64/grub.git
+cd grub
+./bootstrap
+./configure --with-platform=efi --target=loongarch64 --prefix=$(pwd) --disable-werror
+&lt;/code>&lt;/pre>&lt;h2 id="2-grub文件生成">
+ 2. Grub文件生成
+ &lt;a class="anchor" href="#2-grub%e6%96%87%e4%bb%b6%e7%94%9f%e6%88%90">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="21-grubefi">
+ 2.1 grub.efi
+ &lt;a class="anchor" href="#21-grubefi">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>./grub-mkimage -p . -c /boot/mxd.cfg -d ./grub-core/ -O loongarch64-efi -o /boot/mxd.efi $(ls grub-core/ | grep -E &amp;#34;\.mod$&amp;#34; | cut -d &amp;#34;.&amp;#34; -f 1 | uniq)
+&lt;/code>&lt;/pre>&lt;p>各参数可在&lt;code>help&lt;/code>信息中查看.&lt;/p>
+&lt;h3 id="22-grubcfg">
+ 2.2 grub.cfg
+ &lt;a class="anchor" href="#22-grubcfg">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>./grub-mkconfig -o /boot/mxd.cfg
+&lt;/code>&lt;/pre>&lt;p>除了生成&lt;code>grub.cfg&lt;/code>外, 系统下还有一些用于参考的&lt;code>grub&lt;/code>默认配置选项, 如: &lt;code>/etc/default/grub&lt;/code>, &lt;code>/etc/grub.d&lt;/code>等. 倘若修改这些文件, 还需要更新&lt;code>/boot/grub/grub.cfg&lt;/code>, 有命令可以做到:&lt;/p>
+&lt;pre tabindex="0">&lt;code>update-grub
+&lt;/code>&lt;/pre>&lt;h3 id="23-将grub安装至uefi引导界面">
+ 2.3 将grub安装至UEFI引导界面
+ &lt;a class="anchor" href="#23-%e5%b0%86grub%e5%ae%89%e8%a3%85%e8%87%b3uefi%e5%bc%95%e5%af%bc%e7%95%8c%e9%9d%a2">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>grub-install --boot-directory=/boot --efi-directory=/boot/efi --bootload-id=mxd /dev/sda
+&lt;/code>&lt;/pre>&lt;p>&lt;code>--boot-directory&lt;/code>指定在&lt;code>/boot&lt;/code>作为根目录, 下寻找&lt;code>grub.cfg&lt;/code>和模块.&lt;/p></description></item><item><title>Loongnix_FAQ</title><link>https://loonguser.github.io/system/Loongnix_FAQ/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/Loongnix_FAQ/</guid><description>&lt;blockquote>
+&lt;p>文章来源: &lt;code>http://docs.loongnix.cn/loongnix/faq/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F/%E6%A1%8C%E9%9D%A2%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F.html&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>自2022/11/16日起桌面版软件源的key到期，如本地遇到key的问题，可依照下列方法对Key授权进行升级即可：&lt;/p>
+&lt;p>wget 
+ &lt;a href="http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb">http://pkg.loongnix.cn/loongnix/pool/main/d/debian-archive-keyring//debian-archive-keyring_2019.1.lnd.2_all.deb&lt;/a>&lt;/p>
+&lt;p>dpkg -i debian-archive-keyring_2019.1.lnd.2_all.deb&lt;/p>
+&lt;p>apt-key add /usr/share/keyrings/debian-archive-buster-loongarch64-stable.gpg&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-loongnix桌面系统源">
+ 1. loongnix桌面系统源
+ &lt;a class="anchor" href="#1-loongnix%e6%a1%8c%e9%9d%a2%e7%b3%bb%e7%bb%9f%e6%ba%90">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code class="language-auto" data-lang="auto">http://pkg.loongnix.cn/loongnix/
+&lt;/code>&lt;/pre>&lt;h2 id="2-开启sshd服务">
+ 2. 开启sshd服务
+ &lt;a class="anchor" href="#2-%e5%bc%80%e5%90%afsshd%e6%9c%8d%e5%8a%a1">#&lt;/a>
+&lt;/h2>
+&lt;p>Loongnixi桌面系统默认关闭sshd服务，开启方法:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-auto" data-lang="auto">loongson@loongson-pc:~$ sudo apt install openssh-server
+loongson@loongson-pc:~$ systemctl start ssh
+loongson@loongson-pc:~$ systemctl status ssh
+&lt;/code>&lt;/pre>&lt;h2 id="3-安装auditd软件包">
+ 3. 安装auditd软件包
+ &lt;a class="anchor" href="#3-%e5%ae%89%e8%a3%85auditd%e8%bd%af%e4%bb%b6%e5%8c%85">#&lt;/a>
+&lt;/h2>
+&lt;p>Loongnix系统默认不集成auditd软件包，若使用过程中用到审计功能，需手动安装auditd软件包:&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-auto" data-lang="auto">loongson@loongson-pc:~$ sudo apt install auditd &amp;amp;&amp;amp; systemctl start auditd &amp;amp;&amp;amp; systemctl status auditd
+&lt;/code>&lt;/pre>&lt;h2 id="4-制作rootfs文件系统">
+ 4. 制作rootfs文件系统
+ &lt;a class="anchor" href="#4-%e5%88%b6%e4%bd%9crootfs%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f">#&lt;/a>
+&lt;/h2>
+&lt;p>已安装debootstrap的前提下，使用以下方法制作rootfs文件系统：&lt;/p>
+&lt;pre tabindex="0">&lt;code class="language-auto" data-lang="auto">debootstrap --no-check-gpg --variant=minbase --components=main,non-free,contrib --arch=loongarch64 --foreign DaoXiangHu-stable iso http://pkg.loongnix.cn/loongnix/
+chroot iso debootstrap/debootstrap --second-stage
+cd iso
+chroot .
+&lt;/code>&lt;/pre>&lt;p>执行debootstrap操作时，如果遇到下述错误现象：&lt;/p></description></item><item><title>PMON的使用方法</title><link>https://loonguser.github.io/firmware/pmon/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/pmon/</guid><description>&lt;blockquote>
+&lt;p>更新: 新&lt;code>pmon&lt;/code>固件已支持&lt;code>efi_stub&lt;/code>, 详情查看
+ &lt;a href="https://loonguser.github.io/firmware/pmon/#101-%e5%8a%a0%e8%bd%bdgrub">10.1节&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h2 id="1-查看设备">
+ 1. 查看设备
+ &lt;a class="anchor" href="#1-%e6%9f%a5%e7%9c%8b%e8%ae%be%e5%a4%87">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; devls
+syn0
+wd0
+usb0
+&lt;/code>&lt;/pre>&lt;p>&lt;code>sync0&lt;/code>, &lt;code>igb0&lt;/code>, &lt;code>em0&lt;/code> 等字样,表示网络设备, 即网卡&lt;/p>
+&lt;p>&lt;code>wd0&lt;/code>, &lt;code>nvme0&lt;/code>, &lt;code>usb0&lt;/code>, &lt;code>cd0&lt;/code>等字样表示存储设备, 即硬盘, &lt;code>U&lt;/code>盘等.&lt;/p>
+&lt;h2 id="2-查看pci信息">
+ 2. 查看pci信息
+ &lt;a class="anchor" href="#2-%e6%9f%a5%e7%9c%8bpci%e4%bf%a1%e6%81%af">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; pciscan
+&amp;gt;&amp;gt; BUS 0 &amp;lt;&amp;lt;
+Dev Fun Device description
+--------------------------
+ 0 0 vendor/product: 0x0014/0x7a00 (bridge, host, interface: 0x00, revision: 0x00)
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ 0 1 vendor/product: 0x0014/0x7a10 (bridge, host, interface: 0x00, revision: 0x01)
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ 0 2 vendor/product: 0x0014/0x7a20 (bridge, host, interface: 0x00, revision: 0x01)
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ 0 3 vendor/product: 0x0014/0x7a30 (bridge, host, interface: 0x00, revision: 0x00)
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ 4 0 vendor/product: 0x0014/0x7a24 (serialbus, USB, interface: 0x10, revision: 0x02)
+64-bit mem,low address
+0x59648004:0xffff8004 mem @0x59648000, 32768 bytes
+0x00000000:0x00000000 mem @0x00000000, 0 bytes
+ ......
+ ......
+&lt;/code>&lt;/pre>&lt;h2 id="3-产看固件版本信息">
+ 3. 产看固件版本信息
+ &lt;a class="anchor" href="#3-%e4%ba%a7%e7%9c%8b%e5%9b%ba%e4%bb%b6%e7%89%88%e6%9c%ac%e4%bf%a1%e6%81%af">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; vers
+PMON: PMON 5.0.3-Release (loongson) #233: Wed Oct 18 15:09:40 CST 2023 commit d044be8f495e97082c8905b131d525ef31ade0b9 Author: Xiangdong Meng &amp;lt;mengxiangdong@loongson.cn&amp;gt; Date: Wed Sep 6 15:15:31 2023 +0800
+&lt;/code>&lt;/pre>&lt;h2 id="4-查看寄存器信息">
+ 4. 查看寄存器信息
+ &lt;a class="anchor" href="#4-%e6%9f%a5%e7%9c%8b%e5%af%84%e5%ad%98%e5%99%a8%e4%bf%a1%e6%81%af">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; d8 0x800000001fe00020 2
+800000001fe00020 : 0000303030364133 0000000000000000 3A6000..........
+&lt;/code>&lt;/pre>&lt;h2 id="5-查看磁盘信息">
+ 5. 查看磁盘信息
+ &lt;a class="anchor" href="#5-%e6%9f%a5%e7%9c%8b%e7%a3%81%e7%9b%98%e4%bf%a1%e6%81%af">#&lt;/a>
+&lt;/h2>
+&lt;p>这里&lt;code>fdisk&lt;/code>命令后面的设备名是在第一节中&lt;code>devls&lt;/code>命令列出来的.&lt;/p></description></item><item><title>Qemu使用</title><link>https://loonguser.github.io/applications/qemu/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/qemu/</guid><description>&lt;h2 id="部分环境准备">
+ 部分环境准备:
+ &lt;a class="anchor" href="#%e9%83%a8%e5%88%86%e7%8e%af%e5%a2%83%e5%87%86%e5%a4%87">#&lt;/a>
+&lt;/h2>
+&lt;p>qemu: 
+ &lt;a href="https://gitlab.com/qemu-project/qemu.git">https://gitlab.com/qemu-project/qemu.git&lt;/a>&lt;/p>
+&lt;p>固件: 
+ &lt;a href="https://github.com/loongson/Firmware/raw/main/LoongArchVirtMachine/edk2-loongarch64-code.fd">https://github.com/loongson/Firmware/raw/main/LoongArchVirtMachine/edk2-loongarch64-code.fd&lt;/a>&lt;/p>
+&lt;p>系统: 
+ &lt;a href="http://pkg.loongnix.cn/loongnix/isos/Loongnix-20.5/">http://pkg.loongnix.cn/loongnix/isos/Loongnix-20.5/&lt;/a>&lt;/p>
+&lt;h2 id="qemu安装">
+ qemu安装
+ &lt;a class="anchor" href="#qemu%e5%ae%89%e8%a3%85">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code># Arch系
+pacman -S qemu-system-loongarch64
+
+# Debian系
+apt install qemu-system-loongarch64
+
+# Fedora系
+yum install qemu-system-loongarch64
+&lt;/code>&lt;/pre>&lt;p>自己编译安装:&lt;/p>
+&lt;pre tabindex="0">&lt;code>git clone https://gitlab.com/qemu-project/qemu.git
+cd qemu
+mkdir build4la
+cd build4la
+../configure --target-list=loongarch64-softmmu --enable-kvm --disable-werror --enable-vnc --enable-debug --enable-gdb
+make -j 8
+&lt;/code>&lt;/pre>&lt;h2 id="qemu使用">
+ qemu使用
+ &lt;a class="anchor" href="#qemu%e4%bd%bf%e7%94%a8">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="qemu启动固件">
+ qemu启动固件:
+ &lt;a class="anchor" href="#qemu%e5%90%af%e5%8a%a8%e5%9b%ba%e4%bb%b6">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>./qemu-system-loongarch64 -m 4G -smp 1 --cpu la464 --machine virt -bios edk2-loongarch64-code.fd -display none --serial stdio
+&lt;/code>&lt;/pre>&lt;p>参数说明:&lt;/p>
+&lt;p>&lt;code>./qemu-system-loongarch64&lt;/code>: 这是QEMU模拟器的可执行文件，用于模拟LoongArch64架构的系统。&lt;/p>
+&lt;p>&lt;code>-m 4G&lt;/code>: 指定为虚拟机分配4GB内存（4096MB）。&lt;/p>
+&lt;p>&lt;code>-smp 1&lt;/code>: 设置虚拟机的CPU核心数为1个。&lt;/p></description></item><item><title>从UEFI如何启动到系统</title><link>https://loonguser.github.io/firmware/uefi/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/uefi/</guid><description>&lt;h2 id="uefi须知">
+ UEFI须知
+ &lt;a class="anchor" href="#uefi%e9%a1%bb%e7%9f%a5">#&lt;/a>
+&lt;/h2>
+&lt;h2 id="1-进入uefi-setup界面">
+ 1. 进入UEFI setup界面
+ &lt;a class="anchor" href="#1-%e8%bf%9b%e5%85%a5uefi-setup%e7%95%8c%e9%9d%a2">#&lt;/a>
+&lt;/h2>
+&lt;p>在串口或者显示界面下显示&lt;code>BDS&lt;/code>字样的时候(如下图), 稍微按按上下键即可进入&lt;code>Setup&lt;/code>界面
+
+ &lt;img src="https://loonguser.github.io/images/uefi/1.png" alt="UEFI Booting" />&lt;/p>
+&lt;h2 id="2-setup界面">
+ 2. Setup界面
+ &lt;a class="anchor" href="#2-setup%e7%95%8c%e9%9d%a2">#&lt;/a>
+&lt;/h2>
+&lt;p>无论是&lt;code>Intel&lt;/code>还是&lt;code>loongson&lt;/code>, &lt;code>BIOS&lt;/code>下都有设置的接口, &lt;code>PMON&lt;/code>也有, 无非是显示样式差异, 原理相通. &lt;code>Loongson&lt;/code>的&lt;code>UEFI&lt;/code>界面如下图&lt;/p>
+&lt;p>不同的条目, 用于设置不同的功能. 其中普通用户通常只需要进入&lt;code>BootManager&lt;/code>界面选择相应的启动目标即可.
+
+ &lt;img src="https://loonguser.github.io/images/uefi/2.png" alt="Setup" />&lt;/p>
+&lt;h2 id="3-bootmanager界面">
+ 3. BootManager界面
+ &lt;a class="anchor" href="#3-bootmanager%e7%95%8c%e9%9d%a2">#&lt;/a>
+&lt;/h2>
+&lt;p>在下图区域&lt;code>1&lt;/code>中为条目名称, 区域&lt;code>2&lt;/code>中为&lt;code>UEFI&lt;/code>下解析的路径名(有点专业,不用理解), 总之, 左边看不懂时就看右边, 找相关的关键字, 比如下图, 左侧是设备名, 不太能看出是什么设备, 右侧则有&lt;code>Sata&lt;/code>字样可以识别.
+
+ &lt;img src="https://loonguser.github.io/images/uefi/3.png" alt="BootManager" />&lt;/p>
+&lt;h2 id="4-shell下操作">
+ 4. Shell下操作
+ &lt;a class="anchor" href="#4-shell%e4%b8%8b%e6%93%8d%e4%bd%9c">#&lt;/a>
+&lt;/h2>
+&lt;p>通常, 正常情况下, 系统直接启动, 用户无法感知上述界面的存在, 但当出现一些问题时, 我们可能需要进入&lt;code>Shell&lt;/code>下进行操作, 如上图中的第二个条目, 选中后回车进入下图界面:
+
+ &lt;img src="https://loonguser.github.io/images/uefi/4.png" alt="Shell" />&lt;/p>
+&lt;h3 id="41-显示启动设备">
+ 4.1. 显示启动设备
+ &lt;a class="anchor" href="#41-%e6%98%be%e7%a4%ba%e5%90%af%e5%8a%a8%e8%ae%be%e5%a4%87">#&lt;/a>
+&lt;/h3>
+&lt;p>正常情况下， 进入&lt;code>Shell&lt;/code>后仍然会提示启动相关的设备, 如上图, 倘若由于操作过多, 或者显示&lt;code>bug&lt;/code>等, 我们还想再次看到相关的显示, 则需要通过&lt;code>map&lt;/code>命令再次显示，如下图：&lt;/p>
+&lt;p>
+ &lt;img src="https://loonguser.github.io/images/uefi/5.png" alt="map命令" />&lt;/p>
+&lt;p>可以看到, 其实和默认进入&lt;code>Shell&lt;/code>的打印是一样的, 不过为了防止打印被冲刷掉, 还是要会一下.&lt;/p>
+&lt;h3 id="42-进入设备及查看文件">
+ 4.2. 进入设备及查看文件
+ &lt;a class="anchor" href="#42-%e8%bf%9b%e5%85%a5%e8%ae%be%e5%a4%87%e5%8f%8a%e6%9f%a5%e7%9c%8b%e6%96%87%e4%bb%b6">#&lt;/a>
+&lt;/h3>
+&lt;p>看上图, 图中黄色字体, &lt;code>FS0:&lt;/code> , &lt;code>BLK0:&lt;/code>等, 可以理解为不同设备的重命名, 其中&lt;code>FS&lt;/code>开头的标识表示该设备的文件系统可以识别, &lt;code>BLK&lt;/code>开头的表示表示该设备不存在文件系统, 或者文件系统不可识别. 总之对我们有意义的就只有&lt;code>FS&lt;/code>开头的标识.&lt;/p></description></item><item><title>龙芯2K500先锋派OpenHarmony构建指北</title><link>https://loonguser.github.io/system/build_openharmony_for_2k500/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/build_openharmony_for_2k500/</guid><description>&lt;blockquote>
+&lt;p>文章来源: &lt;code>https://bbs.loongarch.org/d/435-2k500openharmony&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;h3 id="一系统需求和环境配置">
+ 一、系统需求和环境配置
+ &lt;a class="anchor" href="#%e4%b8%80%e7%b3%bb%e7%bb%9f%e9%9c%80%e6%b1%82%e5%92%8c%e7%8e%af%e5%a2%83%e9%85%8d%e7%bd%ae">#&lt;/a>
+&lt;/h3>
+&lt;p>官方推荐系统是ubuntu 20.4，预留60G到80G的磁盘空间，交换分区推荐8G以上，主要环境是python3.9。
+也可以使用Debian构建，留意python版本，python3.10及更新版本要改一行代码，才能正常运行hb构建工具。&lt;/p>
+&lt;p>需要安装的软件包：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-scss" data-lang="scss">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">sudo&lt;/span> &lt;span style="color:#f92672">apt&lt;/span> &lt;span style="color:#f92672">update&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">sudo&lt;/span> &lt;span style="color:#f92672">apt&lt;/span> &lt;span style="color:#f92672">upgrade&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#f92672">sudo&lt;/span> &lt;span style="color:#f92672">apt&lt;/span> &lt;span style="color:#f92672">install&lt;/span> &lt;span style="color:#f92672">apt-utils&lt;/span> &lt;span style="color:#f92672">binutils&lt;/span> &lt;span style="color:#f92672">bison&lt;/span> &lt;span style="color:#f92672">flex&lt;/span> &lt;span style="color:#f92672">bc&lt;/span> &lt;span style="color:#f92672">build-essential&lt;/span> &lt;span style="color:#f92672">make&lt;/span> &lt;span style="color:#f92672">mtd-utils&lt;/span> &lt;span style="color:#f92672">gcc-arm-linux-gnueabi&lt;/span> &lt;span style="color:#f92672">u-boot-tools&lt;/span> &lt;span style="color:#f92672">python3&lt;/span>&lt;span style="color:#a6e22e">.9&lt;/span> &lt;span style="color:#f92672">python3-pip&lt;/span> &lt;span style="color:#f92672">git&lt;/span> &lt;span style="color:#f92672">zip&lt;/span> &lt;span style="color:#f92672">unzip&lt;/span> &lt;span style="color:#f92672">curl&lt;/span> &lt;span style="color:#f92672">wget&lt;/span> &lt;span style="color:#f92672">gcc&lt;/span> &lt;span style="color:#f92672">g&lt;/span>&lt;span style="color:#f92672">++&lt;/span> &lt;span style="color:#f92672">ruby&lt;/span> &lt;span style="color:#f92672">dosfstools&lt;/span> &lt;span style="color:#f92672">mtools&lt;/span> &lt;span style="color:#f92672">default-jre&lt;/span> &lt;span style="color:#f92672">default-jdk&lt;/span> &lt;span style="color:#f92672">scons&lt;/span> &lt;span style="color:#f92672">python3-distutils&lt;/span> &lt;span style="color:#f92672">perl&lt;/span> &lt;span style="color:#f92672">openssl&lt;/span> &lt;span style="color:#f92672">libssl-dev&lt;/span> &lt;span style="color:#f92672">cpio&lt;/span> &lt;span style="color:#f92672">git-lfs&lt;/span> &lt;span style="color:#f92672">m4&lt;/span> &lt;span style="color:#f92672">ccache&lt;/span> &lt;span style="color:#f92672">zlib1g-dev&lt;/span> &lt;span style="color:#f92672">tar&lt;/span> &lt;span style="color:#f92672">rsync&lt;/span> &lt;span style="color:#f92672">liblz4-tool&lt;/span> &lt;span style="color:#f92672">genext2fs&lt;/span> &lt;span style="color:#f92672">binutils-dev&lt;/span> &lt;span style="color:#f92672">device-tree-compiler&lt;/span> &lt;span style="color:#f92672">e2fsprogs&lt;/span> &lt;span style="color:#f92672">git-core&lt;/span> &lt;span style="color:#f92672">gnupg&lt;/span> &lt;span style="color:#f92672">gnutls-bin&lt;/span> &lt;span style="color:#f92672">gperf&lt;/span> &lt;span style="color:#f92672">lib32ncurses5-dev&lt;/span> &lt;span style="color:#f92672">libffi-dev&lt;/span> &lt;span style="color:#f92672">zlib&lt;/span>&lt;span style="color:#f92672">*&lt;/span> &lt;span style="color:#f92672">libelf-dev&lt;/span> &lt;span style="color:#f92672">libx11-dev&lt;/span> &lt;span style="color:#f92672">libgl1-mesa-dev&lt;/span> &lt;span style="color:#f92672">lib32z1-dev&lt;/span> &lt;span style="color:#f92672">xsltproc&lt;/span> &lt;span style="color:#f92672">x11proto-core-dev&lt;/span> &lt;span style="color:#f92672">libc6-dev-i386&lt;/span> &lt;span style="color:#f92672">libxml2-dev&lt;/span> &lt;span style="color:#f92672">lib32z-dev&lt;/span> &lt;span style="color:#f92672">libdwarf-dev&lt;/span> &lt;span style="color:#f92672">grsync&lt;/span> &lt;span style="color:#f92672">xxd&lt;/span> &lt;span style="color:#f92672">libglib2&lt;/span>&lt;span style="color:#a6e22e">.0-dev&lt;/span> &lt;span style="color:#f92672">libpixman-1-dev&lt;/span> &lt;span style="color:#f92672">kmod&lt;/span> &lt;span style="color:#f92672">jfsutils&lt;/span> &lt;span style="color:#f92672">reiserfsprogs&lt;/span> &lt;span style="color:#f92672">xfsprogs&lt;/span> &lt;span style="color:#f92672">squashfs-tools&lt;/span> &lt;span style="color:#f92672">pcmciautils&lt;/span> &lt;span style="color:#f92672">quota&lt;/span> &lt;span style="color:#f92672">ppp&lt;/span> &lt;span style="color:#f92672">libtinfo-dev&lt;/span> &lt;span style="color:#f92672">libtinfo5&lt;/span> &lt;span style="color:#f92672">libncurses5&lt;/span> &lt;span style="color:#f92672">libncurses5-dev&lt;/span> &lt;span style="color:#f92672">libncursesw5&lt;/span> &lt;span style="color:#f92672">libstdc&lt;/span>&lt;span style="color:#f92672">++&lt;/span>&lt;span style="color:#f92672">6&lt;/span> &lt;span style="color:#f92672">gcc-arm-none-eabi&lt;/span> &lt;span style="color:#f92672">vim&lt;/span> &lt;span style="color:#f92672">ssh&lt;/span> &lt;span style="color:#f92672">locales&lt;/span> &lt;span style="color:#f92672">doxygen&lt;/span> &lt;span style="color:#f92672">libxinerama-dev&lt;/span> &lt;span style="color:#f92672">libxcursor-dev&lt;/span> &lt;span style="color:#f92672">libxrandr-dev&lt;/span> &lt;span style="color:#f92672">libxi-dev&lt;/span> &lt;span style="color:#f92672">npm&lt;/span> &lt;span style="color:#f92672">libfl-dev&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="二注册gitee账号和代码下载前的准备">
+ 二、注册gitee账号和代码下载前的准备
+ &lt;a class="anchor" href="#%e4%ba%8c%e6%b3%a8%e5%86%8cgitee%e8%b4%a6%e5%8f%b7%e5%92%8c%e4%bb%a3%e7%a0%81%e4%b8%8b%e8%bd%bd%e5%89%8d%e7%9a%84%e5%87%86%e5%a4%87">#&lt;/a>
+&lt;/h3>
+&lt;p>源码下载推荐使用gitee的repo工具，从OpenHarmony gitee仓库下载代码，也可以使用OpenHarmony全量代码包。
+参见资源链接1。使用repo工具需要gitee账号，并上传ssh公钥到账号的&amp;quot;ssh配置”里面，并且需要对git进行全局配置。大致过程如下：&lt;/p>
+&lt;p>1、使用电子邮箱注册gitee账号，如 
+ &lt;a href="mailto:abc@163.com">abc@163.com&lt;/a>
+2、使用如下命令建立公钥
+&lt;code>ssh-keygen -t ed25519 -C &amp;quot;Gitee SSH Key&amp;quot;&lt;/code>
+3、获取公钥内容并复制到gitee的ssh配置里面
+&lt;code>cat ~/.ssh/id_ed25519.pub&lt;/code>
+4、获取gitee repo工具并赋予可执行权限
+&lt;code>sudo curl -s https://gitee.com/oschina/repo/raw/fork_flow/repo-py3 &amp;gt; /usr/local/bin/repo&lt;/code>
+&lt;code>sudo chmod a+x /usr/local/bin/repo&lt;/code>
+&lt;code>pip3 install -i https://repo.huaweicloud.com/repository/pypi/simple requests&lt;/code>
+5、对git进行全局配置，配置账号和选项并进行测试
+&lt;code>// 配置git，以abc@163.com为例，实际配置以注册账号为准 git config --global user.name &amp;quot;abc&amp;quot; git config --global user.email &amp;quot;abc@163.com&amp;quot; git config --global credential.helper store&lt;/code>
+&lt;code>// 测试 ssh -T git@gitee.com&lt;/code>&lt;/p></description></item><item><title>龙芯lajtag常用技巧</title><link>https://loonguser.github.io/applications/ejtag/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/ejtag/</guid><description>&lt;p>使用串口时:&lt;/p>
+&lt;pre tabindex="0">&lt;code>cd /tmp/ejtag-debug/
+./la_ejtag_debug_gpio -t
+source configs/configs.ls3a5000
+&lt;/code>&lt;/pre>&lt;p>在本机上运行时:&lt;/p>
+&lt;pre tabindex="0">&lt;code>cd /path/ejtag-debug/
+./la_ejtag_debug_usb -t
+source configs/configs.ls3a5000
+&lt;/code>&lt;/pre>&lt;ol>
+&lt;li>
+&lt;p>&lt;code>cpus&lt;/code> 查看&lt;code>pc&lt;/code>&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>set&lt;/code> 查看通用寄存器及部分&lt;code>csr&lt;/code>寄存器, 此时&lt;code>pc&lt;/code>停在&lt;code>set&lt;/code>时运行的地址.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>cont&lt;/code> 从&lt;code>set&lt;/code>处继续运行&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>hb&lt;/code> &lt;code>addr&lt;/code>; &lt;code>cont&lt;/code> 断点到&lt;code>addr&lt;/code>处, 等待触发断点.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>hbls&lt;/code> 查看断点&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>watch&lt;/code> &lt;code>data&lt;/code>; &lt;code>cont&lt;/code> 检测通用寄存器, 当通用寄存器中和&lt;code>data&lt;/code>一致时, 断点此处.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>watchls&lt;/code> 查看数据检测点.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>watch&lt;/code> &lt;code>data&lt;/code> &lt;code>mask&lt;/code>; &lt;code>cont&lt;/code> 检测通用寄存器, 当通用寄存器中和&lt;code>data&lt;/code>一致时, 断点此处. &lt;code>mask&lt;/code>可以设置掩码.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>d1&lt;/code>/&lt;code>d4&lt;/code>/&lt;code>d8&lt;/code> &lt;code>addr&lt;/code> &lt;code>length&lt;/code> 按照&lt;code>1&lt;/code>字节, &lt;code>4&lt;/code>字节, &lt;code>8&lt;/code>字节, 依次&lt;code>dump&lt;/code> &lt;code>length&lt;/code>个&lt;code>addr&lt;/code>寄存器中的值.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>m1&lt;/code>/&lt;code>m4&lt;/code>/&lt;code>m8&lt;/code> &lt;code>addr&lt;/code> &lt;code>data1&lt;/code> &lt;code>data2&lt;/code>&amp;hellip; 按照&lt;code>1&lt;/code>字节, &lt;code>4&lt;/code>字节, &lt;code>8&lt;/code>字节, 依次将&lt;code>dataX&lt;/code> 写入&lt;code>addr&lt;/code>地址.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>disas&lt;/code> &lt;code>addr&lt;/code> &lt;code>length&lt;/code> 反汇编&lt;code>addr&lt;/code>处开始&lt;code>length&lt;/code>长的内容.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>csrs&lt;/code> &lt;code>d8&lt;/code> &lt;code>num&lt;/code> &lt;code>length&lt;/code> 从第&lt;code>num&lt;/code>个&lt;code>csr&lt;/code>寄存器连续读出&lt;code>length&lt;/code>个值.&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>&lt;code>csrs&lt;/code> &lt;code>m8&lt;/code> &lt;code>num&lt;/code> &lt;code>data&lt;/code> 向第&lt;code>num&lt;/code>个&lt;code>csr&lt;/code>寄存器写入&lt;code>data&lt;/code>.&lt;/p></description></item><item><title>龙芯平台使用clash</title><link>https://loonguser.github.io/applications/clash/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/clash/</guid><description>&lt;h2 id="旧世界loongnix">
+ 旧世界(Loongnix)
+ &lt;a class="anchor" href="#%e6%97%a7%e4%b8%96%e7%95%8cloongnix">#&lt;/a>
+&lt;/h2>
+&lt;blockquote>
+&lt;p>来源: &lt;code>https://bbs.loongarch.org/d/177-loongnixclash&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;p>下载后:&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>unzip -x clash1130-loong64.zip
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>./clash -d dir_include_config.yaml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中&lt;code>dir_include_config.yaml&lt;/code>是&lt;code>config.yaml&lt;/code>所在的文件夹路径.&lt;/p>
+&lt;p>然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:&lt;/p>
+&lt;pre tabindex="0">&lt;code>http: port:
+ 127.0.0.1 7890
+https: port:
+ 127.0.0.1 7890
+socks: port:
+ 127.0.0.1 7891
+&lt;/code>&lt;/pre>&lt;p>具体端口号信息在&lt;code>config.yaml&lt;/code>中查看.&lt;/p>
+&lt;h2 id="新世界">
+ 新世界
+ &lt;a class="anchor" href="#%e6%96%b0%e4%b8%96%e7%95%8c">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="archlinux">
+ Archlinux
+ &lt;a class="anchor" href="#archlinux">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pacman -S clash
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>clash -d dir_include_config.yaml
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>其中&lt;code>dir_include_config.yaml&lt;/code>是&lt;code>config.yaml&lt;/code>所在的文件夹路径.&lt;/p>
+&lt;p>然后在设置中, 在首选项中设置代理服务器, 或者配置环境变量:&lt;/p>
+&lt;pre tabindex="0">&lt;code>http: port:
+ 127.0.0.1 7890
+https: port:
+ 127.0.0.1 7890
+socks: port:
+ 127.0.0.1 7891
+&lt;/code>&lt;/pre>&lt;p>具体端口号信息在&lt;code>config.yaml&lt;/code>中查看.&lt;/p>
+&lt;h2 id="countrymmdb">
+ Country.mmdb
+ &lt;a class="anchor" href="#countrymmdb">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>wget https://gitee.com/mirrors/Pingtunnel/raw/master/GeoLite2-Country.mmdb -O Country.mmdb
+&lt;/code>&lt;/pre></description></item><item><title>龙芯系统启动参数</title><link>https://loonguser.github.io/system/boot_param_with_kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/boot_param_with_kernel/</guid><description>&lt;h2 id="龙芯平台常用启动参数">
+ 龙芯平台常用启动参数
+ &lt;a class="anchor" href="#%e9%be%99%e8%8a%af%e5%b9%b3%e5%8f%b0%e5%b8%b8%e7%94%a8%e5%90%af%e5%8a%a8%e5%8f%82%e6%95%b0">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="增加串口">
+ 增加串口
+ &lt;a class="anchor" href="#%e5%a2%9e%e5%8a%a0%e4%b8%b2%e5%8f%a3">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>console&lt;span style="color:#f92672">=&lt;/span>ttyS0,115200 earlycon&lt;span style="color:#f92672">=&lt;/span>uart,mmio,0x1fe001e0
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>注意:&lt;/p>
+&lt;ul>
+&lt;li>&lt;code>console&lt;/code>即是指控制台输出, &lt;code>ttyS0&lt;/code>是龙芯默认的串口终端, 波特率是&lt;code>115200&lt;/code>.&lt;/li>
+&lt;li>&lt;code>earlycon&lt;/code>是用来打印早期&lt;code>acpi&lt;/code>初始化过程的参数, 在使用&lt;code>dts&lt;/code>传参时可能不可用.&lt;/li>
+&lt;/ul>
+&lt;h3 id="核数限制">
+ 核数限制
+ &lt;a class="anchor" href="#%e6%a0%b8%e6%95%b0%e9%99%90%e5%88%b6">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>nr_cpus&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">3&lt;/span> maxcpus&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">3&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="多核调度限制">
+ 多核调度限制
+ &lt;a class="anchor" href="#%e5%a4%9a%e6%a0%b8%e8%b0%83%e5%ba%a6%e9%99%90%e5%88%b6">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>isolcpus&lt;span style="color:#f92672">=&lt;/span>0-1,3-5
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>示例可以使&lt;code>0,1,3,4,5&lt;/code>核不参与调度, 即被孤立.&lt;/p>
+&lt;h3 id="禁用smp">
+ 禁用SMP
+ &lt;a class="anchor" href="#%e7%a6%81%e7%94%a8smp">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>nosmp
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="串口调试休眠">
+ 串口调试休眠
+ &lt;a class="anchor" href="#%e4%b8%b2%e5%8f%a3%e8%b0%83%e8%af%95%e4%bc%91%e7%9c%a0">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>no_console_suspend
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>在&lt;code>s3&lt;/code>和&lt;code>s4&lt;/code>的过程中, 串口将打印执行流程.&lt;/p>
+&lt;h3 id="设置替代初始化进程">
+ 设置替代初始化进程
+ &lt;a class="anchor" href="#%e8%ae%be%e7%bd%ae%e6%9b%bf%e4%bb%a3%e5%88%9d%e5%a7%8b%e5%8c%96%e8%bf%9b%e7%a8%8b">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>rdinit&lt;span style="color:#f92672">=&lt;/span>/sbin/my_init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>init&lt;span style="color:#f92672">=&lt;/span>/sbin/my_init
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="减少内核启动时的输出">
+ 减少内核启动时的输出
+ &lt;a class="anchor" href="#%e5%87%8f%e5%b0%91%e5%86%85%e6%a0%b8%e5%90%af%e5%8a%a8%e6%97%b6%e7%9a%84%e8%be%93%e5%87%ba">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>quiet
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="设置日志级别">
+ 设置日志级别
+ &lt;a class="anchor" href="#%e8%ae%be%e7%bd%ae%e6%97%a5%e5%bf%97%e7%ba%a7%e5%88%ab">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>loglevel&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">3&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="设置根文件系统所在设备">
+ 设置根文件系统所在设备
+ &lt;a class="anchor" href="#%e8%ae%be%e7%bd%ae%e6%a0%b9%e6%96%87%e4%bb%b6%e7%b3%bb%e7%bb%9f%e6%89%80%e5%9c%a8%e8%ae%be%e5%a4%87">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>root&lt;span style="color:#f92672">=&lt;/span>/dev/sda3
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="加载ramdisk">
+ 加载ramdisk
+ &lt;a class="anchor" href="#%e5%8a%a0%e8%bd%bdramdisk">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>initrd&lt;span style="color:#f92672">=&lt;/span>/path/to/initrd.img
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="设置pci属性">
+ 设置PCI属性
+ &lt;a class="anchor" href="#%e8%ae%be%e7%bd%aepci%e5%b1%9e%e6%80%a7">#&lt;/a>
+&lt;/h3>
+&lt;p>如禁用&lt;code>msi&lt;/code>&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>pci&lt;span style="color:#f92672">=&lt;/span>nomsi
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="设置挂载参数">
+ 设置挂载参数
+ &lt;a class="anchor" href="#%e8%ae%be%e7%bd%ae%e6%8c%82%e8%bd%bd%e5%8f%82%e6%95%b0">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>mount_param&lt;span style="color:#f92672">=&lt;/span>noatime
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="设置selinux启用">
+ 设置SELinux启用
+ &lt;a class="anchor" href="#%e8%ae%be%e7%bd%aeselinux%e5%90%af%e7%94%a8">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>selinux&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="禁用gpu驱动">
+ 禁用gpu驱动
+ &lt;a class="anchor" href="#%e7%a6%81%e7%94%a8gpu%e9%a9%b1%e5%8a%a8">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>gsgpu.LG100_support&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">0&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h3 id="使能lsdc驱动">
+ 使能lsdc驱动
+ &lt;a class="anchor" href="#%e4%bd%bf%e8%83%bdlsdc%e9%a9%b1%e5%8a%a8">#&lt;/a>
+&lt;/h3>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>lsdc.modeset&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="内核参数查询">
+ 内核参数查询
+ &lt;a class="anchor" href="#%e5%86%85%e6%a0%b8%e5%8f%82%e6%95%b0%e6%9f%a5%e8%af%a2">#&lt;/a>
+&lt;/h2>
+&lt;p>龙芯系统支持的内核启动参数可以使用如下命令查看:&lt;/p></description></item><item><title>内核编译</title><link>https://loonguser.github.io/system/kernel/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/kernel/</guid><description>&lt;h1 id="龙芯内核编译">
+ 龙芯内核编译
+ &lt;a class="anchor" href="#%e9%be%99%e8%8a%af%e5%86%85%e6%a0%b8%e7%bc%96%e8%af%91">#&lt;/a>
+&lt;/h1>
+&lt;p>目前&lt;strong>龙芯&lt;/strong>已经由MIPS架构转战&lt;strong>LoongArch&lt;/strong>架构.&lt;/p>
+&lt;ul>
+&lt;li>&lt;strong>vmlinux+vmlinuz&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>libmodules&lt;/strong>&lt;/li>
+&lt;li>&lt;strong>RamDisk_initrd&lt;/strong>&lt;/li>
+&lt;/ul>
+&lt;h2 id="准备阶段">
+ 准备阶段
+ &lt;a class="anchor" href="#%e5%87%86%e5%a4%87%e9%98%b6%e6%ae%b5">#&lt;/a>
+&lt;/h2>
+&lt;blockquote>
+&lt;p>下面以LoongArch架构的编译为例.
+&lt;strong>编译器采用Gcc交叉编译LoongArch版本&lt;/strong>&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>编译器版本 :
+loongarch64-linux-gnu-gcc-8.3.0&lt;/li>
+&lt;li>配置文件 采用龙芯默认配置:
+cp arch/loongarch/configs/loongson3_defconfig .config&lt;/li>
+&lt;/ul>
+&lt;h2 id="开始编译">
+ 开始编译
+ &lt;a class="anchor" href="#%e5%bc%80%e5%a7%8b%e7%bc%96%e8%af%91">#&lt;/a>
+&lt;/h2>
+&lt;blockquote>
+&lt;p>vmlinux/vmlinuz&lt;/p>
+&lt;/blockquote>
+&lt;ul>
+&lt;li>执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu-(此为编译器路径 which gcc) menuconfig
+
+ &lt;img src="https://loonguser.github.io/images/kernel/1.png" alt="在这里插入图片描述" />&lt;/li>
+&lt;/ul>
+&lt;p>&lt;strong>进入图形化配置界面,开关相关功能,我们直接Esc退出.&lt;/strong>&lt;/p>
+&lt;ul>
+&lt;li>
+&lt;p>执行 make ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu- -j 16 //采用16线程进行编译(目前我是在服务器上编译,核数较多). 到此&lt;strong>vmlinux/vmlinuz 非压缩和压缩版内核&lt;/strong>就编译完成.
+ &lt;img src="https://loonguser.github.io/images/kernel/2.png" alt="在这里插入图片描述" />
+&lt;strong>System.map&lt;/strong> 是符号表&lt;/p>
+&lt;/li>
+&lt;li>
+&lt;p>执行 make modules_install INSTALL_MOD_PATH=./ ARCH=loongarch CROSS_COMPILE=/opt/LoongArch_Toolchains/loongarch64-linux-gnu-2020-11-06/bin/loongarch64-linux-gnu- 编译lib/modules/ 驱动模块包,熟悉内核的人都了解,当配置menuconfig的时候,会将M的驱动以modules的形式在内核中加载.
+ &lt;img src="https://loonguser.github.io/images/kernel/3.png" alt="在这里插入图片描述" />&lt;/p>
+&lt;/li>
+&lt;/ul>
+&lt;h2 id="将编译的文件进行使用">
+ 将编译的文件进行使用
+ &lt;a class="anchor" href="#%e5%b0%86%e7%bc%96%e8%af%91%e7%9a%84%e6%96%87%e4%bb%b6%e8%bf%9b%e8%a1%8c%e4%bd%bf%e7%94%a8">#&lt;/a>
+&lt;/h2>
+&lt;blockquote>
+&lt;p>&lt;strong>1.vmlinuz 放在os的/boot/下,并可以修改成自己喜欢的名字 vmlinuz_go&lt;/strong>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>&lt;strong>2.将lib/modules/下的文件copy到os根目录/lib/modules/&lt;/strong>&lt;/p>
+&lt;/blockquote>
+&lt;blockquote>
+&lt;p>&lt;strong>3.参考Deebian制作Ramdisk为例: 执行&lt;/strong> 
+ &lt;img src="https://loonguser.github.io/images/kernel/4.png" alt="在这里插入图片描述" />
+使用draut进行制作,该脚本制作的Ramdisk支持了好几种文件系统,你可以简单制作RamDisk,这里就不详细介绍该命令了.将制作的*.img文件拷贝到/boot下.&lt;/p>
+&lt;/blockquote>
+&lt;p>dracut 是一个事件驱动的 initramfs 基础设施。dracut(工具)被用来通过拷贝工具和文件，从一个已经安装的系统创建一个 initramfs 镜像，并将镜像与dracut框架结合在一起。&lt;/p></description></item><item><title>如何更新固件</title><link>https://loonguser.github.io/firmware/firmware/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/firmware/firmware/</guid><description>&lt;h2 id="在pmon下更新固件">
+ 在PMON下更新固件
+ &lt;a class="anchor" href="#%e5%9c%a8pmon%e4%b8%8b%e6%9b%b4%e6%96%b0%e5%9b%ba%e4%bb%b6">#&lt;/a>
+&lt;/h2>
+&lt;p>详情
+ &lt;a href="https://loonguser.github.io/firmware/pmon/">PMON使用方法&lt;/a>&lt;/p>
+&lt;p>从硬盘加载:&lt;/p>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; fload /dev/fs/usb0a/gz.mxd
+Loading file: /dev/fs/fat@usb0a/gz.mxd dl_offset 900000000f800000 addr 900000000f800000
+(bin)
+-
+Loaded 993222 bytes
+
+Programming flash 900000000f800000:f27c6 into 800000001c000000
+Erase end!
+-Programming end!
+&lt;/code>&lt;/pre>&lt;p>从tftp服务器加载:&lt;/p>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; fload tftp://192.168.1.4/gz.mxd
+Loading file: tftp://192.168.1.4/gz.mxd dl_offset 900000000f800000 addr 900000000f800000
+(bin)
+-
+Loaded 993222 bytes
+
+Programming flash 900000000f800000:f27c6 into 800000001c000000
+Erase end!
+-Programming end!
+&lt;/code>&lt;/pre>&lt;p>从http服务器加载:&lt;/p>
+&lt;pre tabindex="0">&lt;code>PMON&amp;gt; fload http://192.168.1.4/gz.mxd
+Loading file: http://192.168.1.4/gz.mxd dl_offset 900000000f800000 addr 900000000f800000
+(bin)
+-
+Loaded 993222 bytes
+
+Programming flash 900000000f800000:f27c6 into 800000001c000000
+Erase end!
+-Programming end!
+&lt;/code>&lt;/pre>&lt;h2 id="在uefi下更新固件">
+ 在UEFI下更新固件
+ &lt;a class="anchor" href="#%e5%9c%a8uefi%e4%b8%8b%e6%9b%b4%e6%96%b0%e5%9b%ba%e4%bb%b6">#&lt;/a>
+&lt;/h2>
+&lt;p>详情
+ &lt;a href="https://loonguser.github.io/firmware/uefi/">uefi使用方法&lt;/a>&lt;/p></description></item><item><title>如何更新系统</title><link>https://loonguser.github.io/system/update_system/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/update_system/</guid><description>&lt;h2 id="1-全系统更新">
+ 1 全系统更新:
+ &lt;a class="anchor" href="#1-%e5%85%a8%e7%b3%bb%e7%bb%9f%e6%9b%b4%e6%96%b0">#&lt;/a>
+&lt;/h2>
+&lt;p>&lt;code>Debian&lt;/code>系:&lt;/p>
+&lt;pre tabindex="0">&lt;code>apt update &amp;amp;&amp;amp; apt upgrade
+&lt;/code>&lt;/pre>&lt;p>&lt;code>Redhat&lt;/code>系:&lt;/p>
+&lt;pre tabindex="0">&lt;code>yum update
+&lt;/code>&lt;/pre>&lt;p>&lt;code>Arch&lt;/code>系:&lt;/p>
+&lt;pre tabindex="0">&lt;code>pacman -Syu
+&lt;/code>&lt;/pre>&lt;p>安同 OS (AOSC OS)：&lt;/p>
+&lt;pre tabindex="0">&lt;code>oma upgrade
+&lt;/code>&lt;/pre>&lt;h2 id="2-单独更新内核">
+ 2. 单独更新内核
+ &lt;a class="anchor" href="#2-%e5%8d%95%e7%8b%ac%e6%9b%b4%e6%96%b0%e5%86%85%e6%a0%b8">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="21-更新自己编译的内核">
+ 2.1 更新自己编译的内核
+ &lt;a class="anchor" href="#21-%e6%9b%b4%e6%96%b0%e8%87%aa%e5%b7%b1%e7%bc%96%e8%af%91%e7%9a%84%e5%86%85%e6%a0%b8">#&lt;/a>
+&lt;/h3>
+&lt;p>将内核放置&lt;code>/boot&lt;/code>下即可(通常&lt;code>/boot&lt;/code>是&lt;code>grub.cfg&lt;/code>默认指定的根目录)&lt;/p>
+&lt;p>更新完记得更新&lt;code>grub.cfg&lt;/code>, 见第四节.&lt;/p>
+&lt;h3 id="22-更新软件源上的内核">
+ 2.2 更新软件源上的内核
+ &lt;a class="anchor" href="#22-%e6%9b%b4%e6%96%b0%e8%bd%af%e4%bb%b6%e6%ba%90%e4%b8%8a%e7%9a%84%e5%86%85%e6%a0%b8">#&lt;/a>
+&lt;/h3>
+&lt;p>以&lt;code>Debian&lt;/code>系为例, 其余不做演示:&lt;/p>
+&lt;pre tabindex="0">&lt;code>root@loongson-pc:/home/loongson# apt-cache search linux-header
+aufs-dkms - DKMS files to build and install aufs
+linux-headers-4.19.0-17-common - Common header files for Linux 4.19
+linux-headers-4.19.0-17-loongson-3 - Linux kernel headers for 4.19 on loongson-3
+linux-headers-4.19.0-18-common - Common header files for Linux 4.19
+linux-headers-4.19.0-18-loongson-3 - Linux kernel headers for 4.19 on loongson-3
+linux-headers-4.19.0-19-common - Common header files for Linux 4.19
+linux-headers-4.19.0-19-loongson-3 - Linux kernel headers for 4.19 on loongson-3
+linux-headers-loongson-3 - Linux kernel headers for 4.19 on loongson-3 (meta-package)
+root@loongson-pc:/home/loongson#
+root@loongson-pc:/home/loongson# apt install linux-headers-4.19.0-19-loongson-3
+正在读取软件包列表... 完成正在分析软件包的依赖关系树 
+正在读取状态信息... 完成 
+......
+......
+&lt;/code>&lt;/pre>&lt;h2 id="3-单独更新initrd">
+ 3. 单独更新initrd
+ &lt;a class="anchor" href="#3-%e5%8d%95%e7%8b%ac%e6%9b%b4%e6%96%b0initrd">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="31-更新自己编译的modules并生成initrd">
+ 3.1 更新自己编译的modules并生成initrd
+ &lt;a class="anchor" href="#31-%e6%9b%b4%e6%96%b0%e8%87%aa%e5%b7%b1%e7%bc%96%e8%af%91%e7%9a%84modules%e5%b9%b6%e7%94%9f%e6%88%90initrd">#&lt;/a>
+&lt;/h3>
+&lt;p>将从内核源码编译的模块文件拷贝至&lt;code>/lib/modules/&lt;/code>, 比如&lt;code>4.19.190+.tgz&lt;/code>是模块文件的压缩包:&lt;/p></description></item><item><title>生成系统下的一些文件</title><link>https://loonguser.github.io/system/gen_sys_file/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/gen_sys_file/</guid><description>&lt;h2 id="1-initrd">
+ 1. Initrd
+ &lt;a class="anchor" href="#1-initrd">#&lt;/a>
+&lt;/h2>
+&lt;p>通常, &lt;code>lib/modules/&lt;/code>下的文件夹名称和内核的版本名是一致的, 所以可以通过下列命令生成&lt;code>Initrd&lt;/code>:&lt;/p>
+&lt;h3 id="11-dracut命令">
+ 1.1 dracut命令
+ &lt;a class="anchor" href="#11-dracut%e5%91%bd%e4%bb%a4">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>ls lib/modules/* | xargs -I N dracut --kver N --force
+&lt;/code>&lt;/pre>&lt;h3 id="12-mkinitramfs命令">
+ 1.2 mkinitramfs命令
+ &lt;a class="anchor" href="#12-mkinitramfs%e5%91%bd%e4%bb%a4">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>ls lib/modules/* | xargs -I N mkinitramfs /lib/modules/N -o /boot/initrd.img-N 
+&lt;/code>&lt;/pre>&lt;h2 id="2-grub">
+ 2. GRUB
+ &lt;a class="anchor" href="#2-grub">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="21-grub">
+ 2.1 Grub
+ &lt;a class="anchor" href="#21-grub">#&lt;/a>
+&lt;/h3>
+&lt;p>通常, &lt;code>Grub&lt;/code>安装在当前启动系统所在的磁盘上, 如下命令可以找到当前磁盘. (希望将&lt;code>Grub&lt;/code>安装在其他盘的同学, 看明白自己想要的效果)&lt;/p>
+&lt;pre tabindex="0">&lt;code>[root@mxd ~]# lsblk -P | grep &amp;#34;$(lsblk -P | grep -w &amp;#39;MOUNTPOINTS=&amp;#34;/&amp;#34;&amp;#39; | sed &amp;#39;s/.*MAJ:MIN=&amp;#34;\([^:]*\).*/\1/g&amp;#39;):0&amp;#34; | awk -F &amp;#39;&amp;#34;&amp;#39; &amp;#39;{print &amp;#34;/dev/&amp;#34; $2}&amp;#39;
+/dev/nvme0n1
+&lt;/code>&lt;/pre>&lt;p>再通过&lt;code>grub-install&lt;/code>或者&lt;code>grub2-install&lt;/code>命令安装进磁盘:&lt;/p>
+&lt;pre tabindex="0">&lt;code>grub-install /dev/nvme0n1
+&lt;/code>&lt;/pre>&lt;h3 id="22-grubcfg">
+ 2.2 grub.cfg
+ &lt;a class="anchor" href="#22-grubcfg">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>grub-mkconfig -o /boot/grub/grub.cfg
+&lt;/code>&lt;/pre>&lt;h3 id="23-grubefi">
+ 2.3 grub.efi
+ &lt;a class="anchor" href="#23-grubefi">#&lt;/a>
+&lt;/h3>
+&lt;pre tabindex="0">&lt;code>grub-mkimage -c /boot/grub/grub.cfg -o /boot/efi/EFI/BOOT/BOOTLOONGARCH64.EFI -O loongarch64-efi
+&lt;/code>&lt;/pre>&lt;p>&lt;code>2.1&lt;/code>节中生成&lt;code>grub&lt;/code>可以让&lt;code>bios&lt;/code>找到启动设备, 自动启动.&lt;/p></description></item><item><title>系统下查看一些信息</title><link>https://loonguser.github.io/system/systeminfo/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/systeminfo/</guid><description>&lt;h2 id="1-查看系统版本">
+ 1. 查看系统版本
+ &lt;a class="anchor" href="#1-%e6%9f%a5%e7%9c%8b%e7%b3%bb%e7%bb%9f%e7%89%88%e6%9c%ac">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>[root@mxd mxd]# cat /etc/os-release
+NAME=&amp;#34;Arch Linux&amp;#34;
+PRETTY_NAME=&amp;#34;Arch Linux&amp;#34;
+ID=arch
+BUILD_ID=rolling
+ANSI_COLOR=&amp;#34;38;2;23;147;209&amp;#34;
+HOME_URL=&amp;#34;https://archlinux.org/&amp;#34;
+DOCUMENTATION_URL=&amp;#34;https://wiki.archlinux.org/&amp;#34;
+SUPPORT_URL=&amp;#34;https://bbs.archlinux.org/&amp;#34;
+BUG_REPORT_URL=&amp;#34;https://bugs.archlinux.org/&amp;#34;
+PRIVACY_POLICY_URL=&amp;#34;https://terms.archlinux.org/docs/privacy-policy/&amp;#34;
+LOGO=archlinux-logo
+&lt;/code>&lt;/pre>&lt;h2 id="2-查看内核版本">
+ 2. 查看内核版本
+ &lt;a class="anchor" href="#2-%e6%9f%a5%e7%9c%8b%e5%86%85%e6%a0%b8%e7%89%88%e6%9c%ac">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>[root@mxd mxd]# uname -a
+Linux mxd 6.5.0-4 #1 SMP PREEMPT Thu, 31 Aug 2023 09:38:08 +0000 loongarch64 GNU/Linux
+&lt;/code>&lt;/pre>&lt;h2 id="3-查看固件版本">
+ 3. 查看固件版本
+ &lt;a class="anchor" href="#3-%e6%9f%a5%e7%9c%8b%e5%9b%ba%e4%bb%b6%e7%89%88%e6%9c%ac">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>[root@mxd mxd]# cat /sys/firmware/loongson/boardinfo
+BIOS Information
+Vendor			: Loongson
+Version			: Loongson-UDK2018-V4.0.05494-stable202305
+ROM Size		: 4096 KB
+Release Date		: 07/10/23 18:05:47
+
+Board Information
+Manufacturer		: Loongson
+Board Name		: Loongson-LS3A6000-7A2000-1w-EVB-V1.21
+Family			: LOONGSON64
+&lt;/code>&lt;/pre>&lt;h2 id="4-查看ip">
+ 4. 查看ip
+ &lt;a class="anchor" href="#4-%e6%9f%a5%e7%9c%8bip">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>[root@mxd mxd]# ip a
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+ link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+ inet 127.0.0.1/8 scope host lo
+ valid_lft forever preferred_lft forever
+ inet6 ::1/128 scope host noprefixroute 
+ valid_lft forever preferred_lft forever
+2: enp0s3f0: &amp;lt;NO-CARRIER,BROADCAST,MULTICAST,UP&amp;gt; mtu 1500 qdisc mq state DOWN group default qlen 1000
+ link/ether 00:55:7b:b5:7d:f7 brd ff:ff:ff:ff:ff:ff
+3: enp2s0: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc fq_codel state UP group default qlen 1000
+ link/ether ce:38:b3:df:3b:23 brd ff:ff:ff:ff:ff:ff
+ inet 192.168.1.13/23 brd 192.168.1.255 scope global dynamic noprefixroute enp2s0
+ valid_lft 40218sec preferred_lft 40218sec
+ inet6 fe80::80b6:e9f0:ab6c:e9c5/64 scope link noprefixroute 
+ valid_lft forever preferred_lft forever
+4: docker0: &amp;lt;NO-CARRIER,BROADCAST,MULTICAST,UP&amp;gt; mtu 1500 qdisc noqueue state DOWN group default 
+ link/ether 02:42:4e:12:01:c7 brd ff:ff:ff:ff:ff:ff
+ inet 172.18.0.1/16 brd 172.18.255.255 scope global docker0
+ valid_lft forever preferred_lft forever
+&lt;/code>&lt;/pre>&lt;h2 id="5-查看pci设备">
+ 5. 查看pci设备
+ &lt;a class="anchor" href="#5-%e6%9f%a5%e7%9c%8bpci%e8%ae%be%e5%a4%87">#&lt;/a>
+&lt;/h2>
+&lt;pre tabindex="0">&lt;code>[root@mxd mxd]# lspci 
+00:00.0 Host bridge: Loongson Technology LLC Hyper Transport Bridge Controller
+00:00.1 Host bridge: Loongson Technology LLC Hyper Transport Bridge Controller (rev 01)
+00:00.2 Host bridge: Loongson Technology LLC Device 7a20 (rev 01)
+00:00.3 Host bridge: Loongson Technology LLC Device 7a30
+00:03.0 Ethernet controller: Loongson Technology LLC Device 7a13
+00:04.0 USB controller: Loongson Technology LLC OHCI USB Controller (rev 02)
+00:04.1 USB controller: Loongson Technology LLC EHCI USB Controller (rev 02)
+00:05.0 USB controller: Loongson Technology LLC OHCI USB Controller (rev 02)
+00:05.1 USB controller: Loongson Technology LLC EHCI USB Controller (rev 02)
+00:06.0 Multimedia video controller: Loongson Technology LLC Device 7a25 (rev 01)
+00:06.1 VGA compatible controller: Loongson Technology LLC Device 7a36 (rev 02)
+00:06.2 Audio device: Loongson Technology LLC Device 7a37
+00:07.0 Audio device: Loongson Technology LLC HDA (High Definition Audio) Controller
+00:08.0 SATA controller: Loongson Technology LLC Device 7a18
+00:09.0 PCI bridge: Loongson Technology LLC Device 7a49
+00:0a.0 PCI bridge: Loongson Technology LLC Device 7a39
+00:0b.0 PCI bridge: Loongson Technology LLC Device 7a39
+00:0c.0 PCI bridge: Loongson Technology LLC Device 7a39
+00:0d.0 PCI bridge: Loongson Technology LLC Device 7a49
+00:0f.0 PCI bridge: Loongson Technology LLC Device 7a69
+00:10.0 PCI bridge: Loongson Technology LLC Device 7a59
+00:13.0 PCI bridge: Loongson Technology LLC Device 7a59
+00:16.0 System peripheral: Loongson Technology LLC Device 7a1b
+00:19.0 USB controller: Loongson Technology LLC Device 7a34
+02:00.0 Ethernet controller: Realtek Semiconductor Co., Ltd. RTL8111/8168/8411 PCI Express Gigabit Ethernet Controller (rev 15)
+05:00.0 Non-Volatile memory controller: Shenzhen Longsys Electronics Co., Ltd. SM2263EN/SM2263XT-based OEM SSD (rev 03)
+07:00.0 VGA compatible controller: Advanced Micro Devices, Inc. [AMD/ATI] Oland [Radeon HD 8570 / R5 430 OEM / R7 240/340 / Radeon 520 OEM] (rev 87)
+07:00.1 Audio device: Advanced Micro Devices, Inc. [AMD/ATI] Oland/Hainan/Cape Verde/Pitcairn HDMI Audio [Radeon HD 7000 Series]
+&lt;/code>&lt;/pre>&lt;h3 id="51-详细查看某pci设备使用的驱动">
+ 5.1 详细查看某pci设备使用的驱动
+ &lt;a class="anchor" href="#51-%e8%af%a6%e7%bb%86%e6%9f%a5%e7%9c%8b%e6%9f%90pci%e8%ae%be%e5%a4%87%e4%bd%bf%e7%94%a8%e7%9a%84%e9%a9%b1%e5%8a%a8">#&lt;/a>
+&lt;/h3>
+&lt;p>其中&lt;code>07:00.0&lt;/code>是上面左侧显示的一段数字, 根据描述, &lt;code>07:00.0&lt;/code>那一行指一个&lt;code>VGA兼容设备&lt;/code>, 换句话说是指显示设备, 业内叫做&lt;code>显卡&lt;/code>&lt;/p></description></item><item><title>新世界Archlinux系统安装</title><link>https://loonguser.github.io/system/install_archlinux/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/system/install_archlinux/</guid><description>&lt;blockquote>
+&lt;p>转载文章来源：
+ &lt;a href="https://bbs.loongarch.org/d/88-archlinux/28">https://bbs.loongarch.org/d/88-archlinux/28&lt;/a>&lt;/p>
+&lt;/blockquote>
+&lt;h4 id="本主题多人协作版主权限可编辑开源爱好者若要参与协作可回复中申请权限或者在qq群里申请">
+ 本主题多人协作，版主权限可编辑，开源爱好者若要参与协作，可回复中申请权限，或者在QQ群里申请。
+ &lt;a class="anchor" href="#%e6%9c%ac%e4%b8%bb%e9%a2%98%e5%a4%9a%e4%ba%ba%e5%8d%8f%e4%bd%9c%e7%89%88%e4%b8%bb%e6%9d%83%e9%99%90%e5%8f%af%e7%bc%96%e8%be%91%e5%bc%80%e6%ba%90%e7%88%b1%e5%a5%bd%e8%80%85%e8%8b%a5%e8%a6%81%e5%8f%82%e4%b8%8e%e5%8d%8f%e4%bd%9c%e5%8f%af%e5%9b%9e%e5%a4%8d%e4%b8%ad%e7%94%b3%e8%af%b7%e6%9d%83%e9%99%90%e6%88%96%e8%80%85%e5%9c%a8qq%e7%be%a4%e9%87%8c%e7%94%b3%e8%af%b7">#&lt;/a>
+&lt;/h4>
+&lt;h4 id="为了协调一致本指南基于yetisthttpsbbsloongarchorgu79制作的可引导安装镜像指南覆盖系统引导安装和具体应用配置安装配置中遇到的问题可以在回复中提出本主题多人协作持续更新勿催谢谢">
+ 为了协调一致，本指南基于
+ &lt;a href="https://bbs.loongarch.org/u/79">@yetist&lt;/a>制作的可引导安装镜像，指南覆盖系统引导、安装和具体应用配置。安装配置中遇到的问题，可以在回复中提出。本主题多人协作持续更新，勿催，谢谢！
+ &lt;a class="anchor" href="#%e4%b8%ba%e4%ba%86%e5%8d%8f%e8%b0%83%e4%b8%80%e8%87%b4%e6%9c%ac%e6%8c%87%e5%8d%97%e5%9f%ba%e4%ba%8eyetisthttpsbbsloongarchorgu79%e5%88%b6%e4%bd%9c%e7%9a%84%e5%8f%af%e5%bc%95%e5%af%bc%e5%ae%89%e8%a3%85%e9%95%9c%e5%83%8f%e6%8c%87%e5%8d%97%e8%a6%86%e7%9b%96%e7%b3%bb%e7%bb%9f%e5%bc%95%e5%af%bc%e5%ae%89%e8%a3%85%e5%92%8c%e5%85%b7%e4%bd%93%e5%ba%94%e7%94%a8%e9%85%8d%e7%bd%ae%e5%ae%89%e8%a3%85%e9%85%8d%e7%bd%ae%e4%b8%ad%e9%81%87%e5%88%b0%e7%9a%84%e9%97%ae%e9%a2%98%e5%8f%af%e4%bb%a5%e5%9c%a8%e5%9b%9e%e5%a4%8d%e4%b8%ad%e6%8f%90%e5%87%ba%e6%9c%ac%e4%b8%bb%e9%a2%98%e5%a4%9a%e4%ba%ba%e5%8d%8f%e4%bd%9c%e6%8c%81%e7%bb%ad%e6%9b%b4%e6%96%b0%e5%8b%bf%e5%82%ac%e8%b0%a2%e8%b0%a2">#&lt;/a>
+&lt;/h4>
+&lt;h2 id="一龙芯新固件环境下引导盘的制作">
+ 一、龙芯新固件环境下引导盘的制作
+ &lt;a class="anchor" href="#%e4%b8%80%e9%be%99%e8%8a%af%e6%96%b0%e5%9b%ba%e4%bb%b6%e7%8e%af%e5%a2%83%e4%b8%8b%e5%bc%95%e5%af%bc%e7%9b%98%e7%9a%84%e5%88%b6%e4%bd%9c">#&lt;/a>
+&lt;/h2>
+&lt;h3 id="安装镜像及软件仓库动态可在如下主题中找到">
+ 安装镜像及软件仓库动态，可在如下主题中找到
+ &lt;a class="anchor" href="#%e5%ae%89%e8%a3%85%e9%95%9c%e5%83%8f%e5%8f%8a%e8%bd%af%e4%bb%b6%e4%bb%93%e5%ba%93%e5%8a%a8%e6%80%81%e5%8f%af%e5%9c%a8%e5%a6%82%e4%b8%8b%e4%b8%bb%e9%a2%98%e4%b8%ad%e6%89%be%e5%88%b0">#&lt;/a>
+&lt;/h3>
+&lt;p>
+ &lt;a href="https://bbs.loongarch.org/d/67-loongarchlinux-202203/30">https://bbs.loongarch.org/d/67-loongarchlinux-202203/30&lt;/a>&lt;/p>
+&lt;h3 id="最新镜像下载随时更新">
+ 最新镜像下载，随时更新
+ &lt;a class="anchor" href="#%e6%9c%80%e6%96%b0%e9%95%9c%e5%83%8f%e4%b8%8b%e8%bd%bd%e9%9a%8f%e6%97%b6%e6%9b%b4%e6%96%b0">#&lt;/a>
+&lt;/h3>
+&lt;p>
+ &lt;a href="https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.16.1-loongarch64.iso">https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.16.1-loongarch64.iso&lt;/a>&lt;br>
+
+ &lt;a href="https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.22.1-loongarch64.iso">https://mirrors.wsyu.edu.cn/loongarch/2022.03/iso/2022.06/loongarchlinux-2022.06.22.1-loongarch64.iso&lt;/a>&lt;/p>
+&lt;p>
+ &lt;a href="https://mirrors.wsyu.edu.cn/loongarch/archlinux/iso/latest/archlinux-loong64.iso">https://mirrors.wsyu.edu.cn/loongarch/archlinux/iso/latest/archlinux-loong64.iso&lt;/a>&lt;/p>
+&lt;h3 id="引导盘制作">
+ 引导盘制作
+ &lt;a class="anchor" href="#%e5%bc%95%e5%af%bc%e7%9b%98%e5%88%b6%e4%bd%9c">#&lt;/a>
+&lt;/h3>
+&lt;p>准备工作：一块确定状态良好的U盘，容量4G以上即可，制作引导U盘会擦除盘内原始数据，注意备份。&lt;br>
+Linux环境下，插入U盘，系统会识别，不要做任何打开，加载等操作，具体设备名，可使用如下命令&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>ls -la /dev/sd* &lt;span style="color:#75715e">## U盘一般会识别成硬盘设备，*表示系统动态赋予的一个字符，用以区分不同硬盘&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h4 id="linux环境下使用dd这个工具软件">
+ Linux环境下，使用dd这个工具软件
+ &lt;a class="anchor" href="#linux%e7%8e%af%e5%a2%83%e4%b8%8b%e4%bd%bf%e7%94%a8dd%e8%bf%99%e4%b8%aa%e5%b7%a5%e5%85%b7%e8%bd%af%e4%bb%b6">#&lt;/a>
+&lt;/h4>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-perl" data-lang="perl">&lt;span style="display:flex;">&lt;span>注意&lt;span style="color:#960050;background-color:#1e0010">：&lt;/span>x是个字符&lt;span style="color:#960050;background-color:#1e0010">，&lt;/span>用实际内容替换&lt;span style="color:#960050;background-color:#1e0010">，&lt;/span>命令执行需要root用户权限
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo dd &lt;span style="color:#66d9ef">if&lt;/span>&lt;span style="color:#f92672">=&lt;/span>loongarchlinux&lt;span style="color:#f92672">-&lt;/span>xxx&lt;span style="color:#f92672">.&lt;/span>iso of&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">/dev/s&lt;/span>dx bs&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#ae81ff">1&lt;/span>M status&lt;span style="color:#f92672">=&lt;/span>progress oflag&lt;span style="color:#f92672">=&lt;/span>direct 
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e"># 命令执行完成后，建议运行下如下命令，确保U盘写入完整&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>sudo sync 
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;h2 id="二系统引导和安装前的检查">
+ 二、系统引导和安装前的检查
+ &lt;a class="anchor" href="#%e4%ba%8c%e7%b3%bb%e7%bb%9f%e5%bc%95%e5%af%bc%e5%92%8c%e5%ae%89%e8%a3%85%e5%89%8d%e7%9a%84%e6%a3%80%e6%9f%a5">#&lt;/a>
+&lt;/h2>
+&lt;p>使用新固件引导，有两个快捷键会经常用到：&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-lua" data-lang="lua">&lt;span style="display:flex;">&lt;span>F2 &lt;span style="color:#75715e">----- 激活固件配置界面，可在配置界面的选择引导设备&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>F12 &lt;span style="color:#75715e">----- 激活引导管理菜单，暂时不推荐使用这个方式选择引导设备&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>
+ &lt;img src="https://bbs.loongarch.org/assets/files/2022-06-18/1655528601-696633-boot.jpg" alt="" />&lt;/p>
+&lt;p>&lt;strong>使用新固件引导系统，包括引导本主题中制作好的U盘和之前使用grub有区别，具体流程是：&lt;/strong>&lt;/p>
+&lt;p>1、开机前把&lt;strong>制作好的U盘&lt;/strong>插入机器USB接口，建议插入到&lt;strong>主板提供的接口&lt;/strong>上，不建议使用前置接口，躲坑。&lt;br>
+2、开机后出现龙芯logo，&lt;strong>快速按F2&lt;/strong>，直到进入&lt;strong>固件配置界面&lt;/strong>&lt;br>
+3、按如下图示操作：&lt;br>
+&amp;hellip;&lt;br>
+TODO: 需要补充英文界面操作，或说明修改语言方法。&lt;/p>
+&lt;p>移动光标到 &lt;strong>启动管理&lt;/strong> 项，回车：&lt;br>
+
+ &lt;img src="https://bbs.loongarch.org/assets/files/2022-06-18/1655534559-721436-dbd7f34c6e4fa17c59420e5fe2852376.jpg" alt="" />&lt;/p>
+&lt;p>进入 &lt;strong>启动管理&lt;/strong> 菜单之后，将会看到一系列可选择的启动项，请在列表中找到 &lt;strong>EFI System Partition&lt;/strong> 或 &lt;strong>EFI System Partition 2&lt;/strong>，并选择此项启动：&lt;br>
+
+ &lt;img src="https://bbs.loongarch.org/assets/files/2022-06-18/1655534991-6743-9d13303388461bb11beb2e2ae202d27b.jpg" alt="" />&lt;/p></description></item><item><title>在龙芯3A5000上运行Windows程序</title><link>https://loonguser.github.io/applications/lat/</link><pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate><guid>https://loonguser.github.io/applications/lat/</guid><description>&lt;blockquote>
+&lt;p>文章来源: &lt;code>https://zhuanlan.zhihu.com/p/436405217&lt;/code>&lt;/p>
+&lt;/blockquote>
+&lt;p>2022-03-18：本文所述操作步骤较为繁琐，另写了一篇操作简单的替代本文内容：&lt;/p>
+&lt;p>
+ &lt;a href="https://zhuanlan.zhihu.com/p/482334107">guee：包教包会：龙芯3A5000上运行任意Windows软件161 赞同 · 25 评论文章
+ &lt;img src="https://pic4.zhimg.com/v2-cbb4ce0b260e5f596abf4bf85c37401b_180x120.jpg" alt="" />&lt;/a>&lt;/p>
+&lt;hr>
+&lt;p>　　龙芯3A5000是龙芯最新的桌面CPU，它基于龙芯自主设计的LoongArch架构（指令集），性能接近市场主流CPU水平。因为各种操作系统和应用程序都与指令集相关，所以x86架构（指令集）的CPU就不能直接运行ARM架构（指令集）的应用程序，反之亦然。因此诞生了各种各样的二进制（指令）翻译技术，用于跨架构模拟运行其它平台的操作系统和应用程序，各种二进制（指令）翻译技术可以分为软件翻译、硬件翻译、软硬结合的翻译这三大类。我先简述一下二进制翻译技术，然后再给出在UOS和龙芯3A5000上运行任何Windows程序的方法。&lt;/p>
+&lt;p>
+ &lt;img src="https://pic2.zhimg.com/v2-6dced80ba275d9ba5aa108ea09104e99_b.jpg" alt="" />&lt;/p>
+&lt;p>
+ &lt;img src="https://pic2.zhimg.com/80/v2-6dced80ba275d9ba5aa108ea09104e99_720w.webp" alt="" />&lt;/p>
+&lt;h2 id="二进制翻译技术简述">
+ 二进制翻译技术简述
+ &lt;a class="anchor" href="#%e4%ba%8c%e8%bf%9b%e5%88%b6%e7%bf%bb%e8%af%91%e6%8a%80%e6%9c%af%e7%ae%80%e8%bf%b0">#&lt;/a>
+&lt;/h2>
+&lt;p>　　以软件方式进行二进制（指令）翻译必须存在一个宿主系统，模拟器程序在宿主系统上运行。比如各种游戏模拟器，用来在电脑上玩红白机游戏、街机游戏、PS游戏等，以纯软件的方式构建了一个虚拟的主机环境，让那些游戏程序成为缸中之脑，游戏程序执行的所有指令、请求的所有资源都是由翻译软件模拟出来的，但它以为自己是在真正的主机中运行。&lt;/p>
+&lt;p>　　模拟通用计算机的CPU和相关硬件环境要比模拟游戏主机复杂得多。这方面的代表软件，有开源的可虚拟多种架构的qemu、苹果的rosetta 2、以及微软Windows11在arm上模拟x86和在x86上模拟arm的技术等等。其中qemu可以在多种架构（指令集）之间相互转换，不但只支持动态翻译，而且性能最低，平均运行效率仅为原生性能的5%左右。苹果和微软都是一对一的专用翻译，且与操作系统深度结合，效率较高。&lt;/p>
+&lt;p>　　硬件翻译以Transmeta CPU为代表，它的CPU本身是一种“超长指令字”架构，但在指令译码的阶段，接受的是x86指令，然后把x86指令转换为它自己的指令来运行。这种方式使它的CPU看起来就是一块x86架构的CPU，并且不需要对电脑中的其它硬件进行模拟，各种支持x86指令集的操作系统和应用程序都可以在使用Transmeta CPU的电脑上直接安装运行。Intel/AMD现在的CPU其实也是硬件翻译技术的代表，它们内部是执行的“微码（类似于精简指令集）”，而对于的表现则依然是x86架构的处理器。&lt;/p>
+&lt;p>　　龙芯的LoongArch架构（指令集）则代表了第三个分类，即软件和硬件结合的二进制翻译方式。这种方式既有软件翻译的灵活性，又能接近或达到硬件翻译的效率，兼具二者的优点。龙芯的二进制翻译本质上也是软件翻译，但是对软件翻译中比较耗时的处理提供了专门的硬件指令来加速翻译过程，因此称它为软硬结合的二进制翻译技术。龙芯之所以不使用纯硬件的翻译方式，是因为我们必须建立自主的软件生态体系。如果像Transmeta那样对外表现为x86的CPU，那么它能直接运行的就只有基于x86的操作系统和应用程序，生存状况高度依赖于Intel和微软的态度，因此它虽然在Intel的诉讼中获胜，但却在Intel对市场的操作下惨然离场。&lt;/p>
+&lt;p>　　龙芯的LoongArch架构（指令集）本身是一种独立的，完善的指令系统，可以建立独立于x86/ARM之外的软件生态体系。**龙芯的二进制翻译技术主要是在LoongArch原生软件生态建设的初期，用于补充原生软件的不足，LoongArch架构和龙芯CPU的生存不依赖于Intel/ARM/MS/Google等主导的软件生态。**二进制翻译技术具有单方面的决定权，任何公司都没有理由阻止任何软件以二进制翻译的方式在某种原生不支持的架构上运行。即使软件开发商以检测CPU型号等技术手段阻止运行，那么以软件为主体的二进制翻译技术也能轻松解决这个问题，而固化在CPU硬件中的各种信息和特征则不可能像软件那样在线升级。以软件翻译为主体的二进制翻译，甚至可以针对特定程序把自己模拟成特定的CPU型号。&lt;/p>
+&lt;p>　　即使要翻译的目标架构频繁升级指令集版本，增加新的指令，不断推陈出新，对于龙芯来说，要模拟最新的CPU和指令集，也只是更新一下软件的事儿。而那些需要架构授权的CPU产品，如果没有购买到新版本的架构授权，那就无论如何发布多少个新款CPU产品，都不可能兼容新版架构的新指令。&lt;/p>
+&lt;h2 id="龙芯二进制翻译系统的简单结构说明">
+ 龙芯二进制翻译系统的简单结构说明
+ &lt;a class="anchor" href="#%e9%be%99%e8%8a%af%e4%ba%8c%e8%bf%9b%e5%88%b6%e7%bf%bb%e8%af%91%e7%b3%bb%e7%bb%9f%e7%9a%84%e7%ae%80%e5%8d%95%e7%bb%93%e6%9e%84%e8%af%b4%e6%98%8e">#&lt;/a>
+&lt;/h2>
+&lt;p>　　龙芯的二进制翻译系统仍在开发当中，尚未公开技术资料，但当前已经有可以使用的测试版本。我仅仅根据对当前状态分析的结果，简单描述一下它的基本结构如下图，可能不太准确，也不够详细，意会就好。&lt;/p>
+&lt;p>
+ &lt;img src="https://pic4.zhimg.com/v2-98a539045961f14026c58803e7f1f757_b.jpg" alt="" />&lt;/p>
+&lt;p>
+ &lt;img src="https://pic4.zhimg.com/80/v2-98a539045961f14026c58803e7f1f757_720w.webp" alt="" />&lt;/p>
+&lt;p>　　基于龙芯LoongArch架构（指令集）的CPU，在运行原生的LoongArch指令集的程序时，不需要二进制翻译，可以直接运行。&lt;/p>
+&lt;p>　　在运行基于其它架构（指令集）的Linux程序时，由龙芯的二进制翻译模块对指令进行转译。程序对Linux的API调用，可以直接由操作系统本身提供支持。&lt;/p>
+&lt;p>　　&lt;em>在运行Windows（x86）的程序时，由于Linux系统本身不能提供Windows系统的API，因此需要使用Wine来提供对Windows API的支持。Wine是给Windows（x86）程序提供虚拟的API接口，而不负责对指令的转译，因此只用wine并不能在非x86的CPU运行Windows程序。&lt;strong>在x86的应用程序中，不但程序自身逻辑以及第三方库的二进制代码都是x86指令，而且用于调用Windows API的二进制代码也是x86指令，如果没有二进制翻译，在LoongArch上Windows程序甚至连程序入口的代码都不能执行，也无法调用Window API，程序自身的代码和第三方库就更不可能运行了。&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>　　操作系统API（应用程序编程接口）是由操作系统提供给应用程序的接口，在Linux上运行Windows程序时，假如调用读取文件数据的API，就可以由Wine给应用程序提供这个接口，但接口内部不再是Windows的代码，而是由Wine去调用Linux的相关接口来实现相同的功能，这就是对API的模拟。在应用程序读取到数据之后做的操作，就不在Wine的管辖范围内了。比如程序取得数据后可能加密解密、可能作为图像数据计算对比度、可能作为音频数据计算特殊音效……这些操作可能是由程序自身代码来完成，也可能是调用其它的库文件的接口来实现。&lt;em>&lt;strong>这些在Wine支持范围之外的代码，在x86架构（指令集）的CPU上是由CPU直接执行，在LoongArch架构（指令集）的CPU上，就只能由二进制翻译模块转译为LoongArch的指令来执行。&lt;/strong>&lt;/em>&lt;/p>
+&lt;p>　　操作系统和应用程序对CPU指令的使用，是属于ABI（应用程序二进制接口）的一部分，ABI的层级很低，是二进制代码的规范。在基于LoongArch架构的CPU上运行x86程序时，就是由二进制翻译模块来处理对指令的转译，也就是对x86的ABI规范的模拟。不管是Linux还是Windows的应用程序，只要它不是LoongArch原生指令集的，最终都需要经过二进制翻译才能在龙芯的CPU上运行。&lt;/p>
+&lt;p>　　龙芯的二进制翻译模块当前和qemu一样也是只支持动态翻译，但效率比原生的qemu高出一个数量级。将来会支持动、静态结合的翻译模式，也就是程序运行时的动态翻译结果可以保留下来，下次运行相同的程序就直接使用翻译的结果，仅对程序运行时修改自身代码等行为需要动态翻译。这样可以降低翻译的CPU消耗，翻译运行的效率可以大幅度提高，预计运行x86程序可以达到80%的原生效率。这里的80%是指平均80%，而不像某些纯软件的翻译方案仅对特定类型程序翻译效率较高，就笼统地宣传“高效率”。&lt;/p>
+&lt;h2 id="在龙芯3a5000上实战运行windows程序">
+ 在龙芯3A5000上实战运行Windows程序
+ &lt;a class="anchor" href="#%e5%9c%a8%e9%be%99%e8%8a%af3a5000%e4%b8%8a%e5%ae%9e%e6%88%98%e8%bf%90%e8%a1%8cwindows%e7%a8%8b%e5%ba%8f">#&lt;/a>
+&lt;/h2>
+&lt;p>　　最简单的方式，是在使用3A5000的电脑上安装统信的UOS系统，然后等着UOS系统的应用商店中提供了什么Windows软件，就安装什么软件，可以无障碍，无门槛，无后顾之忧……可是Windows的软件千奇百怪，UOS的应用商店不可能提供所有的Windows软件，那么我们就需要动动小手，自己解决自己的需求。&lt;/p>
+&lt;p>　　目前只有UOS for 3A5000（体验版）系统中集成了龙芯的二进制翻译模块，而龙芯自己的Loongnix为什么反而还没有提供二进制翻译的支持呢？“体验版”这三个字很重要，是否稳定无关紧要。龙芯的Loongnix却是已经正式发布的产品，对于龙芯的行业用户来说，往系统中更新一个还没有开发完成的、可能不稳定的功能模块，大概不是什么喜闻乐见的事情。因此我下面就以UOS为例说明一下如何在龙芯3A5000上运行“任何”的Windows软件，“任何”是指可以尝试任何软件，但不能保证所有软件都能正常运行。&lt;/p>
+&lt;p>　　**UOS中已经集成了龙芯二进制翻译模块，但要运行Windows软件仍然需要一个Wine环境。**UOS本身有多个版本的Wine，有经过深度/统信改良了效率和兼容性的deepin-wine，也有原生的版本，我们要使用deepin-wine。最简单的方式是从UOS应用商店中安装一个由Wine支持的软件，环境就自动配置好了。如果使用Loongnix或其它的系统，就需要手工完成这个过程，可能还需要从UOS复制一些文件和配置，比较麻烦。建议安装的软件是PhotoShop，因为PhotoShop是一个很大很复杂的软件，能够让PhotoShop正常运行的环境，就能让大多数软件正常运行。&lt;/p>
+&lt;p>
+ &lt;img src="https://pic2.zhimg.com/v2-63eed8c737b9dd96dec571c7bc3352b1_b.jpg" alt="" />&lt;/p>
+&lt;p>
+ &lt;img src="https://pic2.zhimg.com/80/v2-63eed8c737b9dd96dec571c7bc3352b1_720w.webp" alt="" />&lt;/p>
+&lt;p>
+ &lt;a href="https://www.zhihu.com/zvideo/1445505380252610560">龙芯3A5000运行Windows程序，微信、PS，扫雷绝对不卡15.2 万播放 · 163 赞同视频
+ &lt;img src="https://pic4.zhimg.com/v2-02ba5aea38a8bd887a6b118f598f1e00_r.jpg?source=2231c908" alt="点击可播放视频" />​&lt;/a>&lt;/p>
+&lt;p>　　UOS对Wine版软件的组织方式是给每个软件一套单独的Windows环境，也就是说每个软件包中都有配套的Windows、Program Files、ProgramData、User等系统文件夹。这些文件夹和软件本身，都被打包成一个files.7z文件，安装到“/opt/apps”文件夹下以包名命名的子文件夹中。软件首次运行时，files.7z被解压到“/home/用户名/.deepinwine/”文件夹中，并自动配置相关的运行环境。这种方式的好处是每个软件都相对独立，避免因某些共用文件的版本不同导致不能运行，坏处就是会增加许多额外的文件。但实际增加的文件体积并不会很大，因为前面说了Wine只是提供虚拟的API接口，因此包中的操作系统的DLL文件实际都是只有接口没有代码的“代理”版本，每个文件只几KB大小。系统DLL接口的功能是由Wine文件夹中的对应的.so文件来实现的。只有系统DLL之外的，软件自身的以及第三方的DLL文件才是“真实”的DLL文件。&lt;/p>
+&lt;p>　　在安装了PhotoShop（Wine）之后，在“/opt/apps/com.pscs6.deepin/files”文件夹中的files.7z和run.sh是我们需要用到的。&lt;/p>
+&lt;p>
+ &lt;img src="https://pic1.zhimg.com/v2-dbf73097fce4923da02e66dcc0310ff8_b.jpg" alt="" />&lt;/p>
+&lt;p>
+ &lt;img src="https://pic1.zhimg.com/80/v2-dbf73097fce4923da02e66dcc0310ff8_720w.webp" alt="" />&lt;/p>
+&lt;p>　　如果你已经运行过刚刚安装的PhotoShop，那么在“/home/用户名/.deepinwine”文件夹中会有“Deepin-CS6”文件夹，“.deepinwine”是隐藏文件夹，在Linux中文件（夹）名字前面加“.”表示隐藏，在文件管理器中看不到，需要手工在地址栏输入才能打开。它里面的内容如下：&lt;/p>
+&lt;p>
+ &lt;img src="https://pic3.zhimg.com/v2-83c7bb3afe85e8c40e1b2ff559ad587e_b.jpg" alt="" />&lt;/p>
+&lt;p>
+ &lt;img src="https://pic3.zhimg.com/80/v2-83c7bb3afe85e8c40e1b2ff559ad587e_720w.webp" alt="" />&lt;/p>
+&lt;p>　　dosdevices文件夹中的内容是虚拟硬盘盘符和com接口的链接文件，比如“c:”文件就链接到“drive_c”文件夹。“drive_c”文件夹是虚拟的Windodws系统的C盘，里面的内容一看就眼熟：&lt;/p>
+&lt;p>
+ &lt;img src="https://pic2.zhimg.com/v2-4bff50334b47e32ae65a5b5876aa50fd_b.jpg" alt="" />&lt;/p>
+&lt;p>
+ &lt;img src="https://pic2.zhimg.com/80/v2-4bff50334b47e32ae65a5b5876aa50fd_720w.webp" alt="" />&lt;/p>
+&lt;p>　　如果你要向这个由Wine虚拟的Windows环境中安装软件，或复制绿色软件来运行，就把“drive_c”当成Windows的C盘来用，都往里面复制就行了。其实直接使用PhotoShop的这个Wine环境文件夹也可以，但是为了避免一些麻烦，比如防止意外卸载了PhotoShop之后你放在里面的软件也被一同删除，我们还是最好自己弄个单独的环境。另外说明一下，这是32位的Wine环境，不能运行64位的Windows程序，如果要运行64位的程序，需要手工配置64位的环境，因为UOS还没有提供直接安装的64位Windows程序。&lt;/p>
+&lt;p>　　先把前面在“/opt/apps/com.pscs6.deepin/files”中看到的files.7z复制到“/home/用户名/.deepinwine”文件夹中，然后在files.7z上单击右键，在右键菜单中选择“解压到当前文件夹”。然后“/home/用户名/.deepinwine”下面就会多出一个“files”文件夹，把它改个名字，比如“MyGames”或者像我一样改成“Default”。这个文件夹中的内容和之前“Deepin-CS6”文件夹中的一样，但你不需要在这里运行PhotoShop，因此可以把“/home/guee/.deepinwine/Default/drive_c/Program Files”里面的Adoeb删除掉，节省一些空间。&lt;/p>
+&lt;p>　　再然后可以把下载到的绿色软件或者安装程序等都复制到“/home/guee/.deepinwine/Default/drive_c”中你喜欢的位置，最后把前面看到的“run.sh”复制出来进行一些修改，就可以运行它们了。当然也可以复制下面的内容，保存为一个扩展名为“.sh”的文件，注意要在文件属性的“权限管理”中设置“允许以程序执行”。&lt;/p>
+&lt;div class="highlight">&lt;pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;">&lt;code class="language-bash" data-lang="bash">&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#!/bin/sh
+&lt;/span>&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#在/home/guee/.deepinwine/下面你的Windows环境所在的子文件夹名。&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>BOTTLENAME&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;Default&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#Wine的版本&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>APPVER&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;13.0deepin6~wine5&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#要运行的程序的路径，你的drive_c文件夹就是c:/，后是相对于它的路径。&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#注意Linux中的路径分隔符是/,而Windows中是\，这里按照Linux的规则写。&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>EXEC_PATH&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;c:/ali213-AngryBirdschs/AngryBirds.exe&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#启动Wine的脚本程序，是Wine自带的。&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>START_SHELL_PATH&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;/opt/deepinwine/tools/run_v4.sh&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#大概是这个程序关联的文档类型，这里设置为&amp;#34;&amp;#34;。&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export MIME_TYPE&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#Wine的主程序，这是环境变量，在run_v4.sh这个启动脚本中会使用它。&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export APPRUN_CMD&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;deepin-wine5-stable&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#语言环境设置&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export PATCH_LOADER_ENV&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">&amp;#34;LC_ALL=zh_CN.UTF-8&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#也是环境变量设置&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>export SPECIFY_SHELL_DIR&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">`&lt;/span>dirname $START_SHELL_PATH&lt;span style="color:#e6db74">`&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DEEPIN_WINE_BIN_DIR&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">`&lt;/span>dirname $APPRUN_CMD&lt;span style="color:#e6db74">`&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>DEEPIN_WINE_DIR&lt;span style="color:#f92672">=&lt;/span>&lt;span style="color:#e6db74">`&lt;/span>dirname $DEEPIN_WINE_BIN_DIR&lt;span style="color:#e6db74">`&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#export WINEPREDLL=&amp;#34;$ARCHIVE_FILE_DIR/dlls&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#还是环境变量设置&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -n &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$PATCH_LOADER_ENV&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -n &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$EXEC_PATH&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span>;&lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> export $PATCH_LOADER_ENV
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">if&lt;/span> &lt;span style="color:#f92672">[&lt;/span> -d &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$DEEPIN_WINE_BIN_DIR&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span> &lt;span style="color:#f92672">&amp;amp;&amp;amp;&lt;/span> &lt;span style="color:#f92672">[&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$DEEPIN_WINE_BIN_DIR&lt;span style="color:#e6db74">&amp;#34;&lt;/span> !&lt;span style="color:#f92672">=&lt;/span> &lt;span style="color:#e6db74">&amp;#34;.&amp;#34;&lt;/span> &lt;span style="color:#f92672">]&lt;/span>;&lt;span style="color:#66d9ef">then&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span> export DEEPIN_WINE_BIN_DIR
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#66d9ef">fi&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>&lt;span style="color:#75715e">#启动Wine，并指定由Wine启动的应用程序。&lt;/span>
+&lt;/span>&lt;/span>&lt;span style="display:flex;">&lt;span>$START_SHELL_PATH $BOTTLENAME $APPVER &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$EXEC_PATH&lt;span style="color:#e6db74">&amp;#34;&lt;/span> &lt;span style="color:#e6db74">&amp;#34;&lt;/span>$@&lt;span style="color:#e6db74">&amp;#34;&lt;/span>
+&lt;/span>&lt;/span>&lt;/code>&lt;/pre>&lt;/div>&lt;p>　　上面的“EXEC_PATH”后面的字符串就是你要运行的程序路径，我是从“游侠网”下载了一个绿色版本的《愤怒的小鸟》，其实看到文件夹名中的“ali213”应该就猜到了。这是绿色软件，如果要运行的不是绿色软件而是安装程序，过程也一样，只要把安装程序设置为要运行的程序就可以了。安装完成后，可以再修改一下运行脚本，把“EXEC_PATH”后面的字符串改为安装完成的程序路径。&lt;/p></description></item></channel></rss>
