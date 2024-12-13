@@ -1,132 +1,281 @@
 ---
-title: 从UEFI如何启动到系统
+title: 龙芯UEFI使用详解
 author: Ayden Meng
 categories: 1. 固件
 toc: true
 ---
 
-## UEFI须知
+![](/images/uefi-png/)
+## 龙芯UEFI使用详解
 
-## 1. 进入UEFI setup界面
+## 1. UEFI主界面及设置语言
 
-在串口或者显示界面下显示`BDS`字样的时候(如下图), 稍微按按上下键即可进入`Setup`界面
-![UEFI Booting](/images/uefi/1.png)
+在串口或者显示界面下显示`BDS`字样的时候(如下图), 按方向下(`↓`)或`F2`即可进入`Setup`界面， 即主界面。
 
-## 2. Setup界面
+光标默认在`语言设置`，可以通过方向键选择，示例为修改语言。
 
-无论是`Intel`还是`loongson`, `BIOS`下都有设置的接口, `PMON`也有, 无非是显示样式差异, 原理相通. `Loongson`的`UEFI`界面如下图
+![UEFI Booting](/images/uefi-png/language.png)
 
-不同的条目, 用于设置不同的功能. 其中普通用户通常只需要进入`BootManager`界面选择相应的启动目标即可.
-![Setup](/images/uefi/2.png)
+## 2. 主板信息
 
-## 3. BootManager界面
+进入主板信息，可以查看BIOS版本、主板型号、CPU名字等相关硬件基础信息，如下图：
+![主板信息](/images/uefi-png/info_main.png)
 
-在下图区域`1`中为条目名称, 区域`2`中为`UEFI`下解析的路径名(有点专业,不用理解), 总之, 左边看不懂时就看右边, 找相关的关键字, 比如下图, 左侧是设备名, 不太能看出是什么设备, 右侧则有`Sata`字样可以识别.
-![BootManager](/images/uefi/3.png)
+### 2.1 PCIE信息
 
-## 4. Shell下操作
+选择`PCIe设备信息`可以查看主板的PCIe的全部信息，如下图：
+![PCIe信息](/images/uefi-png/info_pcie.png)
 
-通常, 正常情况下, 系统直接启动, 用户无法感知上述界面的存在, 但当出现一些问题时, 我们可能需要进入`Shell`下进行操作, 如上图中的第二个条目, 选中后回车进入下图界面:
-![Shell](/images/uefi/4.png)
+### 2.2 USB信息
 
-### 4.1. 显示启动设备
+选择`USB设备信息`可以查看主板的USB的全部信息，如下图：
+![USB信息](/images/uefi-png/info_usb.png)
 
-正常情况下， 进入`Shell`后仍然会提示启动相关的设备, 如上图, 倘若由于操作过多, 或者显示`bug`等, 我们还想再次看到相关的显示, 则需要通过`map`命令再次显示，如下图：
+## 3. 设置系统时间
 
-![map命令](/images/uefi/5.png)
+操作系统时间通常默认使用rtc时钟，所以可以在固件下设置rtc时间以改变操作系统的默认时间。（当操作系统不通过rtc时间同步时，此方法不一定生效，关于系统下的配置，本文不作讨论）
 
-可以看到, 其实和默认进入`Shell`的打印是一样的, 不过为了防止打印被冲刷掉, 还是要会一下.
+![](/images/uefi-png/system_time.png)
 
-### 4.2. 进入设备及查看文件
+## 4. 安全设置
 
-看上图, 图中黄色字体, `FS0:` , `BLK0:`等, 可以理解为不同设备的重命名, 其中`FS`开头的标识表示该设备的文件系统可以识别, `BLK`开头的表示表示该设备不存在文件系统, 或者文件系统不可识别. 总之对我们有意义的就只有`FS`开头的标识.
+安全设置包括如下内容：安全启动、恢复出厂设置、BIOS密码配置、固件更新等。
+![](/images/uefi-png/secure_all.png)
+### 4.1 安全启动配置
 
-只有含有文件系统的设备我们才能访问, 所以`UEFI`下需要访问的`GRUB`, 内核等`EFI`文件一定是放在`UEFI`下能够识别的文件系统中的. 也就是`FS`开头的设备.
+在下图界面中，可以看到安全启动相关的配置，包括状态和开启开关，同事包含相关自定义配置。
 
-如何访问文件系统中的文件呢, 先看下图:
+安全启动开启后，BIOS会开启自身校验功能，对普通用户来说，安全性提高的同时，会对启动速度产生一定影响。
 
-![文件操作](/images/uefi/6.png)
+![](/images/uefi-png/secureboot.png)
 
-进入设备时比较特殊, 输入`FS0:`即可,不能是`cd FS0:`, 也不能不加后面的冒号.
+### 4.2 恢复出厂设置
 
-进入设备之后就和linux的操作很类似了, 使用`cd`, `ls`即可.
+如下图，按照提示执行恢复出厂设置后，原先所有在BIOS下保存的个人配置（如启动顺序、传统启动模式等）都将会被重置。
 
-然后`ls`看到的緑色显示的文件, 也就是UEFI下的可执行文件--EFI文件. 运行时也无需像linux那样在前面加路径才能执行, UEFI下直接输入文件名即可.
+![](/images/uefi-png/recover.png)
 
-哦, 值得一提, UEFI下可以通过`Tab`键实现文件名补全.
+### 4.3 BIOS密码设置
 
-### 4.3. UEFI下的其他操作
+BIOS密码分为管理员密码和普通用户密码，其中当设定管理员密码后，则必须解锁管理员密码才可进一步更改相关配置，TODO.
 
-如第一节的内容, `UEFI`下的界面下通常会有很多选项, 其中用户比较关心的选项大概有:
+![](/images/uefi-png/admin_passwd.png)
 
-1. 快速启动: 忽略部分设备初始化, 启动速度加快, 比如x86部分机器需要关闭此选项才能更改启动顺序, 选择系统安装盘.
-2. 安全启动: 开启安全校验, 部分外插设备未经过校验可能无法识别, 所以x86装机时可能也需要关闭此项, 防止U盘无法识别.
-3. 传统模式: 通常是用于兼容很久的系统启动. 比如龙芯的机器开启传统模式可以安装旧世界系统, 关闭则安装新世界系统, x86下可能叫CSM..., 开启则可以引导MBR分区的硬盘, 关闭则引导GPT格式硬盘.
-4. 高级选项:一些高级的功能开关, 普通用户可能不需要使用, 比如上述传统模式, 龙芯的机器将其放在了高级选项中, 英文是LegacyMode, (看不懂这种英文的同学自我PUA一下). 其他如有需求请在工程师指导下使用.
+### 4.4 固件更新
 
-### 4.4. UEFI下的一些Shell命令
-比如`pci`命令, 具体可以通过`pci -?`查看具体使用方法, 这里不详细演示.
+固件更新应该是目前龙芯用户最关心的功能，截止目前（2024/12/13），龙芯UEFI下的固件更新功能可额外指定三项功能，如下图，分别是: 是否保留SMBIOS信息、是否保留BIOS配置（如启动顺序）、是否校验要更新的BIOS文件等。
 
-常用的命令有:`cd`, `ls`, `map`, `pci`, `mm`, `dmem`, `ifconfig`, `edit`, `vers`等.
+![](/images/uefi-png/firmware_update_main.png)
 
-## 5. UEFI下更新固件方法
+倘若无需修改，则可以通过`选择文件`进入文件列表，并加载相应的BIOS文件。
 
-还有`spi`命令不得不单独强调, 一个产品往往需要保持更新才能更好的满足用户的需求. 固件是尤其重要的一点.
+> PS: UEFI固件下通常仅支持NTFS、FAT、EXT2/3/4等格式的文件系统，由于国内系统镜像制备流程不是非常规范，导致在不同阶段的UEFI下默认可能还支持ISO9660格式的文件系统，在高级选项中可配。
 
-当我们需要更新固件(UEFI和PMON都是固件)时, 在`Shell`下找到文件后, 通过`spi -u filename`的命令, 即可完成固件更新.
+> PS：第一步选择设备时，设备名非常冗长难以理解，但在其中通常有NVME、SATA、USB等字样可供判断。
 
-当然图形界面下也有相关接口, 可以自己理解一下英文再操作.
+> PS：此方式仅支持烧录UEFI文件，不支持PMON、U-Boot等其他文件。
 
-## GRUB
+![](/images/uefi-png/file_explorer.png)
+![](/images/uefi-png/firmware_update.png)
 
-## GRUB界面
+## 5. 电源设置
 
-![GRUB主界面](/images/uefi/7.png)
+电源设置中仅包含`定时唤醒功能`，如下图：
 
-如图, GRUB界面下列出了几个选项, 其中第一项`vm.mxd`是我自己加的内核, 第二项`Loongnix GNU/Linux`是系统自带内核, 第三项`Advanced options for Loongnix GNU/Linux`是高级选项, 通常包含一些恢复模式的选项, 第四项是`System Setup`--系统设置, 其实就是进入`UEFI Setup`界面.
+![](/images/uefi-png/wakeup_timer.png)
+![](/images/uefi-png/wakeup_timer_setup.png)
 
-然后在界面的最下方:
+## 6. 高级设置
 
-> Use the ^ and v keys to select which entry is highlighted.   
-> Press enter to boot the selected OS, `e` to edit the commands
-> before booting or `c` for a command-line.                    
+高级设置中包含许多用户关心的配置，包括PCIe特性、启动模式配置、其他兼容配置等。
+![](/images/uefi-png/advanced_main.png)
 
-翻译一下:
+### 6.1 PCI总线设置
 
-> 通过按上下键选择选项, 按执行进入选项, 按`e`去编辑选项, 按`c`进入`GRUB`的命令行.
+在PCI总线配置中有如下配置选项：
 
-## 1. 编辑GRUB选项
+1. 开启4G以上地址空间支持，等同于可以设置PCIe的Bar地址为64位地址，即支持使用更大Bar空间的设备，当使用一些高端显卡等需要较大的Bar空间的设备，优先考虑此配置。
 
-通常我们通过`UEFI`执行`GRUB`的`efi`文件即可进入`GRUB`界面, 然后回车便可以启动内核, 但是倘若内核无法正常启动, 我们需要加串口调试, 就需要我们按`e`去编辑选项, 比如增加串口或者进入单用户模式等.
+2. SR-IOV支持，即PCIe设备虚拟化，开启并插入支持SR-IOV的设备后，将会为虚拟设备预留Bus和内存资源，当设备较多，资源占用较大时，若需要适用此功能，应该考虑开启`4G以上地址空间支持`的功能配合使用。
 
-按`e`后进入下图, 我们可以将光标通过上下左右按键, 移动至`linux`开头的那一行, 并在行末加入想要的参数比如串口`console=ttyS0,115200 earlycon=uart,mmio,0x1fe001e0`.
+3. 解锁Bar限制，开启后将解锁BAR的最大空间地址，即支持设备使用大于4G空间的Bar. 同样应与`4G以上地址空间支持`的功能配合使用。
 
-![GRUB编辑](/images/uefi/8.png)
+4. GPU模拟开关，在固件下显卡设备通常没有专用驱动，即需要模拟程序驱动显卡，而模拟程序针对特殊或高端显卡时，可能会无法正常模拟，此时使用模拟程序或许会导致固件卡死，因而显卡无法正常点亮时，可以考虑使用集显配置完成后，关闭EMU功能再通过独显进入系统，可使系统下显卡可用。
 
-可以看到, 界面最下面仍然有一些文字, 告诉我们按下`Ctrl-X`组合键或者`F10`可以直接启动, 按下`Ctrl-c`或`F2`进入到`GRUB`命令行, 按下`ESC`可以退回上一步.
+![](/images/uefi-png/pci_advanced_main.png)
 
-## 2. 手动找grub.cfg
+### 6.2.1 传统启动模式
 
-当我们在`UEFI`下执行`GRUB`的`efi`文件后, 加入`grub.cfg`的路径有问题, 则需要我们手动找到`grub.cfg`并且加载:
+由于Loongarch架构早期对兼容性考虑的不足，导致有新旧世界两种系统，针对两种系统，固件也对应着两种传参。
 
-![GRUB命令行操作](/images/uefi/9.png)
+> PS: 选项为`传统启动`，关闭时可起新世界系统，开启时启动旧世界系统。
 
-逐个说明上述命令: 首先`ls`命令能够看到当前能够识别的设别, 其中`hd0`表示一块硬盘(Hard Disk0), 如果有多个硬盘将以`hdx`的形式显示. 
+![](/images/uefi-png/legacy_bootmode.png)
 
-但是`hd0`并不具有文件系统, `(hd0,msdos2)`这种形式才表示有文件系统, `msdos`指MBR的分区格式, `msdos2`也就表示`MBR`硬盘上第二个分区.
+### 6.2.2 ISO文件系统支持
 
-然后逐级用`ls`命令找到`grub.cfg`的路径:`(hd0,msdos2)/boot/grub/grub.cfg`.
+与传统启动模式类似，早期的国产系统厂商通常将系统文件直接打包成ISO9660格式的系统镜像，不带有任何分区信息，与诸如debian上游等iso制作有着些许区别。
 
-最后通过`configfile`命令, 解析`grub.cfg`文件, 即可重新回到GRUB的主界面.
+> PS: 如何判断ISO文件系统支持是否需要启用：
+>> 执行`fdisk -l iso_filename`，有EFI分区的则不需要启用，否则需要启用。
+>> 如下debian则不需要启用, Loongnix-server则需要启用：
 
-## 3. 没有grub.cfg怎么办?
+debian:
+```
+root@aosc [ mxd ] # fdisk -l /work/iso/debian-live-12.2.0-amd64-gnome.iso 
+Disk /work/iso/debian-live-12.2.0-amd64-gnome.iso: 3.18 GiB, 3419209728 bytes, 6678144 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0xe4ed1d81
 
-有时候, 我们会遇到有`grub`, 但是没有`grub.cfg`的情况, 这时, 我们可以稍微背下来两条命令, 这两条也就是`grub.cfg`中加载内核和加载`initrd`的命令: `linux`命令和`initrd`命令
+Device                                        Boot Start     End Sectors  Size Id Type
+/work/iso/debian-live-12.2.0-amd64-gnome.iso1 *       64 6678143 6678080  3.2G  0 Empty
+/work/iso/debian-live-12.2.0-amd64-gnome.iso2       6908   17147   10240    5M ef EFI (FAT-12/16/32)
+```
 
-`linux`命令后面加内核的路径, 以及内核启动参数
+Loongnix-server:
+```
+root@aosc [ mxd ] # fdisk -l /work/iso/Loongnix-server-8.4.0.livecd.loongarch64.iso 
+Disk /work/iso/Loongnix-server-8.4.0.livecd.loongarch64.iso: 1.81 GiB, 1938675712 bytes, 3786476 sectors
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
 
-`initrd`命令后面加initrd的路径即可.
+```
 
-然后执行boot即可启动. 如下图:
+![](/images/uefi-png/legacy_iso.png)
 
-![grub命令启动内核](/images/uefi/10.png)
+### 6.3 基础显示
+
+龙芯目前支持多种显示设备，包括桥片提供的集显、pcie提供的显卡、bmc提供的显示。
+
+龙芯固件支持配置优先使用哪种设备作为显示，如下图。
+
+> PS: 配置为自动时的优先级：显卡 > BMC > 集显
+
+![](/images/uefi-png/primary_display.png)
+
+### 6.4 系统管理核心配置
+
+此项包括龙芯平台的动态调频调压策略配置，由于更完善的功能尚未推出，暂不介绍
+
+## 7. 设备管理
+
+龙芯平台支持对设备进行开关，包括SATA、USB、网口、唤醒设置、IO虚拟化、电源恢复策略、7A桥片提供的PCIE控制器等，详情如下图：
+
+![](/images/uefi-png/dev_manager.png)
+
+1. SATA开关
+
+![](/images/uefi-png/dev_manager_sata.png)
+
+2. USB开关
+
+![](/images/uefi-png/dev_manager_usb.png)
+
+3. 网口开关
+
+> PS: 龙芯平台的网口0和网口1分别为每个7A桥片的GNET, 倘若没有或不是，则不可通过此项控制
+
+![](/images/uefi-png/dev_manager_network.png)
+
+4. 唤醒设置
+
+![](/images/uefi-png/wakeup_manager.png)
+
+4. IO虚拟化开关
+
+即IOMMU控制器开关，开启后可在虚拟机中对设备直通访问。
+
+![](/images/uefi-png/dev_manager_iommu.png)
+
+5. 电源恢复策略
+
+控制电源上电时的行为，如可以配置每一次按下电源键为开机，则当电源通电时即会开机，具体配置如下：
+
+![](/images/uefi-png/battery_setup.png)
+
+6. 7A桥片提供的PCIE控制器开关
+
+7A桥片提供F0、F1、G0、H四个控制器，可分别通过BIOS进行开关、速率调整、带宽配置，如下图：
+
+![](/images/uefi-png/dev_manager_pcie_enable.png)
+![](/images/uefi-png/dev_manager_pcie_speed.png)
+![](/images/uefi-png/dev_manager_pcie_width.png)
+
+## 8. 启动管理
+
+通过启动管理选项，可直接选择启动某一设备：
+
+> PS: Enter Setup即UEFI 设置界面，选择后会回到上一页。
+
+> PS：UEFI Shell为UEFI下的终端，可实现更灵活复杂的操作，详情可参考[如何从UEFI命令行启动到系统](firmware/uefi_boot_system/)
+
+> PS：选择设备时，设备名非常冗长难以理解，但在其中通常有NVME、SATA、USB等字样可供判断。
+
+![](/images/uefi-png/bootmanager.png)
+
+UEFI Shell如下：
+
+![](/images/uefi-png/shell.png)
+
+## 9. 启动维护管理
+
+启动维护管理包括启动选项配置、驱动选项配置、控制台配置、文件引导等内容，如下图：
+
+![](/images/uefi-png/bm.png)
+
+### 9.1 启动选项
+
+在此项配置中，可以增加/删除启动选项、调整启动选项的顺序、禁用/启用某个启动项，也可以按照设备类型来调整启动选项。
+
+
+![](/images/uefi-png/bm_setup.png)
+
+如下为部分示例：
+
+1. 调整启动项
+
+> PS: 回车后通过+或-按键调整。
+
+![](/images/uefi-png/bootable_change.png)
+
+2. 删除启动选项
+
+![](/images/uefi-png/bootable_delete.png)
+
+3. 禁用启动选项
+
+![](/images/uefi-png/bootable_disable.png)
+
+4. 按设备类型调整启动项
+
+![](/images/uefi-png/boottype_change.png)
+
+### 9.2 驱动选项配置
+
+通过此项配置可以实现加载自定义或卸载已有驱动。
+
+![](/images/uefi-png/driver_setup.png)
+
+如社区同学做出了睿频的EFI驱动，即可通过此项设置加载：
+
+![](/images/uefi-png/driver_add.png)
+
+### 9.3 控制台配置
+
+此项用于配置stdout、stdin、stderr三项内容，并提供丰富可用的功能：
+
+![](/images/uefi-png/console_setup.png)
+
+以最常用的输出设备为例，即通常为显示设备，但当偶尔显示设备无法点亮时，可以通过设置控制台输出设备的模式来使串口显示(配置为100x31或更小)：
+
+![](/images/uefi-png/con-output.png)
+
+## 10. 保存退出
+
+修改相应配置后，大多数需要重启后生效，除`F10`快捷键外，可通过此项保存，并选择重启或关机。
+
+![](/images/uefi-png/save_exit.png)
