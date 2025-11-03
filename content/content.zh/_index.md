@@ -37,6 +37,7 @@
 |安同 OS (AOSC OS)|[https://aosc.io/zh-cn/](https://aosc.io/zh-cn/)|
 |deepin深度系统预览版|[https://ci.deepin.com/repo/deepin/deepin-ports/cdimage/](https://ci.deepin.com/repo/deepin/deepin-ports/cdimage/)|
 |内网ftp源(旧)|[http://ftp.loongnix.org/](http://ftp.loongnix.org/)|
+|Debian OS|[https://cdimage.debian.org/cdimage/](https://cdimage.debian.org/cdimage/)|
 
 ### 代码
 
